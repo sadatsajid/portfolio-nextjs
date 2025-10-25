@@ -1,6 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+'use client';
+import React, { useLayoutEffect, useRef } from 'react';
 
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import { Avatar } from './Avatar';
 import { AvatarContainer } from './AvatarContainer';
@@ -15,7 +16,8 @@ const clamp = (number: number, a: number, b: number) => {
 };
 
 export const Header = () => {
-  const isHomePage = useRouter().pathname === '/';
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   const headerRef = useRef<HTMLDivElement | null>(null);
   const avatarRef = useRef<HTMLDivElement | null>(null);

@@ -7,10 +7,10 @@ import { About, Name, SocialMedia } from '../data/lifeApi';
 import { Note } from '../lib/notesApi';
 
 type Props = {
-  latestNotes: Note[];
+  latestNotes?: Note[];
 };
 
-export default function Home({ latestNotes }: Props) {
+export default function Home({ latestNotes = [] }: Props) {
   return (
     <>
       <Container className="mt-9">

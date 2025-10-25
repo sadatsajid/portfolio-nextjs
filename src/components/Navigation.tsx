@@ -1,7 +1,8 @@
+'use client';
 import { Fragment } from 'react';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import { ChevronDownIcon } from './icons/ChevronDownIcon';
 import { CloseIcon } from './icons/CloseIcon';
@@ -56,7 +57,8 @@ const NavItem = ({
   href,
   children,
 }: React.PropsWithChildren<{ href: string }>) => {
-  const isActive = useRouter().pathname === href;
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
   return (
     <li>

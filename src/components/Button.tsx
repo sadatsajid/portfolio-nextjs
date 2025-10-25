@@ -17,7 +17,7 @@ type Props<T extends ElementType> = {
 export const Button = forwardRef(
   <T extends ElementType = 'button'>(
     { as: Component = 'button', ...props }: Props<T>,
-    ref: React.Ref<any>
+    ref: React.Ref<HTMLElement>
   ) => {
     const { className, variant = 'primary', children, ...rest } = props;
 

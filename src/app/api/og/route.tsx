@@ -4,8 +4,11 @@ import { NextRequest } from 'next/server';
 import { ImageResponse } from '@vercel/og';
 
 const font = fetch(
-  new URL('../../../public/assets/font/Inter.ttf', import.meta.url)
-).then(res => res.arrayBuffer());
+  new URL('../../../../public/assets/font/Inter.ttf', import.meta.url)
+).then(res => res.arrayBuffer()).catch(() => {
+  // Fallback if font loading fails
+  return new ArrayBuffer(0);
+});
 
 export async function GET(req: NextRequest) {
   const fontData = await font;
