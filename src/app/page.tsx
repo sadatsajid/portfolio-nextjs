@@ -4,11 +4,7 @@ import { Resume } from '../components/Resume';
 import { SocialLink } from '../components/SocialLink';
 import { NotePreview } from '../components/notes/NotePreview';
 import { About, Name, SocialMedia } from '../data/lifeApi';
-import { Note, notesApi } from '../lib/notesApi';
-
-const seoTitle = 'ASIF SADAT';
-const seoDescription =
-  'Full Stack Developer with 6+ years of experience building scalable applications. Based in Dhaka, Bangladesh.';
+import { Note } from '../lib/notesApi';
 
 type Props = {
   latestNotes: Note[];
@@ -47,12 +43,4 @@ export default function Home({ latestNotes }: Props) {
       </Container>
     </>
   );
-}
-
-const NEWEST_POSTS_TO_DISPLAY = 5;
-
-export async function generateStaticParams() {
-  // Disable blog functionality for now
-  const latestNotes: Note[] = [];
-  return latestNotes;
 }
