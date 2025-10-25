@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://asifsadat.com
+
+# Sitemaps
+Sitemap: https://asifsadat.com/sitemap.xml
