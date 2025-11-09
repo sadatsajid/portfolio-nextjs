@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
-import '../styles/index.css';
+import './globals.css';
 import '../styles/prism.css';
 import { Analytics } from '@vercel/analytics/react';
 import 'focus-visible';
