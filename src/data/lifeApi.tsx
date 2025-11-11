@@ -3,17 +3,15 @@ import { GitHubIcon } from '../components/icons/GitHubIcon';
 import { LinkedInIcon } from '../components/icons/LinkedInIcon';
 import AmbitLogo from '../images/logos/ambit.png';
 import BimLogo from '../images/logos/bim.png';
-import ClevertechLogo from '../images/logos/clevertech.png';
 import Consultly from '../images/logos/consultly.svg';
 import EvercastLogo from '../images/logos/evercast.svg';
-import FilmIoLogo from '../images/logos/filmio.jpg';
 import Howdy from '../images/logos/howdy.png';
 import JarockiMeLogo from '../images/logos/jarocki.svg';
-import JojoMobileLogo from '../images/logos/jojomobile.png';
+import MghLogo from '../images/logos/mgh.png';
 import MonitoLogo from '../images/logos/monito.svg';
-import MotionLogo from '../images/logos/motion.svg';
 import MobileVikingsLogo from '../images/logos/mv.png';
 import ParabolLogo from '../images/logos/parabol.svg';
+import SeliseLogo from '../images/logos/selise.png';
 import TastyCloudLogo from '../images/logos/tastycloud.png';
 
 import { StaticImageData } from 'next/image';
@@ -41,12 +39,13 @@ export type Project = {
   };
 };
 
+// Professional Projects (Current)
 export const MyCurrentProjects: Project[] = [
   {
     title: 'Creolytix',
     techStack: ['Full Stack', 'React', 'TypeScript', 'Node.js', 'Vitest'],
     description:
-      'Advanced online platform providing real-time monitoring and threat analysis, helping organizations quickly detect and respond to risks.',
+      'Advanced online platform providing real-time monitoring and threat analysis, helping organizations quickly detect and respond to risks. Features AI Summary, Understand Module with configurable widgets, and comprehensive unit testing.',
     logo: Consultly,
     link: {
       label: 'In Development',
@@ -57,7 +56,7 @@ export const MyCurrentProjects: Project[] = [
     title: 'OBHAI Ride-Sharing Admin Panel',
     techStack: ['AngularJS', 'Bootstrap', 'FCM', 'Google Maps API'],
     description:
-      'Master Admin Panel for ride-sharing platform with promo notifications, issue management, and asset tracking modules.',
+      'Master Admin Panel for ride-sharing platform with promo notifications, issue management, and asset tracking modules. Integrated FCM-powered Missed Ride tracking to prioritize customer satisfaction.',
     logo: MonitoLogo,
     link: {
       label: 'Internal System',
@@ -68,7 +67,7 @@ export const MyCurrentProjects: Project[] = [
     title: 'OBHAI Ride Tracker',
     techStack: ['React', 'Google Maps API', 'Real-time Tracking'],
     description:
-      'Real-time location tracking feature utilizing Google Maps API for customers to securely share their ride progress with contacts.',
+      'Real-time location tracking feature utilizing Google Maps API for OBHAI customers to securely share their ride progress with contacts via URL.',
     logo: JarockiMeLogo,
     link: {
       label: 'Live System',
@@ -77,12 +76,13 @@ export const MyCurrentProjects: Project[] = [
   },
 ];
 
+// Professional Projects (Past)
 export const MyPastProjects: Project[] = [
   {
     title: 'OBHAI Sales Performance Management',
     techStack: ['NodeJS', 'React', 'MUI', 'RBAC', 'Web Push'],
     description:
-      'Sales performance tracking application with real-time web push alerts, in-app calling, and driver leaderboard system.',
+      'Sales performance tracking application with real-time web push alerts for managers and stakeholders, in-app calling for Sales Managers and Drivers, and a driver leaderboard system utilizing performance metrics.',
     logo: ParabolLogo,
     link: {
       label: 'Internal System',
@@ -104,7 +104,7 @@ export const MyPastProjects: Project[] = [
     title: 'OBHAI Fleet Owner Panel',
     techStack: ['React', 'MUI', 'PWA', 'Real-time Updates'],
     description:
-      'Progressive Web App for Fleet Owners to track rides and earnings from each vehicle registered with OBHAI.',
+      'Progressive Web App for Fleet Owners to track rides and earnings from each vehicle registered with OBHAI. Modernized from AngularJS to React, improving collaboration and delivery speed.',
     logo: MobileVikingsLogo,
     link: {
       label: 'Live System',
@@ -115,7 +115,7 @@ export const MyPastProjects: Project[] = [
     title: 'Peyala Food Ordering Admin Panel',
     techStack: ['NodeJS', 'React', 'MUI', 'RBAC'],
     description:
-      'Fullstack Admin Panel for managing customer orders with role-based access control, delivery charge module, and buzzer notifications.',
+      'Fullstack Admin Panel for managing customer orders with role-based access control, delivery charge module, menu items management, menu category ordering, order cancellation refund system, and buzzer notifications.',
     logo: Howdy,
     link: {
       label: 'Live System',
@@ -126,7 +126,7 @@ export const MyPastProjects: Project[] = [
     title: 'Warehouse Management System',
     techStack: ['React', 'MUI', 'Barcode Scanning', 'Inventory Tracking'],
     description:
-      'WMS solution for inventory tracking with barcode scanning for faster data entry and bulk PO upload system.',
+      'WMS solution for inventory tracking with barcode scanning for faster data entry and bulk PO (purchase order) upload system.',
     logo: TastyCloudLogo,
     link: {
       label: 'Internal System',
@@ -137,7 +137,7 @@ export const MyPastProjects: Project[] = [
     title: 'Power BI Report Embedding System',
     techStack: ['NodeJS', 'React', 'MUI', 'MSAL', 'Microsoft Auth'],
     description:
-      'Admin Panel for embedding Power BI reports with Microsoft Authentication and dynamic report management features.',
+      'Admin Panel for embedding Power BI reports with Microsoft Authentication (MSAL) and dynamic report management features, enabling admins to seamlessly add, view, and manage Power BI reports.',
     logo: AmbitLogo,
     link: {
       label: 'Internal System',
@@ -148,11 +148,37 @@ export const MyPastProjects: Project[] = [
     title: 'DristiVan - SAAF EMR System',
     techStack: ['React', 'MUI', 'Medical Equipment Integration'],
     description:
-      'Electronic Medical Records system for glaucoma detection through screening patients with different medical equipment.',
+      'Electronic Medical Records (EMR) system for glaucoma detection through screening patients with different medical equipment. Features patient registration, appointment scheduling, queue management, examination tracking, inventory, and billing modules.',
     logo: BimLogo,
     link: {
       label: 'Medical System',
       href: '#',
+    },
+  },
+];
+
+// Personal Projects
+export const MyPersonalProjects: Project[] = [
+  {
+    title: 'Circular Idea Blender',
+    techStack: ['Next.js', 'React', 'TypeScript', 'Full Stack'],
+    description:
+      'A creative platform for blending and sharing innovative ideas in a circular, collaborative format. Built with modern web technologies to foster creativity and idea exchange.',
+    logo: JarockiMeLogo,
+    link: {
+      label: 'Visit Site',
+      href: 'https://circularideablender.com/',
+    },
+  },
+  {
+    title: 'E-Learning Platform',
+    techStack: ['Next.js', 'React', 'TypeScript', 'Full Stack'],
+    description:
+      'A comprehensive e-learning platform with course catalog, student management, and interactive learning features. Features course browsing, enrollment, and progress tracking capabilities.',
+    logo: MonitoLogo,
+    link: {
+      label: 'Visit Demo',
+      href: 'https://elearning-demo-nextjs.vercel.app/',
     },
   },
 ];
@@ -170,37 +196,37 @@ export const Work = [
   {
     company: 'SELISE Digital Platforms',
     title: 'Staff Software Engineer (Frontend)',
-    logo: MotionLogo,
+    logo: SeliseLogo,
     start: '2024',
     end: 'Present',
   },
   {
     company: 'MGH Group',
-    title: 'Manager - Full Stack Developer',
-    logo: FilmIoLogo,
-    start: '2023',
-    end: '2024',
-  },
-  {
-    company: 'MGH Group',
-    title: 'Assistant Manager - Full Stack Developer',
-    logo: ParabolLogo,
-    start: '2021',
-    end: '2023',
-  },
-  {
-    company: 'MGH Group',
-    title: 'Senior Executive - Lead Frontend Developer',
-    logo: ClevertechLogo,
-    start: '2019',
-    end: '2020',
-  },
-  {
-    company: 'MGH Group',
-    title: 'Trainee Executive - Junior Frontend Developer',
-    logo: JojoMobileLogo,
+    logo: MghLogo,
+    roles: [
+      {
+        title: 'Manager - Full Stack Developer',
+        start: '2023',
+        end: '2024',
+      },
+      {
+        title: 'Assistant Manager - Full Stack Developer',
+        start: '2021',
+        end: '2023',
+      },
+      {
+        title: 'Senior Executive - Lead Frontend Developer',
+        start: '2019',
+        end: '2020',
+      },
+      {
+        title: 'Trainee Executive - Junior Frontend Developer',
+        start: '2018',
+        end: '2019',
+      },
+    ],
     start: '2018',
-    end: '2019',
+    end: '2024',
   },
 ] as const;
 
@@ -367,85 +393,6 @@ export const Blogs = [
   {
     name: 'Naval Ravikant',
     link: 'https://nav.al/',
-  },
-] as const;
-
-export const Quotes = [
-  {
-    content:
-      'We have two lives, and the second begins when we realize we only have one.',
-    author: '― Confucius',
-  },
-  {
-    content:
-      'The man who moves a mountain begins by carrying away small stones.',
-    author: '― Confucius',
-  },
-  {
-    content:
-      'The man who asks a question is a fool for a minute, the man who does not ask is a fool for life.',
-    author: '― Confucius',
-  },
-  {
-    content:
-      "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did so. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.",
-    author: '― Mark Twain',
-  },
-  {
-    content:
-      "You have no responsibility to live up to what other people think you ought to accomplish. I have no responsibility to be like they expect me to be. It's their mistake, not my failing.",
-    author: '― Mark Twain',
-  },
-  {
-    content:
-      'Watch your thoughts, they become your words; watch your words, they become your actions; watch your actions, they become your habits; watch your habits, they become your character; watch your character, it becomes your destiny.',
-    author: '― Laozi',
-  },
-  {
-    content: 'If you are going through hell, keep going.',
-    author: '― Winston S. Churchill',
-  },
-  {
-    content: 'Attitude is a little thing that makes a big difference.',
-    author: '― Winston S. Churchill',
-  },
-  {
-    content:
-      'To think is easy. To act is hard. But the hardest thing in the world is to act in accordance with your thinking.',
-    author: '― Johann Wolfgang von Goethe',
-  },
-  {
-    content:
-      'It is not death that a man should fear, but he should fear never beginning to live.',
-    author: '― Marcus Aurelius',
-  },
-  {
-    content:
-      'If it is not right do not do it; if it is not true do not say it.',
-    author: '― Marcus Aurelius',
-  },
-  {
-    content:
-      'You have power over your mind - not outside events. Realize this, and you will find strength.',
-    author: '― Marcus Aurelius',
-  },
-  {
-    content:
-      'The happiness of your life depends upon the quality of your thoughts.',
-    author: '― Marcus Aurelius',
-  },
-  {
-    content:
-      'If you are distressed by anything external, the pain is not due to the thing itself, but to your estimate of it; and this you have the power to revoke at any moment.',
-    author: '― Marcus Aurelius',
-  },
-  {
-    content: 'There is no easy way from the earth to the stars',
-    author: '― Seneca',
-  },
-  {
-    content: 'We suffer more often in imagination than in reality',
-    author: '― Seneca',
   },
 ] as const;
 

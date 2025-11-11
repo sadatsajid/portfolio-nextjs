@@ -2,15 +2,15 @@ import React from 'react';
 
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
+import { Providers } from '../components/Providers';
 import './globals.css';
 import '../styles/prism.css';
 import { Analytics } from '@vercel/analytics/react';
 import 'focus-visible';
 import { GeistSans } from 'geist/font/sans';
-import { ThemeProvider } from 'next-themes';
 
 export const metadata = {
-  title: 'ASIF SADAT - Full Stack Developer',
+  title: 'Asif Sadat - Full Stack Developer',
   description:
     'Full Stack Developer with 7+ years of experience building scalable applications. Based in Dhaka, Bangladesh.',
   metadataBase: process.env.NEXT_PUBLIC_URL ? new URL(process.env.NEXT_PUBLIC_URL) : undefined,
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.className} h-full antialiased`}>
+    <html lang="en" className={`${GeistSans.className} h-full antialiased`} suppressHydrationWarning>
       <head>
         <link
           rel="apple-touch-icon"
@@ -46,7 +46,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#18181b" />
       </head>
       <body className="flex h-full flex-col bg-zinc-50 text-zinc-700 dark:bg-black dark:text-zinc-300">
-        <ThemeProvider attribute="class">
+        <Providers>
           <div className="fixed inset-0 flex justify-center sm:px-8">
             <div className="flex w-full max-w-7xl lg:px-8">
               <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
@@ -58,7 +58,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <Analytics />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

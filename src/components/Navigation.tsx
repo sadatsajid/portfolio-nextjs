@@ -26,8 +26,8 @@ export const NavigationItems = [
   //   type: 'internal',
   // },
   {
-    name: 'Creating',
-    href: '/creating',
+    name: 'Projects',
+    href: '/projects',
     type: 'internal',
   },
   {
@@ -35,11 +35,11 @@ export const NavigationItems = [
     href: '/skills',
     type: 'internal',
   },
-  {
-    name: 'Resume',
-    href: 'https://cv.jarocki.me',
-    type: 'external',
-  },
+  // {
+  //   name: 'Resume',
+  //   href: 'https://cv.jarocki.me',
+  //   type: 'external',
+  // },
 ] as const;
 
 export const NavLink = ({
@@ -81,7 +81,11 @@ export const MobileNavItem = ({
 }: React.PropsWithChildren<{ href: string }>) => {
   return (
     <li>
-      <Popover.Button as={Link} href={href} className="block py-2">
+      <Popover.Button
+        as={Link}
+        href={href}
+        className="block py-2 transition hover:text-primary"
+      >
         {children}
       </Popover.Button>
     </li>

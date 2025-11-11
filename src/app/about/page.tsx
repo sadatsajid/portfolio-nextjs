@@ -8,18 +8,17 @@ import { ExternalLink } from '../../components/ExternalLink';
 import { PageTitle } from '../../components/PageTitle';
 import { Section } from '../../components/Section';
 import { SocialLink } from '../../components/SocialLink';
-import { AboutExtended, Blogs, SocialMedia } from '../../data/lifeApi';
+import { AboutExtended, SocialMedia } from '../../data/lifeApi';
 
 export const metadata = {
   title: 'About - Asif Sadat',
   description:
-    'Learn more about Asif Sadat, a Full Stack Developer with 6+ years of experience.',
+    'Learn more about Asif Sadat, a Full Stack Developer with 7+ years of experience.',
 };
 
 export default function AboutMe() {
   return (
-    <>
-      <Container className="mt-16 sm:mt-32">
+    <Container className="mt-16 sm:mt-32">
         <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
           <div className="lg:pl-20">
             <div className="max-w-xs px-2.5 lg:max-w-none">
@@ -81,21 +80,8 @@ export default function AboutMe() {
                 </ExternalLink>
               </Section.Content>
             </Section>
-            <Section>
-              <Section.Title as="h2">Blogs I read</Section.Title>
-              <Section.Content>
-                <ul className="mt-1 list-inside list-disc">
-                  {Blogs.map(blog => (
-                    <li key={blog.name}>
-                      <ExternalLink href={blog.link}>{blog.name}</ExternalLink>
-                    </li>
-                  ))}
-                </ul>
-              </Section.Content>
-            </Section>
           </div>
         </div>
       </Container>
-    </>
   );
 }
