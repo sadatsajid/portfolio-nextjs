@@ -47,14 +47,19 @@ export default function RootLayout({
       </head>
       <body className="flex h-full flex-col bg-zinc-50 text-zinc-700 dark:bg-black dark:text-zinc-300">
         <Providers>
+          {/* Background gradient effect */}
           <div className="fixed inset-0 flex justify-center sm:px-8">
             <div className="flex w-full max-w-7xl lg:px-8">
               <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
             </div>
           </div>
+          <div className="fixed inset-0 -z-10 overflow-hidden">
+            <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-red-100 to-orange-100 opacity-20 blur-3xl dark:from-red-900 dark:to-orange-900 dark:opacity-10" />
+            <div className="absolute top-1/2 -left-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 opacity-20 blur-3xl dark:from-blue-900 dark:to-purple-900 dark:opacity-10" />
+          </div>
           <div className="relative">
             <Header />
-            <main>{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </div>
           <Analytics />

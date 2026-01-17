@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
             </div>
             <img
               tw="rounded-lg w-32 h-32 self-end ml-auto"
-              src="https://asifsadat.com/assets/blog/authors/asif-sadat.jpg"
+              src="https://asifsadat.com/assets/blog/authors/asif-sadat.jpeg"
               alt="Avatar"
             />
           </div>

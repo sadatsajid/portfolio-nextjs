@@ -123,7 +123,7 @@ export const Header = () => {
   return (
     <>
       <header
-        className="pointer-events-none relative z-50 flex flex-col"
+        className="relative z-40 flex flex-col"
         style={{
           height: 'var(--header-height)',
           marginBottom: 'var(--header-mb)',
@@ -171,7 +171,7 @@ export const Header = () => {
         )}
         <div
           ref={headerRef}
-          className="top-0 z-10 h-16 pt-6"
+          className="top-0 z-50 h-16 pt-6"
           style={
             {
               position: 'var(--header-position)',
@@ -195,13 +195,11 @@ export const Header = () => {
                 )}
               </div>
               <div className="flex flex-1 justify-end md:justify-center">
-                <MobileNavigation className="pointer-events-auto md:hidden" />
-                <DesktopNavigation className="pointer-events-auto hidden md:block" />
+                <MobileNavigation className="md:hidden" />
+                <DesktopNavigation className="hidden md:block" />
               </div>
               <div className="flex justify-end md:flex-1">
-                <div className="pointer-events-auto">
-                  <ThemeToggle />
-                </div>
+                <ThemeToggle />
               </div>
             </div>
           </Container>

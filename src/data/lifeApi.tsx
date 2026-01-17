@@ -454,11 +454,57 @@ export const Tools = {
         'Progressive Node.js framework for building efficient and scalable server-side applications.',
       href: 'https://nestjs.com/',
     },
+  ],
+  Databases: [
     {
-      title: 'SQL & Sequelize',
+      title: 'MySQL',
       description:
-        'Database management and ORM for Node.js applications. Essential for data persistence and management.',
+        'Reliable relational database management system. Used for structured data storage and complex queries in production applications.',
+      href: 'https://www.mysql.com/',
+    },
+    {
+      title: 'PostgreSQL',
+      description:
+        'Advanced open-source relational database with powerful features. Excellent for complex data relationships and enterprise applications.',
+      href: 'https://www.postgresql.org/',
+    },
+    {
+      title: 'MongoDB',
+      description:
+        'NoSQL document database for flexible, scalable data storage. Perfect for applications requiring rapid iteration and dynamic schemas.',
+      href: 'https://www.mongodb.com/',
+    },
+    {
+      title: 'Supabase',
+      description:
+        'Open-source Firebase alternative with PostgreSQL database, authentication, and real-time subscriptions. Great for rapid full-stack development.',
+      href: 'https://supabase.com/',
+    },
+    {
+      title: 'Sequelize',
+      description:
+        'Promise-based ORM for Node.js supporting multiple SQL databases. Simplifies database operations with elegant JavaScript APIs.',
       href: 'https://sequelize.org/',
+    },
+  ],
+  'AI & Machine Learning': [
+    {
+      title: 'OpenAI API',
+      description:
+        'Integration with GPT models for natural language processing, content generation, and intelligent features in applications.',
+      href: 'https://platform.openai.com/',
+    },
+    {
+      title: 'RAG (Retrieval-Augmented Generation)',
+      description:
+        'Architecture pattern combining information retrieval with generative AI to build knowledge-based AI systems with up-to-date, accurate responses.',
+      href: 'https://www.pinecone.io/learn/retrieval-augmented-generation/',
+    },
+    {
+      title: 'Vector Databases',
+      description:
+        'Specialized databases (Pinecone, Chroma) for storing and querying embeddings. Essential for semantic search and RAG implementations.',
+      href: 'https://www.pinecone.io/',
     },
   ],
   'Development Tools': [

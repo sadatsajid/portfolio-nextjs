@@ -19,7 +19,7 @@ export const PageLayout = ({
         <h1 className="text-4xl font-bold tracking-tight text-balance text-zinc-800 dark:text-zinc-100">
           {title}
         </h1>
-        <p className="mt-6 text-base text-balance">{intro}</p>
+        <p className="mt-6 text-base text-balance text-zinc-600 dark:text-zinc-400">{intro}</p>
       </header>
       <div className="mt-16 sm:mt-20">{children}</div>
     </Container>

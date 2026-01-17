@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import AvatarImage from '../../../public/assets/blog/authors/asif-sadat.jpg';
+import AvatarImage from '../../../public/assets/blog/authors/asif-sadat.jpeg';
 import { Container } from '../../components/Container';
 import { ExternalLink } from '../../components/ExternalLink';
 import { PageTitle } from '../../components/PageTitle';

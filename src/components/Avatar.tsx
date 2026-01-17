@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import AvatarImage from '../../public/assets/blog/authors/asif-sadat.jpg';
+import AvatarImage from '../../public/assets/blog/authors/asif-sadat.jpeg';
 import clsx from 'clsx';
 
 type Props = {

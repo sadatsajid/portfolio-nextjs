@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const ExternalLink = ({
-  className = 'underline',
+  className = 'underline text-zinc-900 hover:text-primary dark:text-zinc-100 dark:hover:text-primary-light transition',
   href,
   children,
   ...otherProps

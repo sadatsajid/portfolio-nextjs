@@ -5,7 +5,7 @@ import Image, { StaticImageData } from 'next/image';
 
 import { travelImages } from '../images/travel';
 import clsx from 'clsx';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 
 const possibleRotations = [1.3, -1.3, 1.3, -1.3, 1.3, -1.3];
 

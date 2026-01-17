@@ -3,20 +3,18 @@ import React, { useEffect, useState } from 'react';
 
 import { MoonIcon } from './icons/MoonIcon';
 import { SunIcon } from './icons/SunIcon';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 
 export const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   const toggleTheme = () => {
-    // Handle undefined theme (defaults to light)
-    const currentTheme = theme || 'light';
-    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
   };
 
   return (
@@ -25,15 +23,16 @@ export const ThemeToggle = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        className="relative z-[60]"
       >
         <button
           type="button"
           aria-label="Toggle dark mode"
-          className="group rounded-full bg-white/90 px-3 py-2 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur transition dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20"
+          className="group cursor-pointer rounded-full bg-white/90 px-3 py-2 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur transition-all duration-200 hover:bg-white hover:shadow-xl dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20 dark:hover:bg-zinc-700"
           onClick={toggleTheme}
         >
-          <SunIcon className="[@media(prefers-color-scheme:dark)]:stroke-primary [@media(prefers-color-scheme:dark)]:group-hover:stroke-primary-dark h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50" />
-          <MoonIcon className="[@media_not_(prefers-color-scheme:dark)]:stroke-primary hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 transition dark:block [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400" />
+          <MoonIcon className="h-6 w-6 fill-zinc-700 stroke-zinc-500 transition group-hover:fill-zinc-900 group-hover:stroke-zinc-700 dark:hidden" />
+          <SunIcon className="hidden h-6 w-6 fill-amber-200 stroke-amber-400 transition group-hover:fill-amber-100 group-hover:stroke-amber-300 dark:block" />
         </button>
       </motion.div>
     </AnimatePresence>

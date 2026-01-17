@@ -5,7 +5,7 @@ import { formatDate } from '../../lib/date';
 import { Note } from '../../lib/notesApi';
 import { Card } from '../Card';
 import clsx from 'clsx';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 const StaticBadge = ({
   className,
