@@ -2,19 +2,21 @@ import { ExternalLink } from '../components/ExternalLink';
 import { GitHubIcon } from '../components/icons/GitHubIcon';
 import { LinkedInIcon } from '../components/icons/LinkedInIcon';
 import AmbitLogo from '../images/logos/ambit.png';
-import BimLogo from '../images/logos/bim.png';
 import Consultly from '../images/logos/consultly.svg';
-import EvercastLogo from '../images/logos/evercast.svg';
-import Howdy from '../images/logos/howdy.png';
 import JarockiMeLogo from '../images/logos/jarocki.svg';
 import MghLogo from '../images/logos/mgh.png';
 import MonitoLogo from '../images/logos/monito.svg';
-import MobileVikingsLogo from '../images/logos/mv.png';
-import ParabolLogo from '../images/logos/parabol.svg';
 import SeliseLogo from '../images/logos/selise.png';
 import TastyCloudLogo from '../images/logos/tastycloud.png';
 
 import { StaticImageData } from 'next/image';
+
+/** Logos served from `public/assets/logo/` */
+const logo = {
+  dristiVan: '/assets/logo/saaf-dristivan.webp',
+  obhai: '/assets/logo/obhai-logo.png',
+  peyala: '/assets/logo/peyala-logo.png',
+} as const;
 
 export const Name = 'ASIF SADAT';
 
@@ -32,7 +34,7 @@ export type Project = {
   title: string;
   techStack: string[];
   description: string;
-  logo: StaticImageData;
+  logo: StaticImageData | string;
   link?: {
     label: string;
     href: string;
@@ -57,7 +59,7 @@ export const MyCurrentProjects: Project[] = [
     techStack: ['AngularJS', 'Bootstrap', 'FCM', 'Google Maps API'],
     description:
       'Master Admin Panel for ride-sharing platform with promo notifications, issue management, and asset tracking modules. Integrated FCM-powered Missed Ride tracking to prioritize customer satisfaction.',
-    logo: MonitoLogo,
+    logo: logo.obhai,
     link: {
       label: 'Internal System',
       href: '#',
@@ -68,7 +70,7 @@ export const MyCurrentProjects: Project[] = [
     techStack: ['React', 'Google Maps API', 'Real-time Tracking'],
     description:
       'Real-time location tracking feature utilizing Google Maps API for OBHAI customers to securely share their ride progress with contacts via URL.',
-    logo: JarockiMeLogo,
+    logo: logo.obhai,
     link: {
       label: 'Live System',
       href: '#',
@@ -83,7 +85,7 @@ export const MyPastProjects: Project[] = [
     techStack: ['NodeJS', 'React', 'MUI', 'RBAC', 'Web Push'],
     description:
       'Sales performance tracking application with real-time web push alerts for managers and stakeholders, in-app calling for Sales Managers and Drivers, and a driver leaderboard system utilizing performance metrics.',
-    logo: ParabolLogo,
+    logo: logo.obhai,
     link: {
       label: 'Internal System',
       href: '#',
@@ -94,7 +96,7 @@ export const MyPastProjects: Project[] = [
     techStack: ['React', 'MUI', 'PWA', 'Mobile-First'],
     description:
       'Revamped driver onboarding process enabling registration from personal devices with CRM agent verification, reducing onboarding time by 40%.',
-    logo: EvercastLogo,
+    logo: logo.obhai,
     link: {
       label: 'Live System',
       href: '#',
@@ -105,7 +107,7 @@ export const MyPastProjects: Project[] = [
     techStack: ['React', 'MUI', 'PWA', 'Real-time Updates'],
     description:
       'Progressive Web App for Fleet Owners to track rides and earnings from each vehicle registered with OBHAI. Modernized from AngularJS to React, improving collaboration and delivery speed.',
-    logo: MobileVikingsLogo,
+    logo: logo.obhai,
     link: {
       label: 'Live System',
       href: '#',
@@ -116,7 +118,7 @@ export const MyPastProjects: Project[] = [
     techStack: ['NodeJS', 'React', 'MUI', 'RBAC'],
     description:
       'Fullstack Admin Panel for managing customer orders with role-based access control, delivery charge module, menu items management, menu category ordering, order cancellation refund system, and buzzer notifications.',
-    logo: Howdy,
+    logo: logo.peyala,
     link: {
       label: 'Live System',
       href: '#',
@@ -149,7 +151,7 @@ export const MyPastProjects: Project[] = [
     techStack: ['React', 'MUI', 'Medical Equipment Integration'],
     description:
       'Electronic Medical Records (EMR) system for glaucoma detection through screening patients with different medical equipment. Features patient registration, appointment scheduling, queue management, examination tracking, inventory, and billing modules.',
-    logo: BimLogo,
+    logo: logo.dristiVan,
     link: {
       label: 'Medical System',
       href: '#',
@@ -434,6 +436,12 @@ export const Tools = {
         'Utility-first CSS framework that speeds up development and ensures consistent styling across applications.',
       href: 'https://tailwindcss.com/',
     },
+    {
+      title: 'shadcn/ui',
+      description:
+        'Copy-paste React components built on Radix UI and Tailwind. I use it for accessible, themeable UI without giving up control of the source.',
+      href: 'https://ui.shadcn.com/',
+    },
   ],
   'Backend Technologies': [
     {
@@ -515,6 +523,18 @@ export const Tools = {
       href: 'https://code.visualstudio.com/',
     },
     {
+      title: 'Cursor',
+      description:
+        'AI-native editor built on VS Code. I use it for faster refactors, codebase-aware assistance, and tight integration with modern LLM workflows.',
+      href: 'https://cursor.com/',
+    },
+    {
+      title: 'Codex',
+      description:
+        "OpenAI's coding agent for end-to-end implementation, reviews, and iteration in the terminal and IDE. Helpful for shipping features and debugging across the stack.",
+      href: 'https://openai.com/codex/',
+    },
+    {
       title: 'Git',
       description:
         'Version control system essential for collaborative development and code management.',
@@ -531,6 +551,12 @@ export const Tools = {
       description:
         'Design tool for creating mockups and collaborating with designers on UI/UX projects.',
       href: 'https://www.figma.com/',
+    },
+    {
+      title: 'Google Stitch',
+      description:
+        'Google Labs experiment for turning prompts and references into UI concepts and frontend code—useful for rapid ideation before refining in Figma or the codebase.',
+      href: 'https://stitch.withgoogle.com/',
     },
     {
       title: 'Vitest',
