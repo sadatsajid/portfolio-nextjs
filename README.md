@@ -39,30 +39,53 @@ public/           # Static assets (favicons, fonts, images, robots, sitemap)
 ### Prerequisites
 
 - Node.js 20+ (recommended)
-- npm (lockfile is `package-lock.json`)
+- pnpm 10+ (lockfile is `pnpm-lock.yaml`)
 
 ### Install
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Run Dev Server
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Open `http://localhost:3000`.
 
 ## Available Scripts
 
-- `npm run dev` - Start local development server (Turbopack)
-- `npm run build` - Create production build (Turbopack)
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint with `--fix`
-- `npm run format` - Run Prettier write mode
-- `npm run format:check` - Run Prettier check mode
+- `pnpm dev` - Start local development server (Turbopack)
+- `pnpm build` - Create production build (Turbopack)
+- `pnpm start` - Start production server
+- `pnpm lint` - Run ESLint in check mode
+- `pnpm lint:fix` - Run ESLint with auto-fixes
+- `pnpm typecheck` - Run TypeScript type-checking without emit
+- `pnpm validate:push` - Run strict lint, typecheck, and production build
+- `pnpm format` - Run Prettier write mode
+- `pnpm format:check` - Run Prettier check mode
+
+## Git Hooks (Lefthook)
+
+This project uses Lefthook to enforce a strict pre-push validation gate.
+
+- Hook: `pre-push`
+- Command: `pnpm validate:push`
+- Behavior: blocks push when lint warnings/errors, type errors, or build failures are present
+
+Install hooks locally (also runs automatically via the `prepare` script):
+
+```bash
+pnpm exec lefthook install
+```
+
+Run the hook manually:
+
+```bash
+pnpm exec lefthook run pre-push
+```
 
 ## Content Editing Guide
 
