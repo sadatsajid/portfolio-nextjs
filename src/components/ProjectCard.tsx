@@ -16,6 +16,8 @@ export const ProjectCard = ({ project }: Props) => {
         <Image
           src={project.logo}
           alt={`Logo of ${project.title}`}
+          width={40}
+          height={40}
           className="h-10 w-10 object-contain p-1"
           unoptimized
         />
