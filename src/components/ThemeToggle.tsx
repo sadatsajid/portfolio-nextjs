@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useTheme } from 'next-themes';
 
 export const ThemeToggle = () => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -23,12 +23,12 @@ export const ThemeToggle = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="relative z-[60]"
+        className="relative z-60"
       >
         <button
           type="button"
           aria-label="Toggle dark mode"
-          className="group cursor-pointer rounded-full bg-white/90 px-3 py-2 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur transition-all duration-200 hover:bg-white hover:shadow-xl dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:ring-white/20 dark:hover:bg-zinc-700"
+          className="group cursor-pointer rounded-full bg-white/90 px-3 py-2 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur transition-all duration-200 hover:bg-white hover:shadow-xl dark:bg-zinc-800/90 dark:ring-white/10 dark:hover:bg-zinc-700 dark:hover:ring-white/20"
           onClick={toggleTheme}
         >
           <MoonIcon className="h-6 w-6 fill-zinc-700 stroke-zinc-500 transition group-hover:fill-zinc-900 group-hover:stroke-zinc-700 dark:hidden" />

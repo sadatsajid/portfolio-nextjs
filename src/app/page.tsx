@@ -2,19 +2,13 @@
 import { Container } from '../components/Container';
 import { Resume } from '../components/Resume';
 import { SocialLink } from '../components/SocialLink';
-import { NotePreview } from '../components/notes/NotePreview';
 import { About, AboutExtended, Name, SocialMedia } from '../data/lifeApi';
-import { Note } from '../lib/notesApi';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import AvatarImage from '../../public/assets/blog/authors/asif-sadat.jpeg';
 import { ExternalLink } from '../components/ExternalLink';
 
-type Props = {
-  latestNotes?: Note[];
-};
-
-export default function Home({ latestNotes = [] }: Props) {
+export default function Home() {
   return (
     <>
       {/* Hero Section */}
