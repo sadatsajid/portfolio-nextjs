@@ -39,13 +39,12 @@ function CompanyEntry({ entry }: { entry: WorkEntry }) {
       {/* Logo + company */}
       <div className="col-span-12 md:col-span-4 flex items-start gap-4">
         {logo && (
-          <div className="w-10 h-10 rounded-full bg-paper-deep border border-rule flex items-center justify-center shrink-0 overflow-hidden">
+          <div className="relative w-10 h-10 rounded-full bg-paper-deep border border-rule shrink-0 overflow-hidden">
             <Image
               src={logo}
               alt={`${entry.company} logo`}
-              width={28}
-              height={28}
-              className="object-contain"
+              fill
+              className="object-cover"
               unoptimized
             />
           </div>
@@ -67,12 +66,10 @@ function CompanyEntry({ entry }: { entry: WorkEntry }) {
           <div className="text-[15px] text-ink-soft">{entry.role}</div>
         ) : (
           /* Promotion timeline */
-          <div className="relative pl-5">
-            <div className="absolute left-[7px] top-2 bottom-2 w-px bg-rule" />
+          <div className="border-l border-rule pl-5 space-y-3">
             {entry.roles?.map((r, i) => (
-              <div key={r.title} className="relative flex items-baseline justify-between gap-4 mb-4 last:mb-0">
-                <div className="absolute left-[-13px] top-[7px] w-2 h-2 rounded-full bg-paper border border-rule" />
-                <span className={`text-[14px] leading-[1.4] ${i === 0 ? 'text-ink' : 'text-ink-soft'}`}>
+              <div key={r.title} className="flex items-baseline justify-between gap-4">
+                <span className={`text-[14px] leading-[1.5] ${i === 0 ? 'text-ink' : 'text-ink-soft'}`}>
                   {r.title}
                 </span>
                 <span className="text-[12px] text-muted tabular-nums shrink-0">
