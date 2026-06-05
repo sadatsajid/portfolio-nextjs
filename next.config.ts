@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
   experimental: {
     scrollRestoration: true,
   },
-  transpilePackages: ['geist'],
   images: {
     remotePatterns: [
       {
@@ -21,11 +20,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: '/blog/:slug*',
-        destination: '/notes/:slug*',
-        permanent: true,
-      },
+      { source: '/blog/:slug*',    destination: '/notes/:slug*', permanent: true },
+      { source: '/about',          destination: '/',             permanent: false },
+      { source: '/projects',       destination: '/#work',        permanent: false },
+      { source: '/skills',         destination: '/#work',        permanent: false },
     ];
   },
 };
