@@ -1,41 +1,71 @@
 @import 'tailwindcss';
 
+/* ── Cobalt Press palette ──────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-primary: #dc2626;
-  --color-primary-light: #f87171;
-  --color-primary-dark: #991b1b;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --paper: #F4F5F7;
+  --paper-deep: #E9EBF0;
+  --ink: #14161A;
+  --ink-soft: #3A3F4A;
+  --muted: #6B7280;
+  --rule: rgba(20, 22, 26, 0.12);
+  --accent: #2B45FF;
+  --accent-soft: rgba(43, 69, 255, 0.08);
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --paper: #0B0D12;
+  --paper-deep: #12151C;
+  --ink: #E8EAF0;
+  --ink-soft: #C2C7D2;
+  --muted: #7B8194;
+  --rule: rgba(232, 234, 240, 0.11);
+  --accent: #5B74FF;
+  --accent-soft: rgba(91, 116, 255, 0.12);
+}
+
+@theme inline {
+  /* Colors */
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-rule: var(--rule);
+
+  /* Fonts — variables injected by next/font on <html> */
+  --font-heading: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-ss4);
+
+  /* Tracking */
+  --tracking-display: -0.045em;
+  --tracking-display-tight: -0.04em;
+  --tracking-heading: -0.03em;
+
+  /* Leading */
+  --leading-display: 1;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body, system-ui, sans-serif);
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+/* ── Marquee ───────────────────────────────────────── */
+.marquee-track {
+  animation: marquee 42s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation-play-state: paused; }
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.hide-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.text-balance {
-  text-wrap: balance;
-}
+/* ── Scrollbar ─────────────────────────────────────── */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
