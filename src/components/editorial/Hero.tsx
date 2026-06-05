@@ -48,7 +48,7 @@ export function Hero() {
 
         {/* Right: portrait */}
         <aside className="hidden lg:block col-span-3">
-          <div className="relative w-full overflow-hidden rounded-[2px]" style={{ aspectRatio: '3/4' }}>
+          <div className="relative w-full overflow-hidden rounded-full" style={{ aspectRatio: '1/1' }}>
             <Image
               src="/assets/blog/authors/asif-sadat.jpeg"
               alt="Asif Sadat"
