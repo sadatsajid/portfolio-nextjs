@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import clsx from 'clsx';
 
-import { FEATURED } from '@/data/portfolio';
+import { FEATURED, PERSONAL_PROJECTS } from '@/data/portfolio';
 
 export function Work() {
   const [active, setActive] = useState(0);
@@ -133,6 +133,69 @@ export function Work() {
               </div>
             </article>
           )}
+        </div>
+      </div>
+
+      {/* ── Side projects ───────────────────────────── */}
+      <div className="mt-24 pt-12 border-t border-rule">
+        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+          <h3
+            className="font-heading font-bold tracking-display-tight leading-display text-ink"
+            style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}
+          >
+            Side projects.
+          </h3>
+          <span className="text-[13px] text-muted">Personal work · 2025</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {PERSONAL_PROJECTS.map(p => (
+            <div
+              key={p.title}
+              className="bg-paper-deep p-6 rounded-[2px] flex flex-col gap-4"
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="font-heading font-semibold text-[20px] tracking-heading text-ink">
+                  {p.title}
+                </span>
+                <span className="text-[12px] text-muted shrink-0">{p.year}</span>
+              </div>
+
+              <p className="font-serif text-[15px] leading-[1.5] text-ink-soft">
+                {p.tagline}
+              </p>
+
+              <p className="text-[13px] leading-[1.6] text-muted flex-1">
+                {p.description}
+              </p>
+
+              <div className="flex flex-wrap gap-1.5">
+                {p.stack.map(s => (
+                  <span
+                    key={s}
+                    className="font-mono text-[11px] px-2 py-0.5 bg-paper rounded-[2px] text-muted"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+
+              <div className="text-[12px]">
+                {p.href ? (
+                  <a
+                    href={p.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline underline-offset-2 hover:text-ink transition-colors"
+                  >
+                    Visit site →
+                  </a>
+                ) : (
+                  <span className="text-muted">In development</span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

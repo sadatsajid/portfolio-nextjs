@@ -22,6 +22,16 @@ export type ArchiveProject = {
   note: string;
 };
 
+export type PersonalProject = {
+  title: string;
+  year: string;
+  tagline: string;
+  description: string;
+  stack: string[];
+  href?: string;
+  status: 'live' | 'in-development';
+};
+
 export type Essay = {
   title: string;
   date: string;
@@ -205,6 +215,37 @@ export const ESSAYS: Essay[] = [
   { title: 'How to refactor a four-year-old codebase without stopping shipping', date: 'Mar 2026', read: '8 min', kind: 'Essay' },
   { title: 'What I look for in a junior frontend hire', date: 'Feb 2026', read: '5 min', kind: 'Notes' },
   { title: 'The Axios service layer pattern that finally stuck', date: 'Jan 2026', read: '12 min', kind: 'Engineering' },
+];
+
+// ── Personal / side projects ─────────────────────────────
+export const PERSONAL_PROJECTS: PersonalProject[] = [
+  {
+    title: 'TrySpecta',
+    year: '2025',
+    tagline: 'AI-powered virtual glasses try-on for ecommerce.',
+    description:
+      'Turbo monorepo — NestJS API + Next.js storefront. Customers upload a selfie; FAL/Gemini overlays frames in real time. PostgreSQL + Redis backend, shared Zod validation across the stack.',
+    stack: ['Next.js', 'NestJS', 'TypeScript', 'FAL', 'Gemini', 'PostgreSQL', 'Redis'],
+    status: 'in-development',
+  },
+  {
+    title: 'ReadSaver',
+    year: '2025',
+    tagline: 'Paste any article. Get a TL;DR, key points, and Q&A with citations.',
+    description:
+      'Full RAG pipeline: Jina Reader extracts content, OpenAI embeds and chunks it into pgvector. Semantic search returns grounded answers with source attribution. Streaming UI, magic-link auth.',
+    stack: ['Next.js', 'OpenAI', 'pgvector', 'Supabase', 'Prisma', 'TypeScript'],
+    status: 'in-development',
+  },
+  {
+    title: 'MoneyQ',
+    year: '2025',
+    tagline: 'Personal finance for Bangladesh — AI categorisation, savings buckets, EMI tracking.',
+    description:
+      'BDT-primary expense tracker. GPT-4o-mini auto-categorises transactions, decimal.js handles financial precision, Vercel crons process recurring entries nightly, Recharts renders monthly insights.',
+    stack: ['Next.js', 'OpenAI', 'Supabase', 'Prisma', 'Recharts', 'TypeScript'],
+    status: 'in-development',
+  },
 ];
 
 // ── Marquee ──────────────────────────────────────────────
