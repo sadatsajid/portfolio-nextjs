@@ -4,28 +4,14 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { ChevronDownIcon } from './icons/ChevronDownIcon';
-import { CloseIcon } from './icons/CloseIcon';
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 
-export const NavigationItems = [
-  {
-    name: 'Home',
-    href: '/',
-    type: 'internal',
-  },
-  {
-    name: 'Projects',
-    href: '/projects',
-    type: 'internal',
-  },
-  {
-    name: 'Skills',
-    href: '/skills',
-    type: 'internal',
-  },
-] as const;
+import { NavigationItems } from '../data/navigationData';
+import { ChevronDownIcon } from './icons/ChevronDownIcon';
+import { CloseIcon } from './icons/CloseIcon';
+
+export { NavigationItems } from '../data/navigationData';
 
 export const NavLink = ({
   href,

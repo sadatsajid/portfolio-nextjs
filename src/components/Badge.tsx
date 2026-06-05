@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react';
 
 import Link from 'next/link';
 
-import classNames from 'classnames';
+import clsx from 'clsx';
 
 const styles = `inline-flex items-center rounded-full hover:text-primary bg-zinc-100 px-2.5 py-0.5 text-xs leading-4 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:text-primary`;
 
@@ -22,13 +22,13 @@ export const Badge = ({
 }: PropsWithChildren<Props>) => {
   if ('href' in otherProps)
     return (
-      <Link className={classNames(styles, className)} {...otherProps}>
+      <Link className={clsx(styles, className)} {...otherProps}>
         {children}
       </Link>
     );
 
   return (
-    <button className={classNames(styles, className)} {...otherProps}>
+    <button className={clsx(styles, className)} {...otherProps}>
       {children}
     </button>
   );
