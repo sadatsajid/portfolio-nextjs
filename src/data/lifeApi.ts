@@ -1,6 +1,5 @@
-import { ExternalLink } from '../components/ExternalLink';
-import { GitHubIcon } from '../components/icons/GitHubIcon';
-import { LinkedInIcon } from '../components/icons/LinkedInIcon';
+import { StaticImageData } from 'next/image';
+
 import AmbitLogo from '../images/logos/ambit.png';
 import Consultly from '../images/logos/consultly.svg';
 import JarockiMeLogo from '../images/logos/jarocki.svg';
@@ -8,8 +7,6 @@ import MghLogo from '../images/logos/mgh.png';
 import MonitoLogo from '../images/logos/monito.svg';
 import SeliseLogo from '../images/logos/selise.png';
 import TastyCloudLogo from '../images/logos/tastycloud.png';
-
-import { StaticImageData } from 'next/image';
 
 /** Logos served from `public/assets/logo/` */
 const logo = {
@@ -20,15 +17,38 @@ const logo = {
 
 export const Name = 'ASIF SADAT';
 
-export const About = (
-  <>
-    {`I'm a Full Stack Developer with 7+ years of experience building scalable applications. I enjoy leading teams and creating solutions that make a real impact. If you'd like to get in touch,`}{' '}
-    <ExternalLink href="mailto:sadatsajid@gmail.com">
-      send me an email.
-    </ExternalLink>
-  </>
-);
+export const About = {
+  text: "I'm a Full Stack Developer with 7+ years of experience building scalable applications. I enjoy leading teams and creating solutions that make a real impact. If you'd like to get in touch,",
+  contactLinkText: 'send me an email.',
+  contactHref: 'mailto:sadatsajid@gmail.com',
+} as const;
+
 export const AboutExtended = `I'm a passionate Full Stack Developer based in Dhaka, Bangladesh, with over 7 years of experience in building scalable web applications. I have a B.Sc. in Computer Science & Engineering from BRAC University. I specialize in React, TypeScript, Node.js, and have extensive experience in team leadership and project management. I enjoy mentoring junior developers, solving complex technical challenges, and building products that make a difference in people's lives.`;
+
+/** Company link facts — the authoritative source for names and hrefs used across pages. */
+export const SeliseLink = {
+  name: 'SELISE Digital Platforms',
+  href: 'https://selise.com/',
+} as const;
+
+export const MghLink = {
+  name: 'MGH Group',
+  href: 'https://mghgroup.com/',
+} as const;
+
+/**
+ * Shared bio prose — facts that appear on both the home and about pages.
+ * Update here; both pages consume these strings.
+ */
+export const Bio = {
+  specialisation:
+    'I specialize in React, TypeScript, Node.js, and have extensive experience with Angular, Material-UI, and various backend technologies.',
+  companiesIntro: "I've led development teams and managed projects for companies like",
+  systems:
+    "I've built comprehensive systems including ride-sharing platforms, EMR systems, warehouse management solutions, and real-time monitoring platforms.",
+  leadership:
+    'I have a strong background in team leadership, project management, and mentoring junior developers.',
+} as const;
 
 export type Project = {
   title: string;
@@ -185,13 +205,10 @@ export const MyPersonalProjects: Project[] = [
   },
 ];
 
+// Icon field removed — resolved at the callsite via SOCIAL_ICONS map
 export const SocialMedia = [
-  {
-    name: 'LinkedIn',
-    link: 'https://linkedin.com/in/asif-sadat',
-    icon: LinkedInIcon,
-  },
-  { name: 'Github', link: 'https://github.com/sadatsajid', icon: GitHubIcon },
+  { name: 'LinkedIn' as const, link: 'https://linkedin.com/in/asif-sadat' },
+  { name: 'Github' as const, link: 'https://github.com/sadatsajid' },
 ] as const;
 
 export const Work = [
@@ -233,26 +250,11 @@ export const Work = [
 ] as const;
 
 export const CompaniesLinks = [
-  {
-    name: 'VisionMedia',
-    link: 'https://www.visionmedia.com/',
-  },
-  {
-    name: 'DKMS',
-    link: 'https://www.dkms.org/en',
-  },
-  {
-    name: 'AAA',
-    link: 'https://www.aaa.com/',
-  },
-  {
-    name: 'PolskaPress',
-    link: 'https://polskapress.pl/pl',
-  },
-  {
-    name: 'Canal Digital',
-    link: 'https://www.canaldigital.no/',
-  },
+  { name: 'VisionMedia', link: 'https://www.visionmedia.com/' },
+  { name: 'DKMS', link: 'https://www.dkms.org/en' },
+  { name: 'AAA', link: 'https://www.aaa.com/' },
+  { name: 'PolskaPress', link: 'https://polskapress.pl/pl' },
+  { name: 'Canal Digital', link: 'https://www.canaldigital.no/' },
 ] as const;
 
 export const Books = [
@@ -272,18 +274,12 @@ export const Books = [
     name: 'Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets by Nassim Nicholas Taleb',
     link: 'https://amzn.to/3kbvaD9',
   },
-  {
-    name: 'Daily stoic by Ryan Holiday',
-    link: 'https://amzn.to/3n8ATuC',
-  },
+  { name: 'Daily stoic by Ryan Holiday', link: 'https://amzn.to/3n8ATuC' },
   {
     name: 'A Guide to the Good Life: The Ancient Art of Stoic Joy by William B. Irvine',
     link: 'https://amzn.to/3iuL1ud',
   },
-  {
-    name: 'Atomic Habits by James Clear',
-    link: 'https://amzn.to/3iqimpZ',
-  },
+  { name: 'Atomic Habits by James Clear', link: 'https://amzn.to/3iqimpZ' },
 ] as const;
 
 export const VideosWorthWatching = [
@@ -298,104 +294,38 @@ export const VideosWorthWatching = [
 ] as const;
 
 export const Podcasts = [
-  {
-    name: 'Lex Fridman Podcast',
-    link: 'https://www.youtube.com/@lexfridman',
-  },
-  {
-    name: 'Huberman Lab',
-    link: 'https://www.youtube.com/@hubermanlab',
-  },
-  {
-    name: 'Joe Rogan',
-    link: 'https://www.youtube.com/@joerogan',
-  },
+  { name: 'Lex Fridman Podcast', link: 'https://www.youtube.com/@lexfridman' },
+  { name: 'Huberman Lab', link: 'https://www.youtube.com/@hubermanlab' },
+  { name: 'Joe Rogan', link: 'https://www.youtube.com/@joerogan' },
   {
     name: 'The Tim Ferriss Show',
     link: 'https://www.youtube.com/channel/UCznv7Vf9nBdJYvBagFdAHWw',
   },
-  {
-    name: 'Build your SaaS',
-    link: 'https://saas.transistor.fm/',
-  },
+  { name: 'Build your SaaS', link: 'https://saas.transistor.fm/' },
 ] as const;
 
 export const PeopleWorthFollowingOnTwitter = [
-  {
-    name: 'Andrew Wilkinson',
-    link: 'https://twitter.com/awilkinson',
-  },
-  {
-    name: 'Oliur',
-    link: 'https://twitter.com/UltraLinx',
-  },
-  {
-    name: 'Jack Butcher',
-    link: 'https://twitter.com/jackbutcher',
-  },
-  {
-    name: 'Sahil Lavingia',
-    link: 'https://twitter.com/shl',
-  },
-  {
-    name: 'James Clear',
-    link: 'https://twitter.com/JamesClear',
-  },
-  {
-    name: 'Naval',
-    link: 'https://twitter.com/naval',
-  },
-  {
-    name: 'Paul Graham',
-    link: 'https://twitter.com/paulg',
-  },
-  {
-    name: "John O'Nolan",
-    link: 'https://twitter.com/JohnONolan',
-  },
-  {
-    name: 'Jon Yongfook',
-    link: 'https://twitter.com/yongfook',
-  },
-  {
-    name: 'Joel Gascoigne',
-    link: 'https://twitter.com/joelgascoigne',
-  },
-  {
-    name: 'Pieter Levels',
-    link: 'https://twitter.com/levelsio',
-  },
+  { name: 'Andrew Wilkinson', link: 'https://twitter.com/awilkinson' },
+  { name: 'Oliur', link: 'https://twitter.com/UltraLinx' },
+  { name: 'Jack Butcher', link: 'https://twitter.com/jackbutcher' },
+  { name: 'Sahil Lavingia', link: 'https://twitter.com/shl' },
+  { name: 'James Clear', link: 'https://twitter.com/JamesClear' },
+  { name: 'Naval', link: 'https://twitter.com/naval' },
+  { name: 'Paul Graham', link: 'https://twitter.com/paulg' },
+  { name: "John O'Nolan", link: 'https://twitter.com/JohnONolan' },
+  { name: 'Jon Yongfook', link: 'https://twitter.com/yongfook' },
+  { name: 'Joel Gascoigne', link: 'https://twitter.com/joelgascoigne' },
+  { name: 'Pieter Levels', link: 'https://twitter.com/levelsio' },
 ] as const;
 
 export const Blogs = [
-  {
-    name: 'Wait but why',
-    link: 'https://waitbutwhy.com/',
-  },
-  {
-    name: 'Paul Graham',
-    link: 'http://www.paulgraham.com/',
-  },
-  {
-    name: 'Joel Hooks',
-    link: 'https://joelhooks.com',
-  },
-  {
-    name: 'David Perell',
-    link: 'https://www.perell.com/',
-  },
-  {
-    name: 'Dan Abramov',
-    link: 'https://overreacted.io',
-  },
-  {
-    name: 'Lee Robinson',
-    link: 'https://leerob.io',
-  },
-  {
-    name: 'Naval Ravikant',
-    link: 'https://nav.al/',
-  },
+  { name: 'Wait but why', link: 'https://waitbutwhy.com/' },
+  { name: 'Paul Graham', link: 'http://www.paulgraham.com/' },
+  { name: 'Joel Hooks', link: 'https://joelhooks.com' },
+  { name: 'David Perell', link: 'https://www.perell.com/' },
+  { name: 'Dan Abramov', link: 'https://overreacted.io' },
+  { name: 'Lee Robinson', link: 'https://leerob.io' },
+  { name: 'Naval Ravikant', link: 'https://nav.al/' },
 ] as const;
 
 export const Tools = {

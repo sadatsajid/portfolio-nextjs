@@ -1,56 +1,36 @@
-'use client';
-import { Container } from '../components/Container';
-import { Resume } from '../components/Resume';
-import { SocialLink } from '../components/SocialLink';
-import { About, AboutExtended, Name, SocialMedia } from '../data/lifeApi';
-import { motion } from 'motion/react';
 import Image from 'next/image';
 import AvatarImage from '../../public/assets/blog/authors/asif-sadat.jpeg';
+
+import { AnimatedSection } from '../components/AnimatedSection';
+import { Container } from '../components/Container';
 import { ExternalLink } from '../components/ExternalLink';
+import { Resume } from '../components/Resume';
+import { SocialLinks } from '../components/SocialLinks';
+import { About, AboutExtended, Bio, MghLink, Name, SeliseLink } from '../data/lifeApi';
 
 export default function Home() {
   return (
     <>
       {/* Hero Section */}
       <Container className="mt-16 sm:mt-20">
-        <motion.div 
-          className="max-w-2xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <AnimatedSection className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
             {Name}
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400 text-balance">
-            {About}
+            {About.text}{' '}
+            <ExternalLink href={About.contactHref}>
+              {About.contactLinkText}
+            </ExternalLink>
           </p>
-          <div className="mt-8 flex gap-6">
-            {SocialMedia.map((socialProfile, index) => (
-              <motion.div
-                key={socialProfile.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.1 * index }}
-              >
-                <SocialLink
-                  aria-label={`Follow on ${socialProfile.name}`}
-                  href={socialProfile.link}
-                  icon={socialProfile.icon}
-                  className="group"
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+          <SocialLinks />
+        </AnimatedSection>
       </Container>
 
       {/* About Section */}
       <Container className="mt-24 sm:mt-32">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+        <AnimatedSection
+          delay={0.4}
           className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-12"
         >
           <div className="lg:order-first">
@@ -60,18 +40,15 @@ export default function Home() {
             <div className="mt-6 space-y-7 text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
               <p>{AboutExtended}</p>
               <p>
-                I specialize in React, TypeScript, Node.js, and have extensive experience with Angular, Material-UI, and various backend technologies. I&apos;ve led development teams and managed projects for companies like{' '}
-                <ExternalLink href="https://selise.com/">
-                  SELISE Digital Platforms
+                {Bio.specialisation} {Bio.companiesIntro}{' '}
+                <ExternalLink href={SeliseLink.href}>
+                  {SeliseLink.name}
                 </ExternalLink>{' '}
                 and{' '}
-                <ExternalLink href="https://mghgroup.com/">
-                  MGH Group
-                </ExternalLink>
-                .
+                <ExternalLink href={MghLink.href}>{MghLink.name}</ExternalLink>.
               </p>
               <p>
-                I&apos;ve built comprehensive systems including ride-sharing platforms, EMR systems, warehouse management solutions, and real-time monitoring platforms. I have a strong background in team leadership, project management, and mentoring junior developers.
+                {Bio.systems} {Bio.leadership}
               </p>
             </div>
           </div>
@@ -86,21 +63,17 @@ export default function Home() {
               />
             </div>
           </div>
-        </motion.div>
+        </AnimatedSection>
       </Container>
+
       {/* Work Experience Section */}
       <Container className="mt-24 sm:mt-32">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mx-auto max-w-2xl lg:max-w-none"
-        >
+        <AnimatedSection delay={0.6} className="mx-auto max-w-2xl lg:max-w-none">
           <h2 className="text-3xl font-bold tracking-tight text-zinc-800 sm:text-4xl dark:text-zinc-100 mb-12">
             Work Experience
           </h2>
           <Resume />
-        </motion.div>
+        </AnimatedSection>
       </Container>
     </>
   );

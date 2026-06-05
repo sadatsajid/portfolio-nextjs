@@ -1,8 +1,8 @@
-'use client';
 import React from 'react';
 
+import { NavigationItems } from '../data/navigationData';
 import { Container } from './Container';
-import { NavLink, NavigationItems } from './Navigation';
+import { NavLink } from './Navigation';
 
 export const Footer = () => {
   return (
@@ -19,7 +19,8 @@ export const Footer = () => {
                 ))}
               </div>
               <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                &copy; {new Date().getFullYear()} Asif Sadat. All rights reserved.
+                &copy; {new Date().getFullYear()} Asif Sadat. All rights
+                reserved.
               </p>
             </div>
           </Container.Inner>
