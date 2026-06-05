@@ -54,6 +54,11 @@ body {
   font-family: var(--font-body, system-ui, sans-serif);
 }
 
+/* ── Smooth scroll (respects reduced-motion) ──────── */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
 /* ── Marquee ───────────────────────────────────────── */
 .marquee-track {
   animation: marquee 42s linear infinite;
