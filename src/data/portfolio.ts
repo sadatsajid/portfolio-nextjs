@@ -217,6 +217,37 @@ export const ESSAYS: Essay[] = [
   { title: 'The Axios service layer pattern that finally stuck', date: 'Jan 2026', read: '12 min', kind: 'Engineering' },
 ];
 
+// ── Work experience ──────────────────────────────────────
+export type WorkRole = { title: string; start: string; end: string };
+
+export type WorkEntry = {
+  company: string;
+  start: string;
+  end: string;
+  role?: string;
+  roles?: WorkRole[];
+};
+
+export const WORK: WorkEntry[] = [
+  {
+    company: 'SELISE Digital Platforms',
+    start: '2024',
+    end: 'Present',
+    role: 'Staff Software Engineer (Frontend)',
+  },
+  {
+    company: 'MGH Group',
+    start: '2018',
+    end: '2024',
+    roles: [
+      { title: 'Manager — Full Stack Developer',               start: '2023', end: '2024' },
+      { title: 'Assistant Manager — Full Stack Developer',     start: '2021', end: '2023' },
+      { title: 'Senior Executive — Lead Frontend Developer',   start: '2019', end: '2020' },
+      { title: 'Trainee Executive — Junior Frontend Developer',start: '2018', end: '2019' },
+    ],
+  },
+];
+
 // ── Personal / side projects ─────────────────────────────
 export const PERSONAL_PROJECTS: PersonalProject[] = [
   {

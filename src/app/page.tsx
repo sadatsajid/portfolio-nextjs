@@ -1,5 +1,6 @@
 import { Archive } from '@/components/editorial/Archive';
 import { Beliefs } from '@/components/editorial/Beliefs';
+import { Experience } from '@/components/editorial/Experience';
 import { Contact } from '@/components/editorial/Contact';
 import { Hero } from '@/components/editorial/Hero';
 import { Marquee } from '@/components/editorial/Marquee';
@@ -16,6 +17,7 @@ export default function Home() {
       <Marquee />
       <Work />
       <Archive />
+      <Experience />
       <Beliefs />
       <Toolkit />
       <Writing />
