@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { CONTACT } from '@/data/portfolio';
 
@@ -56,12 +57,12 @@ export function Hero() {
               Email me about a role
               <span aria-hidden>→</span>
             </a>
-            <a
+            <Link
               href="/#work"
               className="text-muted hover:text-ink-soft text-[13px] underline underline-offset-2 transition-colors"
             >
               or skim the work first
-            </a>
+            </Link>
           </div>
         </aside>
       </div>
