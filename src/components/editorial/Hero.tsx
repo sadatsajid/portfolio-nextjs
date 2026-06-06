@@ -30,25 +30,10 @@ export function Hero() {
             </em>
           </p>
 
-          <div className="mt-8 flex flex-col items-start gap-3">
-            <a
-              href={`mailto:${CONTACT.email}`}
-              className="bg-accent text-paper font-heading tracking-heading inline-flex items-center gap-3 rounded-full px-6 py-4 text-[15px] font-semibold transition-transform hover:scale-[1.02]"
-            >
-              Email me about a role
-              <span aria-hidden>→</span>
-            </a>
-            <Link
-              href="/#work"
-              className="text-muted hover:text-ink-soft ml-2 text-[14px] underline underline-offset-2 transition-colors"
-            >
-              or skim the work first
-            </Link>
-          </div>
         </div>
 
-        {/* Right: portrait */}
-        <aside className="col-span-3 hidden lg:block">
+        {/* Right: portrait + CTA */}
+        <aside className="col-span-3 hidden lg:flex lg:flex-col lg:items-center lg:gap-6">
           <div
             className="relative w-full overflow-hidden rounded-full"
             style={{ aspectRatio: '1/1' }}
@@ -62,6 +47,22 @@ export function Hero() {
               priority
               sizes="(min-width: 1024px) 280px, 0px"
             />
+          </div>
+
+          <div className="flex flex-col items-center gap-3 w-full">
+            <a
+              href={`mailto:${CONTACT.email}`}
+              className="bg-accent text-paper font-heading tracking-heading inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[14px] font-semibold transition-transform hover:scale-[1.02]"
+            >
+              Email me about a role
+              <span aria-hidden>→</span>
+            </a>
+            <Link
+              href="/#work"
+              className="text-muted hover:text-ink-soft text-[13px] underline underline-offset-2 transition-colors"
+            >
+              or skim the work first
+            </Link>
           </div>
         </aside>
       </div>
