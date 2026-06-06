@@ -37,7 +37,7 @@ export function EditorialNav() {
           <span className="font-heading font-semibold text-[16px] tracking-heading">
             Asif Sadat
           </span>
-          <span className="text-muted text-[13px] hidden md:inline">Staff Frontend</span>
+          <span className="text-muted text-[13px] hidden md:inline">Staff Software Engineer</span>
         </div>
 
         {/* Nav links + toggle */}
