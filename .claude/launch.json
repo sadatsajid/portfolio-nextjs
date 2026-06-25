@@ -6,7 +6,7 @@
       "name": "portfolio",
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["dev"],
-      "port": 3000
+      "port": 3007
     }
   ]
 }
