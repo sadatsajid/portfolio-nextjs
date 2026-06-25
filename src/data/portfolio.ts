@@ -32,13 +32,6 @@ export type PersonalProject = {
   status: 'live' | 'in-development';
 };
 
-export type Essay = {
-  title: string;
-  date: string;
-  read: string;
-  kind: string;
-};
-
 export type Skills = Record<string, readonly string[]>;
 
 // ── Identity ────────────────────────────────────────────
@@ -210,12 +203,7 @@ export const SKILLS: Skills = {
   'Currently learning': ['Docker', 'AWS', 'React Native'],
 };
 
-// ── Writing (stubs — add real slugs when blog is live) ───
-export const ESSAYS: Essay[] = [
-  { title: 'How to refactor a four-year-old codebase without stopping shipping', date: 'Mar 2026', read: '8 min', kind: 'Essay' },
-  { title: 'What I look for in a junior frontend hire', date: 'Feb 2026', read: '5 min', kind: 'Notes' },
-  { title: 'The Axios service layer pattern that finally stuck', date: 'Jan 2026', read: '12 min', kind: 'Engineering' },
-];
+// Writing now lives in src/content/notes/*.mdx — see src/lib/notes.ts
 
 // ── Work experience ──────────────────────────────────────
 export type WorkRole = { title: string; start: string; end: string };
