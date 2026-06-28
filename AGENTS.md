@@ -40,6 +40,7 @@ This repository is a single Next.js application split by responsibility.
 - `src/components/notes` owns note-specific presentation components.
 - `src/components/tools` owns tool-specific UI components.
 - `src/data` owns static portfolio content and structured display data.
+- `src/content` owns long-form authored content (MDX notes), parsed into typed data by `src/lib/notes.ts`.
 - `src/images` owns local image assets used by the app.
 - `src/lib` owns shared utilities, helpers, and integration-light app logic.
 - `src/styles` owns global styles and styling primitives that are not local to a component.
