@@ -39,7 +39,7 @@ export const CONTACT = {
   email: 'sadatsajid@gmail.com',
   linkedin: 'https://linkedin.com/in/asif-sadat',
   github: 'https://github.com/sadatsajid',
-  resume: '/resume.pdf',
+  resume: '/AsifSadat.pdf',
   location: 'Dhaka, Bangladesh',
   role: 'Staff Software Engineer',
   company: 'Selise Digital Platforms',
