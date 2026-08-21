@@ -221,7 +221,7 @@ export const WORK: WorkEntry[] = [
     company: 'SELISE Digital Platforms',
     start: '2024',
     end: 'Present',
-    role: 'Staff Software Engineer (Frontend)',
+    role: 'Staff Software Engineer',
   },
   {
     company: 'MGH Group',

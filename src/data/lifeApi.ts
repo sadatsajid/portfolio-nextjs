@@ -214,7 +214,7 @@ export const SocialMedia = [
 export const Work = [
   {
     company: 'SELISE Digital Platforms',
-    title: 'Staff Software Engineer (Frontend)',
+    title: 'Staff Software Engineer',
     logo: SeliseLogo,
     start: '2024',
     end: 'Present',
