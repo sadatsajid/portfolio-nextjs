@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import clsx from 'clsx';
@@ -17,7 +17,47 @@ const NAV_LINKS = [
 export function EditorialNav() {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ active: false, startX: 0, scrollLeft: 0 });
+  const [overflow, setOverflow] = useState({ left: false, right: false });
+
   useEffect(() => setMounted(true), []);
+
+  const updateOverflow = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    setOverflow({
+      left: el.scrollLeft > 4,
+      right: el.scrollLeft + el.clientWidth < el.scrollWidth - 4,
+    });
+  };
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    updateOverflow();
+    const ro = new ResizeObserver(updateOverflow);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    const el = scrollerRef.current;
+    if (!el) return;
+    dragRef.current = { active: true, startX: e.clientX, scrollLeft: el.scrollLeft };
+    el.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.active || !scrollerRef.current) return;
+    scrollerRef.current.scrollLeft =
+      dragRef.current.scrollLeft - (e.clientX - dragRef.current.startX);
+  };
+
+  const onPointerUp = () => {
+    dragRef.current.active = false;
+  };
 
   const isDark = mounted && resolvedTheme === 'dark';
 
@@ -76,20 +116,46 @@ export function EditorialNav() {
         </nav>
       </div>
 
-      {/* Now strip — hidden on mobile */}
-      <div className="hidden md:block border-t border-rule">
-        <div className="max-w-[1200px] mx-auto px-6 lg:px-10 py-2 flex items-center gap-4 text-[13px] overflow-x-auto hide-scrollbar">
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="text-muted">Now —</span>
+      {/* Now strip — swipe / drag to see the rest */}
+      <div className="relative hidden border-t border-rule md:block">
+        <div className="relative mx-auto max-w-[1200px]">
+          <div
+            ref={scrollerRef}
+            onScroll={updateOverflow}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
+            className="hide-scrollbar cursor-grab touch-pan-x select-none overflow-x-auto overscroll-x-contain px-6 py-2 active:cursor-grabbing lg:px-10"
+          >
+            <div className="flex w-max items-center gap-4 text-[13px]">
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+                <span className="text-muted">Now —</span>
+              </div>
+              {NOW.items.map((item, i) => (
+                <span key={item.label} className="flex shrink-0 items-center gap-3">
+                  {i > 0 && <span className="select-none text-rule" aria-hidden>·</span>}
+                  <span className="font-medium text-accent">{item.label}</span>
+                  <span className="text-ink-soft">{item.text}</span>
+                </span>
+              ))}
+            </div>
           </div>
-          {NOW.items.map((item, i) => (
-            <span key={item.label} className="flex items-center gap-3 shrink-0">
-              {i > 0 && <span className="text-rule select-none" aria-hidden>·</span>}
-              <span className="text-accent font-medium">{item.label}</span>
-              <span className="text-ink-soft">{item.text}</span>
-            </span>
-          ))}
+          <div
+            aria-hidden
+            className={clsx(
+              'pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-paper to-transparent transition-opacity',
+              overflow.left ? 'opacity-100' : 'opacity-0'
+            )}
+          />
+          <div
+            aria-hidden
+            className={clsx(
+              'pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-paper to-transparent transition-opacity',
+              overflow.right ? 'opacity-100' : 'opacity-0'
+            )}
+          />
         </div>
       </div>
     </header>

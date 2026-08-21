@@ -36,7 +36,7 @@ export function Work() {
               key={p.slug}
               onClick={() => setActive(i)}
               className={clsx(
-                'w-full text-left py-5 px-4 -mx-4 border-b border-rule transition-colors',
+                'w-full cursor-pointer text-left py-5 px-4 -mx-4 border-b border-rule transition-colors',
                 i === active ? 'bg-paper-deep' : 'hover:bg-paper-deep/60'
               )}
             >
@@ -145,10 +145,10 @@ export function Work() {
           >
             Side projects.
           </h3>
-          <span className="text-[13px] text-muted">Personal work · 2025</span>
+          <span className="text-[13px] text-muted">Personal work · 2025 — 2026</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {PERSONAL_PROJECTS.map(p => (
             <div
               key={p.title}
@@ -180,19 +180,20 @@ export function Work() {
                 ))}
               </div>
 
-              <div className="text-[12px]">
+              <div className="flex items-center justify-between gap-3 text-[12px]">
+                <span className="text-muted">
+                  {p.status === 'live' ? 'Live' : 'In development'}
+                </span>
                 {p.href ? (
                   <a
                     href={p.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-accent underline underline-offset-2 hover:text-ink transition-colors"
+                    className="cursor-pointer text-accent underline underline-offset-2 hover:text-ink transition-colors"
                   >
-                    Visit site →
+                    GitHub →
                   </a>
-                ) : (
-                  <span className="text-muted">In development</span>
-                )}
+                ) : null}
               </div>
             </div>
           ))}
