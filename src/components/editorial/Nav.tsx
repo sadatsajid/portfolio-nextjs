@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import clsx from 'clsx';
 
@@ -26,17 +27,23 @@ export function EditorialNav() {
       <div className="max-w-[1200px] mx-auto px-6 lg:px-10 h-14 flex items-center justify-between gap-6">
         {/* Wordmark */}
         <div className="flex items-center gap-3 shrink-0">
-          <div
-            className="w-7 h-7 rounded-full bg-accent flex items-center justify-center select-none"
-            aria-hidden
+          <Link
+            href="/"
+            className="group flex items-center gap-3"
+            aria-label="Asif Sadat — home"
           >
-            <span className="font-heading font-bold text-paper text-[11px] tracking-heading">
-              AS
+            <div
+              className="w-7 h-7 rounded-full bg-accent flex items-center justify-center select-none"
+              aria-hidden
+            >
+              <span className="font-heading font-bold text-paper text-[11px] tracking-heading">
+                AS
+              </span>
+            </div>
+            <span className="font-heading font-semibold text-[16px] tracking-heading transition-colors group-hover:text-accent">
+              Asif Sadat
             </span>
-          </div>
-          <span className="font-heading font-semibold text-[16px] tracking-heading">
-            Asif Sadat
-          </span>
+          </Link>
           <span className="text-muted text-[13px] hidden md:inline">Staff Software Engineer</span>
         </div>
 
@@ -54,17 +61,15 @@ export function EditorialNav() {
 
           {/* Theme toggle pill */}
           <button
+            type="button"
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className={clsx(
-              'relative w-[42px] h-[22px] rounded-full transition-colors duration-200 ml-1 shrink-0',
-              isDark ? 'bg-paper-deep' : 'bg-ink'
-            )}
+            className="relative ml-1 h-[22px] w-[42px] shrink-0 cursor-pointer overflow-hidden rounded-full bg-ink transition-colors duration-200"
           >
             <span
               className={clsx(
-                'absolute top-[2px] w-[18px] h-[18px] rounded-full transition-transform duration-200',
-                isDark ? 'bg-ink translate-x-[22px]' : 'bg-paper translate-x-[2px]'
+                'absolute top-[2px] left-[2px] h-[18px] w-[18px] rounded-full bg-paper transition-transform duration-200',
+                isDark && 'translate-x-5'
               )}
             />
           </button>
