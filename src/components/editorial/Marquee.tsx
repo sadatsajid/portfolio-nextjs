@@ -4,9 +4,9 @@ export function Marquee() {
   const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
 
   return (
-    <div className="bg-paper-deep py-6 overflow-hidden border-y border-rule">
+    <div className="w-full min-w-0 overflow-hidden border-y border-rule bg-paper-deep py-6">
       <div
-        className="marquee-track flex whitespace-nowrap items-center gap-10 font-heading font-bold tracking-display-tight"
+        className="marquee-track flex w-max items-center gap-10 whitespace-nowrap font-heading font-bold tracking-display-tight"
         style={{ fontSize: 'clamp(24px, 3vw, 40px)' }}
         aria-hidden
       >

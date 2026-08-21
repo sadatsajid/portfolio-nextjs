@@ -19,12 +19,12 @@ export function Archive() {
         {ARCHIVE.map((item, i) => (
           <div
             key={item.title}
-            className="flex items-baseline gap-4 lg:gap-6 py-4 border-b border-rule text-[13px] hover:bg-paper-deep/50 px-2 -mx-2 transition-colors"
+            className="flex min-w-0 items-baseline gap-3 py-4 px-2 -mx-2 border-b border-rule text-[13px] transition-colors hover:bg-paper-deep/50 sm:gap-4 lg:gap-6"
           >
             <span className="text-muted tabular-nums w-7 shrink-0">
               {String(i + offset).padStart(2, '0')}
             </span>
-            <span className="font-heading font-semibold text-[18px] tracking-heading text-ink w-[200px] lg:w-[260px] shrink-0">
+            <span className="min-w-0 flex-1 font-heading font-semibold text-[18px] tracking-heading text-ink md:w-[200px] md:flex-none lg:w-[260px]">
               {item.title}
             </span>
             <span className="font-serif text-[14px] text-ink-soft flex-1 hidden md:block">

@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-screen flex-col bg-paper text-ink">
         <Providers>
           <EditorialNav />
-          <main className="flex-1">{children}</main>
+          <main className="min-w-0 flex-1">{children}</main>
           <EditorialFooter />
           <Analytics />
         </Providers>

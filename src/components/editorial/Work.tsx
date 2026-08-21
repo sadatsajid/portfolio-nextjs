@@ -28,9 +28,9 @@ export function Work() {
         </span>
       </div>
 
-      <div className="grid grid-cols-12 gap-10">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
         {/* Left: project list */}
-        <div className="col-span-12 md:col-span-5">
+        <div className="min-w-0 md:col-span-5">
           {FEATURED.map((p, i) => (
             <button
               key={p.slug}
@@ -69,7 +69,7 @@ export function Work() {
         </div>
 
         {/* Right: sticky detail */}
-        <div className="col-span-12 md:col-span-7 md:sticky md:top-[100px] self-start">
+        <div className="min-w-0 self-start md:col-span-7 md:sticky md:top-[100px]">
           {project && (
             <article className="bg-paper-deep p-8 lg:p-10 rounded-[2px]">
               <div className="flex items-center gap-3 text-[13px] text-muted flex-wrap">

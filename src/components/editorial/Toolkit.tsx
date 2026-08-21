@@ -16,9 +16,9 @@ export function Toolkit() {
         {entries.map(([category, items]) => (
           <div
             key={category}
-            className="grid grid-cols-12 gap-6 pb-6 border-b border-rule items-baseline"
+            className="grid grid-cols-1 items-baseline gap-2 border-b border-rule pb-6 lg:grid-cols-12 lg:gap-6"
           >
-            <div className="col-span-12 md:col-span-3">
+            <div className="lg:col-span-3">
               <span
                 className={`font-heading font-semibold text-[15px] tracking-heading ${
                   category === 'Currently learning' ? 'text-accent' : 'text-ink-soft'
@@ -28,13 +28,15 @@ export function Toolkit() {
                 {category}
               </span>
             </div>
-            <div className="col-span-12 md:col-span-9 text-[17px] text-ink-soft leading-[1.55]">
+            <div className="flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[17px] leading-[1.55] text-ink-soft lg:col-span-9">
               {items.map((s, j) => (
-                <span key={s}>
+                <span key={s} className="inline-flex items-baseline gap-2.5">
+                  {j > 0 ? (
+                    <span className="text-muted" aria-hidden>
+                      ·
+                    </span>
+                  ) : null}
                   {s}
-                  {j < items.length - 1 && (
-                    <span className="text-muted mx-2.5" aria-hidden>·</span>
-                  )}
                 </span>
               ))}
             </div>
