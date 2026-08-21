@@ -1,0 +1,41 @@
+---
+title: The bottleneck moved from typing to judgment
+description: Cursor, Claude, and ChatGPT didn't make JSX cheaper to ship. They made the expensive part obvious — deciding whether the component belongs in the codebase at all.
+date: '2026-08-21'
+kind: Engineering
+published: true
+---
+
+The cheap part of my job used to be thinking. The expensive part was typing. That inverted in about a year, and I didn't notice until a Creolytix PR compiled, passed Vitest, and still solved the wrong problem.
+
+I lead frontend on a React + TypeScript threat-monitoring product. The surfaces are not toy CRUD. A monitor-and-alert wizard that is URL-driven create and edit. Weather as a map mode with our own tiles instead of Google. Places with POI markers, railroad paths, and zoom-gated geo fetches. An AI Summary that has to turn a 200-line threat feed into one paragraph a human will actually read. For seven years the constraint was how fast I could write that. It isn't anymore.
+
+## What actually changed in a day
+
+I stopped starting in a blank file.
+
+Claude gets the shapeless ask first. Not "write the wizard." The contract: this create/edit flow lives in the URL, Zustand holds client state, the PM should be able to read the component names, do not invent a second source of truth. If the plan is wrong, the code will be fluent and still wrong. That used to take a whiteboard. Now it takes a tight prompt and a refusal to skip it.
+
+Cursor gets the repo. It can see the Zustand stores, the existing map modes, the Vitest patterns. I use it to implement against files that already exist, not to hallucinate a new folder structure. The move that mattered was treating every agent diff like a junior PR I would not merge unread — especially the parts that look senior.
+
+ChatGPT gets the questions I do not want in the Cursor context. A Recharts tick formatter eating the axis on MoneyQ. A Zod schema that should be shared across TrySpecta's NestJS API and Next storefront. A pgvector chunking question for ReadSaver. Disposable. If the answer is useful, it earns a place in the codebase. If it isn't, it dies in the chat.
+
+The split is boring on purpose. One model to decide. One to edit in-repo. One to not pollute the other two.
+
+## The work that used to fill the afternoon
+
+Scaffolding a wizard used to be a day of wiring: search params, form state, the edit path that must not fork the create path. Cursor will produce that in minutes. The job left behind is noticing when it introduced a local cache that fights the URL, or a "helper" that duplicates a selector we already own.
+
+Same pattern on the side projects. ReadSaver's RAG pipeline — Jina in, embeddings into pgvector, answers with citations — is a lot of glue. MoneyQ's BDT tracker is decimal.js, crons, and charts. TrySpecta is a monorepo with validation that has to stay honest on both sides of the HTTP boundary. None of that is hard React. All of it used to be slow React. Evenings that died in boilerplate now die in review, which is a better place to die.
+
+This portfolio is the same loop. MDX notes, typed data in `src/data`, editorial pages that must not leak route logic into components. An agent will happily put a chart in a utility file if you let it. The ownership rules in the repo exist because fluency is not taste.
+
+## What I would argue with you about
+
+AI did not make me a faster React engineer. It made "it compiles" a weaker signal.
+
+The agents are fluent in hooks and illiterate in the product. They will build a beautiful Weather map mode that refetches on every pan if you do not say zoom-gated. They will summarise a threat feed in six paragraphs if you do not say one. They will name a component something a PM cannot read, which in this codebase is a bug.
+
+People who skip the read are not 10x. They are a faster way to ship the wrong abstraction. The skill that transferred from Staff work was not prompting. It was already knowing what "done" looks like before the first line of JSX exists.
+
+I used to measure a good day in components written. I measure it now in decisions I did not have to unwind. That is a worse metric for a performance review and a better one for the product.

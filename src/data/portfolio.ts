@@ -49,7 +49,7 @@ export const CONTACT = {
 export const NOW: { week: string; items: NowItem[] } = {
   week: 'Jun 2026',
   items: [
-    { label: 'Shipping', text: 'AI Summary v2 — interest-based threat insights at Selise' },
+    { label: 'Shipping', text: 'Experimental feature with Cache-Augmented Generation (CAG)' },
     { label: 'Reading', text: 'Designing Data-Intensive Applications, ch. 7' },
     { label: 'Building', text: 'A side project in React Native + Expo' },
     { label: 'Learning', text: 'Docker + AWS, the slow proper way' },
@@ -76,10 +76,10 @@ export const FEATURED: FeaturedProject[] = [
     impact:
       'Led the AI Summary feature end-to-end — from shapeless PM ask to a UI that turns 200-line threat feeds into one-paragraph decisions.',
     contributions: [
-      'Designed & shipped the AI Summary interface (country-based + interest-based)',
-      'Built the Insights module: drag-resize widgets, per-tab filters, global filters',
-      'Unified Axios service layer across multi-environment APIs',
-      'Vitest coverage for the critical path',
+      'Shipped the monitor + alert wizard — URL-driven create/edit that turns a map view into a live watch',
+      'Built Weather as a map mode: backend tiles, forecast, history, air quality; retired Google Weather',
+      'Shipped Places: POI markers, railroad paths, country/shape filters, zoom-gated geo fetches',
+      'Wired F24 SSO and ENS+ alarm trigger — login through to firing an alarm from an event',
     ],
     stack: ['React', 'TypeScript', 'Vitest', 'Axios', 'Zustand'],
     kind: 'Enterprise SaaS',
