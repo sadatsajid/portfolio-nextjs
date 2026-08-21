@@ -1,29 +1,137 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import {
+  CloseButton,
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+} from '@headlessui/react';
 import clsx from 'clsx';
 
-import { FEATURED, PERSONAL_PROJECTS } from '@/data/portfolio';
+import { CloseIcon } from '@/components/icons/CloseIcon';
+import {
+  FEATURED,
+  PERSONAL_PROJECTS,
+  type FeaturedProject,
+} from '@/data/portfolio';
+
+const MOBILE_QUERY = '(max-width: 767px)';
+
+function isMobileViewport() {
+  return window.matchMedia(MOBILE_QUERY).matches;
+}
+
+function ProjectDetail({
+  project,
+  className,
+}: {
+  project: FeaturedProject;
+  className?: string;
+}) {
+  return (
+    <article className={className}>
+      <div className="text-muted flex flex-wrap items-center gap-3 text-[13px]">
+        <span>{project.kind}</span>
+        <span aria-hidden>·</span>
+        <span>{project.year}</span>
+        <span className="ml-auto">{project.company}</span>
+      </div>
+
+      <h3
+        className="font-heading tracking-display leading-display text-ink mt-5 font-bold"
+        style={{ fontSize: 'clamp(32px, 3.5vw, 48px)' }}
+      >
+        {project.title}
+      </h3>
+      <div className="text-muted mt-2 text-[13px]">{project.role}</div>
+
+      <p className="text-ink-soft mt-6 font-serif text-[clamp(17px,1.5vw,22px)] leading-[1.4]">
+        &ldquo;{project.tagline}&rdquo;
+      </p>
+
+      <div className="mt-8">
+        <div className="font-heading tracking-heading text-accent mb-3 text-[12px] font-semibold">
+          Impact
+        </div>
+        <p className="text-ink font-serif text-[16px] leading-[1.6]">
+          {project.impact}
+        </p>
+      </div>
+
+      <div className="mt-7">
+        <div className="font-heading tracking-heading text-accent mb-3 text-[12px] font-semibold">
+          What I did
+        </div>
+        <ul className="space-y-2.5">
+          {project.contributions.map((c, j) => (
+            <li key={j} className="flex gap-3 text-[14px] leading-[1.55]">
+              <span className="text-accent shrink-0 tabular-nums">
+                {String(j + 1).padStart(2, '0')}
+              </span>
+              <span className="text-ink-soft">{c}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-7">
+        <div className="font-heading tracking-heading text-muted mb-2 text-[12px] font-semibold">
+          Stack
+        </div>
+        <div className="text-ink-soft text-[14px]">
+          {project.stack.map((s, j) => (
+            <span key={s}>
+              {s}
+              {j < project.stack.length - 1 && (
+                <span className="text-muted mx-2" aria-hidden>
+                  ·
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+      </div>
+    </article>
+  );
+}
 
 export function Work() {
   const [active, setActive] = useState(0);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const project = FEATURED[active];
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const closeOnDesktop = () => {
+      if (!mq.matches) setDrawerOpen(false);
+    };
+    closeOnDesktop();
+    mq.addEventListener('change', closeOnDesktop);
+    return () => mq.removeEventListener('change', closeOnDesktop);
+  }, []);
+
+  const selectProject = (index: number) => {
+    setActive(index);
+    if (isMobileViewport()) setDrawerOpen(true);
+  };
 
   return (
     <section
       id="work"
-      className="scroll-mt-24 max-w-[1200px] mx-auto px-6 lg:px-10 py-24"
+      className="mx-auto max-w-[1200px] scroll-mt-24 px-6 py-24 lg:px-10"
     >
-      <div className="flex items-end justify-between mb-14 gap-6 flex-wrap">
+      <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
         <h2
-          className="font-heading font-bold tracking-display-tight leading-display text-ink"
+          className="font-heading tracking-display-tight leading-display text-ink font-bold"
           style={{ fontSize: 'clamp(36px, 4.5vw, 64px)' }}
         >
           Six projects I&apos;d point to
           <br />
           <span className="text-ink-soft">in an interview.</span>
         </h2>
-        <span className="text-[13px] text-muted">
+        <span className="text-muted text-[13px]">
           {FEATURED.length} featured · {11} in the archive
         </span>
       </div>
@@ -34,29 +142,30 @@ export function Work() {
           {FEATURED.map((p, i) => (
             <button
               key={p.slug}
-              onClick={() => setActive(i)}
+              type="button"
+              onClick={() => selectProject(i)}
               className={clsx(
-                'w-full cursor-pointer text-left py-5 px-4 -mx-4 border-b border-rule transition-colors',
+                'border-rule -mx-4 w-full cursor-pointer border-b px-4 py-5 text-left transition-colors',
                 i === active ? 'bg-paper-deep' : 'hover:bg-paper-deep/60'
               )}
             >
               <div className="flex items-baseline justify-between gap-4">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-[12px] text-muted tabular-nums w-6 shrink-0">
+                  <span className="text-muted w-6 shrink-0 text-[12px] tabular-nums">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <div>
-                    <div className="font-heading font-semibold text-[22px] tracking-heading text-ink">
+                    <div className="font-heading tracking-heading text-ink text-[22px] font-semibold">
                       {p.title}
                     </div>
-                    <div className="text-[13px] text-muted mt-1">
+                    <div className="text-muted mt-1 text-[13px]">
                       {p.year} · {p.company}
                     </div>
                   </div>
                 </div>
                 <span
                   className={clsx(
-                    'text-[16px] transition-colors shrink-0',
+                    'shrink-0 text-[16px] transition-colors',
                     i === active ? 'text-accent' : 'text-rule'
                   )}
                   aria-hidden
@@ -68,104 +177,81 @@ export function Work() {
           ))}
         </div>
 
-        {/* Right: sticky detail */}
-        <div className="min-w-0 self-start md:col-span-7 md:sticky md:top-[100px]">
+        {/* Right: sticky detail — desktop only */}
+        <div className="hidden min-w-0 self-start md:sticky md:top-[100px] md:col-span-7 md:block">
           {project && (
-            <article className="bg-paper-deep p-8 lg:p-10 rounded-[2px]">
-              <div className="flex items-center gap-3 text-[13px] text-muted flex-wrap">
-                <span>{project.kind}</span>
-                <span aria-hidden>·</span>
-                <span>{project.year}</span>
-                <span className="ml-auto">{project.company}</span>
-              </div>
-
-              <h3
-                className="font-heading font-bold tracking-display leading-display text-ink mt-5"
-                style={{ fontSize: 'clamp(32px, 3.5vw, 48px)' }}
-              >
-                {project.title}
-              </h3>
-              <div className="text-[13px] text-muted mt-2">{project.role}</div>
-
-              <p className="font-serif text-[clamp(17px,1.5vw,22px)] leading-[1.4] mt-6 text-ink-soft">
-                &ldquo;{project.tagline}&rdquo;
-              </p>
-
-              <div className="mt-8">
-                <div className="text-[12px] font-heading font-semibold tracking-heading text-accent mb-3">
-                  Impact
-                </div>
-                <p className="font-serif text-[16px] leading-[1.6] text-ink">
-                  {project.impact}
-                </p>
-              </div>
-
-              <div className="mt-7">
-                <div className="text-[12px] font-heading font-semibold tracking-heading text-accent mb-3">
-                  What I did
-                </div>
-                <ul className="space-y-2.5">
-                  {project.contributions.map((c, j) => (
-                    <li key={j} className="flex gap-3 text-[14px] leading-[1.55]">
-                      <span className="text-accent shrink-0 tabular-nums">
-                        {String(j + 1).padStart(2, '0')}
-                      </span>
-                      <span className="text-ink-soft">{c}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-7">
-                <div className="text-[12px] font-heading font-semibold tracking-heading text-muted mb-2">
-                  Stack
-                </div>
-                <div className="text-[14px] text-ink-soft">
-                  {project.stack.map((s, j) => (
-                    <span key={s}>
-                      {s}
-                      {j < project.stack.length - 1 && (
-                        <span className="text-muted mx-2" aria-hidden>·</span>
-                      )}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </article>
+            <ProjectDetail
+              project={project}
+              className="bg-paper-deep rounded-[2px] p-8 lg:p-10"
+            />
           )}
         </div>
       </div>
 
+      {project && (
+        <Dialog
+          open={drawerOpen}
+          onClose={setDrawerOpen}
+          className="relative z-50 md:hidden"
+          aria-label={`${project.title} project details`}
+        >
+          <DialogBackdrop
+            transition
+            className="bg-ink/45 fixed inset-0 duration-200 ease-out data-closed:opacity-0 dark:bg-black/70"
+          />
+          <div className="fixed inset-0 flex justify-end overflow-hidden">
+            <DialogPanel
+              transition
+              className="border-rule bg-paper-deep flex h-full w-[88vw] flex-col overflow-y-auto overscroll-contain border-l duration-200 ease-out data-closed:translate-x-full"
+            >
+              <div className="border-rule bg-paper-deep sticky top-0 z-10 flex items-center justify-end border-b px-4 py-3">
+                <CloseButton
+                  aria-label="Close project details"
+                  className="text-muted hover:text-ink cursor-pointer p-1.5 transition-colors"
+                >
+                  <CloseIcon className="h-5 w-5" />
+                </CloseButton>
+              </div>
+              <ProjectDetail project={project} className="px-6 pb-10" />
+            </DialogPanel>
+          </div>
+        </Dialog>
+      )}
+
       {/* ── Side projects ───────────────────────────── */}
-      <div className="mt-24 pt-12 border-t border-rule">
-        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+      <div className="border-rule mt-24 border-t pt-12">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <h3
-            className="font-heading font-bold tracking-display-tight leading-display text-ink"
+            className="font-heading tracking-display-tight leading-display text-ink font-bold"
             style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}
           >
             Side projects.
           </h3>
-          <span className="text-[13px] text-muted">Personal work · 2025 — 2026</span>
+          <span className="text-muted text-[13px]">
+            Personal work · 2025 — 2026
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {PERSONAL_PROJECTS.map(p => (
             <div
               key={p.title}
-              className="bg-paper-deep p-6 rounded-[2px] flex flex-col gap-4"
+              className="bg-paper-deep flex flex-col gap-4 rounded-[2px] p-6"
             >
               <div className="flex items-baseline justify-between gap-2">
-                <span className="font-heading font-semibold text-[20px] tracking-heading text-ink">
+                <span className="font-heading tracking-heading text-ink text-[20px] font-semibold">
                   {p.title}
                 </span>
-                <span className="text-[12px] text-muted shrink-0">{p.year}</span>
+                <span className="text-muted shrink-0 text-[12px]">
+                  {p.year}
+                </span>
               </div>
 
-              <p className="font-serif text-[15px] leading-[1.5] text-ink-soft">
+              <p className="text-ink-soft font-serif text-[15px] leading-[1.5]">
                 {p.tagline}
               </p>
 
-              <p className="text-[13px] leading-[1.6] text-muted flex-1">
+              <p className="text-muted flex-1 text-[13px] leading-[1.6]">
                 {p.description}
               </p>
 
@@ -173,7 +259,7 @@ export function Work() {
                 {p.stack.map(s => (
                   <span
                     key={s}
-                    className="font-mono text-[11px] px-2 py-0.5 bg-paper rounded-[2px] text-muted"
+                    className="bg-paper text-muted rounded-[2px] px-2 py-0.5 font-mono text-[11px]"
                   >
                     {s}
                   </span>
@@ -189,7 +275,7 @@ export function Work() {
                     href={p.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="cursor-pointer text-accent underline underline-offset-2 hover:text-ink transition-colors"
+                    className="text-accent hover:text-ink cursor-pointer underline underline-offset-2 transition-colors"
                   >
                     GitHub →
                   </a>
