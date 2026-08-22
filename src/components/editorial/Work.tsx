@@ -12,15 +12,66 @@ import clsx from 'clsx';
 
 import { CloseIcon } from '@/components/icons/CloseIcon';
 import {
+  CLIENT_PROJECTS,
   FEATURED,
   PERSONAL_PROJECTS,
+  type ClientProject,
   type FeaturedProject,
+  type PersonalProject,
 } from '@/data/portfolio';
 
 const MOBILE_QUERY = '(max-width: 767px)';
 
 function isMobileViewport() {
   return window.matchMedia(MOBILE_QUERY).matches;
+}
+
+function ProjectCard({ p }: { p: ClientProject | PersonalProject }) {
+  return (
+    <div className="bg-paper-deep flex flex-col gap-4 rounded-[2px] p-6">
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="font-heading tracking-heading text-ink text-[20px] font-semibold">
+          {p.title}
+        </span>
+        <span className="text-muted shrink-0 text-[12px]">{p.year}</span>
+      </div>
+
+      <p className="text-ink-soft font-serif text-[15px] leading-[1.5]">
+        {p.tagline}
+      </p>
+
+      <p className="text-muted flex-1 text-[13px] leading-[1.6]">
+        {p.description}
+      </p>
+
+      <div className="flex flex-wrap gap-1.5">
+        {p.stack.map(s => (
+          <span
+            key={s}
+            className="bg-paper text-muted rounded-[2px] px-2 py-0.5 font-mono text-[11px]"
+          >
+            {s}
+          </span>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between gap-3 text-[12px]">
+        <span className="text-muted">
+          {p.status === 'live' ? 'Live' : 'In development'}
+        </span>
+        {p.href ? (
+          <a
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:text-ink cursor-pointer underline underline-offset-2 transition-colors"
+          >
+            {p.href.includes('github.com') ? 'GitHub →' : 'Visit →'}
+          </a>
+        ) : null}
+      </div>
+    </div>
+  );
 }
 
 function ProjectDetail({
@@ -218,8 +269,27 @@ export function Work() {
         </Dialog>
       )}
 
-      {/* ── Side projects ───────────────────────────── */}
+      {/* ── Client projects ─────────────────────────── */}
       <div className="border-rule mt-24 border-t pt-12">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+          <h3
+            className="font-heading tracking-display-tight leading-display text-ink font-bold"
+            style={{ fontSize: 'clamp(24px, 2.5vw, 36px)' }}
+          >
+            Client projects.
+          </h3>
+          <span className="text-muted text-[13px]">Freelance</span>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {CLIENT_PROJECTS.map(p => (
+            <ProjectCard key={p.title} p={p} />
+          ))}
+        </div>
+      </div>
+
+      {/* ── Side projects ───────────────────────────── */}
+      <div className="border-rule mt-16 border-t pt-12">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <h3
             className="font-heading tracking-display-tight leading-display text-ink font-bold"
@@ -234,54 +304,7 @@ export function Work() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {PERSONAL_PROJECTS.map(p => (
-            <div
-              key={p.title}
-              className="bg-paper-deep flex flex-col gap-4 rounded-[2px] p-6"
-            >
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="font-heading tracking-heading text-ink text-[20px] font-semibold">
-                  {p.title}
-                </span>
-                <span className="text-muted shrink-0 text-[12px]">
-                  {p.year}
-                </span>
-              </div>
-
-              <p className="text-ink-soft font-serif text-[15px] leading-[1.5]">
-                {p.tagline}
-              </p>
-
-              <p className="text-muted flex-1 text-[13px] leading-[1.6]">
-                {p.description}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5">
-                {p.stack.map(s => (
-                  <span
-                    key={s}
-                    className="bg-paper text-muted rounded-[2px] px-2 py-0.5 font-mono text-[11px]"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex items-center justify-between gap-3 text-[12px]">
-                <span className="text-muted">
-                  {p.status === 'live' ? 'Live' : 'In development'}
-                </span>
-                {p.href ? (
-                  <a
-                    href={p.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent hover:text-ink cursor-pointer underline underline-offset-2 transition-colors"
-                  >
-                    GitHub →
-                  </a>
-                ) : null}
-              </div>
-            </div>
+            <ProjectCard key={p.title} p={p} />
           ))}
         </div>
       </div>

@@ -22,6 +22,16 @@ export type ArchiveProject = {
   note: string;
 };
 
+export type ClientProject = {
+  title: string;
+  year: string;
+  tagline: string;
+  description: string;
+  stack: string[];
+  href?: string;
+  status: 'live' | 'in-development';
+};
+
 export type PersonalProject = {
   title: string;
   year: string;
@@ -233,6 +243,20 @@ export const WORK: WorkEntry[] = [
       { title: 'Senior Executive — Lead Frontend Developer',   start: '2019', end: '2020' },
       { title: 'Trainee Executive — Junior Frontend Developer',start: '2018', end: '2019' },
     ],
+  },
+];
+
+// ── Client projects ───────────────────────────────────────
+export const CLIENT_PROJECTS: ClientProject[] = [
+  {
+    title: 'Circular Idea Blender',
+    year: '2023',
+    tagline: 'Match food waste to real circular-economy products, live.',
+    description:
+      'Freelance build for Bopinc and Village Capital. Pick a waste or byproduct, or a product you want to make, and see real companies already doing it circularly.',
+    stack: ['React', 'TypeScript'],
+    href: 'https://circularideablender.com/',
+    status: 'live',
   },
 ];
 
