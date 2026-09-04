@@ -57,11 +57,11 @@ export const CONTACT = {
 
 // ── Now (update this each week) ──────────────────────────
 export const NOW: { week: string; items: NowItem[] } = {
-  week: 'Jun 2026',
+  week: 'Sep 2026',
   items: [
-    { label: 'Shipping', text: 'Experimental feature with Cache-Augmented Generation (CAG)' },
+    { label: 'Shipping', text: 'A discussions feature on the Creolytix React Native app' },
     { label: 'Reading', text: 'Designing Data-Intensive Applications, ch. 7' },
-    { label: 'Building', text: 'A side project in React Native + Expo' },
+    { label: 'Building', text: 'A write-up on a payment gateway settlement flow I shipped' },
     { label: 'Learning', text: 'Docker + AWS, the slow proper way' },
   ],
 };
@@ -90,8 +90,9 @@ export const FEATURED: FeaturedProject[] = [
       'Built Weather as a map mode: backend tiles, forecast, history, air quality; retired Google Weather',
       'Shipped Places: POI markers, railroad paths, country/shape filters, zoom-gated geo fetches',
       'Wired F24 SSO and ENS+ alarm trigger — login through to firing an alarm from an event',
+      'Extended the platform to React Native: a discussions feature end to end — read path with filters, write path, rich-text authoring with @mentions — plus relevance-sorted search and React Native Maps',
     ],
-    stack: ['React', 'TypeScript', 'Vitest', 'Axios', 'Zustand'],
+    stack: ['React', 'React Native', 'TypeScript', 'Vitest', 'Axios', 'Zustand'],
     kind: 'Enterprise SaaS',
   },
   {
@@ -207,10 +208,11 @@ export const BELIEFS: string[] = [
 
 // ── Skills ───────────────────────────────────────────────
 export const SKILLS: Skills = {
-  Frontend: ['React', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'MUI', 'Zustand', 'Redux'],
-  Backend: ['Node.js', 'Express', 'NestJS', 'MySQL', 'Sequelize'],
+  Frontend: ['React', 'React Native', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'MUI', 'Zustand', 'Redux'],
+  Backend: ['Node.js', 'Express', 'NestJS', 'MySQL', 'PostgreSQL', 'Prisma', 'Sequelize'],
+  'AI & Machine Learning': ['OpenAI API', 'RAG (Retrieval-Augmented Generation)', 'pgvector', 'Vector Search', 'Prompt Engineering'],
   'Realtime & Tooling': ['Pusher', 'SignalR', 'FCM', 'Web Push', 'PWA', 'Google Maps', 'Vitest'],
-  'Currently learning': ['Docker', 'AWS', 'React Native'],
+  'Currently learning': ['Docker', 'AWS'],
 };
 
 // Writing now lives in src/content/notes/*.mdx — see src/lib/notes.ts
@@ -258,6 +260,24 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     href: 'https://circularideablender.com/',
     status: 'live',
   },
+  {
+    title: 'Multi-Outlet Retail Commerce Platform',
+    year: '2026',
+    tagline: 'A storefront where the backend owns every pixel — and the admin never waits on a deploy.',
+    description:
+      'Freelance build for a retail client under NDA. NestJS backend split into two API planes — a resolved, cacheable storefront surface and a raw, RBAC-gated admin surface — driving a typed, versioned block vocabulary the frontend renders. Next.js storefront, ERP catalogue integration, measured SEO and performance work.',
+    stack: ['NestJS', 'Next.js', 'Prisma', 'PostgreSQL', 'TypeScript', 'Zod'],
+    status: 'live',
+  },
+  {
+    title: 'Payment Gateway Settlement',
+    year: '2026',
+    tagline: 'A payment lands twice, from two directions. The order gets created once.',
+    description:
+      'For the same client, under NDA. SSLCommerz settlement across two racing callback channels — a server-to-server notification and a browser redirect — consumed exactly once via an atomic state claim. Encrypted customer credential at rest, with expiry routed to an operator review queue instead of silently dropped. I also wrote the ERP team a spec for the endpoints that would remove the workaround.',
+    stack: ['NestJS', 'PostgreSQL', 'Prisma', 'SSLCommerz'],
+    status: 'in-development',
+  },
 ];
 
 // ── Personal / side projects ─────────────────────────────
@@ -277,7 +297,7 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
     year: '2025 — 2026',
     tagline: 'Paste any article. Get a TL;DR, key points, and Q&A with citations.',
     description:
-      'Full RAG pipeline: Jina Reader extracts content, OpenAI embeds and chunks it into pgvector. Semantic search returns grounded answers with source attribution. Streaming UI, magic-link auth.',
+      'Full RAG pipeline: in-house extraction (Readability + Playwright) with Jina as a fallback, not the primary — swapped after volume made the vendor bill the bottleneck. OpenAI embeds and chunks into pgvector; semantic search returns grounded, cited answers. Streaming UI, magic-link auth.',
     stack: ['Next.js', 'OpenAI', 'pgvector', 'Supabase', 'Prisma', 'TypeScript'],
     href: 'https://github.com/sadatsajid/read-saver',
     status: 'in-development',

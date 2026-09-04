@@ -3,14 +3,14 @@ import { BELIEFS } from '@/data/portfolio';
 export function Beliefs() {
   return (
     <section id="beliefs" className="scroll-mt-24 bg-paper-deep border-y border-rule">
-      <div className="max-w-[1200px] mx-auto px-6 lg:px-10 py-28">
+      <div className="max-w-300 mx-auto px-6 lg:px-10 py-28">
         <h2
           className="font-heading font-bold tracking-display leading-display text-ink"
           style={{ fontSize: 'clamp(40px, 5.5vw, 80px)' }}
         >
           Why hire me?
         </h2>
-        <p className="font-serif text-[clamp(17px,1.6vw,22px)] leading-[1.45] text-ink-soft mt-5 max-w-[640px]">
+        <p className="font-serif text-[clamp(17px,1.6vw,22px)] leading-[1.45] text-ink-soft mt-5 max-w-160">
           Because most engineers ship code. I ship outcomes — and I can explain
           them to your CFO.
         </p>

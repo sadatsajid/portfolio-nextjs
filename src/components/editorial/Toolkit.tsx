@@ -4,7 +4,7 @@ export function Toolkit() {
   const entries = Object.entries(SKILLS);
 
   return (
-    <section className="max-w-[1200px] mx-auto px-6 lg:px-10 py-24">
+    <section id="toolkit" className="max-w-[1200px] mx-auto px-6 lg:px-10 py-24 scroll-mt-24">
       <h2
         className="font-heading font-bold tracking-display-tight leading-display text-ink mb-14"
         style={{ fontSize: 'clamp(28px, 3vw, 44px)' }}

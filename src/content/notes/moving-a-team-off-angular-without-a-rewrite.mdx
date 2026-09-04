@@ -6,29 +6,24 @@ kind: Leadership
 published: true
 ---
 
-> **Draft outline — replace with the real story.**
+The Fleet Owner Panel was built on AngularJS, and by the time I was leading frontend on it, it had become the app nobody wanted to touch. Not because Angular was bad — because the codebase had aged past the point where changing one screen felt safe. Every fleet-operations feature request turned into a negotiation about risk.
 
-Every "we should switch frameworks" conversation dies the same way: someone says
-"rewrite," everyone pictures a six-month freeze, and the idea is buried. Here's how
-we moved off Angular without ever stopping shipping.
+"Let's rewrite it in React" is the conversation that kills momentum every time. Someone says rewrite, everyone pictures a six-month freeze on new features while the team rebuilds what already works, and the idea gets shelved. I didn't want that conversation. I wanted the panel to get faster to change, starting now, without ever telling the business "no new features while we rebuild."
 
-## Why the question even came up
+## The pitch that actually worked
 
-What was actually hurting? Be specific — hiring, build times, the parts of Angular
-the team kept fighting. Avoid "React is trendy."
+No freeze. No parallel rewrite branch. New surfaces got built in React from day one; the existing AngularJS screens stayed exactly as they were until there was a real reason to touch them — a bug, a feature request, anything that meant we were in that code anyway. The migration piggybacked on work we were already doing instead of competing with it for time.
 
-## Selling the migration, not the rewrite
-
-The pitch that worked: no big bang, no freeze. New surfaces in React, old ones left
-alone until they were worth touching. How did you get buy-in from people who'd built
-the Angular app?
+That's a much easier sell to a business stakeholder than "give us a quarter and nothing will change on the surface." It's also a much easier sell to a team that just spent years building the thing you're proposing to replace — nobody has to admit the old app was a mistake, because it isn't being thrown away, it's being outgrown one screen at a time.
 
 ## Making it boring on purpose
 
-The de-risking moves — the seam between the two stacks, what you migrated first, how
-you proved it before asking anyone to commit.
+The technical part I actually optimized for was the seam, not the rewrite. Angular and React had to coexist in the same shell without either side knowing the other existed — shared auth, shared routing decisions, no flash of the wrong framework loading. Once that seam worked once, it worked forever, and every subsequent screen was a repeat of the same pattern instead of a new architectural decision.
 
-## Bringing the team with you
+I led a small team through this — two junior frontend developers at the time — and the boring seam is what made it safe to hand pieces of the migration to them without me reviewing every routing decision from scratch. The interesting problems got solved once, early, by me. Everything after that was execution.
 
-The human half. Pairing, the first PRs, the skeptic who became the advocate. This is
-the part hiring managers actually read.
+## What I'd tell someone about to do this
+
+The team, not the framework, is the actual project. A junior engineer who's only ever touched Angular needs the first React screen to feel like a small, contained win, not a leap into an unfamiliar codebase with no map. Pairing on that first screen mattered more than any architecture doc I wrote.
+
+And the metric that told me it worked wasn't a velocity number — it was that fleet-operations feature requests stopped coming with a wince attached. The panel had gone from "the app we're scared of" to "the app we ship into." That's the actual definition of a successful migration: not that the framework changed, but that the fear did.

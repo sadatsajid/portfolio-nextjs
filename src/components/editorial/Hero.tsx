@@ -5,7 +5,7 @@ import { CONTACT } from '@/data/portfolio';
 
 export function Hero() {
   return (
-    <section className="mx-auto max-w-[1200px] px-6 pt-20 pb-16 lg:px-10">
+    <section className="mx-auto max-w-300 px-6 pt-20 pb-16 lg:px-10">
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-10">
         {/* Portrait first on small screens; right column from lg */}
         <aside className="order-first flex min-w-0 lg:order-last lg:col-span-3 lg:flex-col lg:items-center lg:gap-6">
@@ -53,7 +53,7 @@ export function Hero() {
             <span className="text-accent">shipped software.</span>
           </h1>
 
-          <p className="text-ink-soft mt-10 max-w-[620px] font-serif text-[clamp(17px,1.6vw,22px)] leading-normal">
+          <p className="text-ink-soft mt-10 max-w-155 font-serif text-[clamp(17px,1.6vw,22px)] leading-normal">
             Staff engineer, frontend lead, and quiet operator. Seven years
             building back-office systems, sales engines, and AI tools that move
             metrics — not just merge requests. I read the P&L before the PRD,
