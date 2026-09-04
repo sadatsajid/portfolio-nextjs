@@ -19,7 +19,7 @@ This repository contains a personal portfolio site with:
 - TypeScript (strict mode)
 - Tailwind CSS 4
 - ESLint 9 + Prettier 3
-- Vercel Analytics
+- Vercel Analytics + Umami
 
 ## Project Structure
 
@@ -112,9 +112,16 @@ Optional:
 
 ```bash
 NEXT_PUBLIC_URL=https://your-domain.com
+NEXT_PUBLIC_UMAMI_SRC=https://cloud.umami.is/script.js
+NEXT_PUBLIC_UMAMI_WEBSITE_ID=00000000-0000-0000-0000-000000000000
 ```
 
-Used to set `metadataBase` for canonical metadata generation.
+- `NEXT_PUBLIC_URL` sets `metadataBase` for canonical metadata generation.
+- `NEXT_PUBLIC_UMAMI_SRC` and `NEXT_PUBLIC_UMAMI_WEBSITE_ID` enable Umami
+  page-view tracking. Both come from the Umami dashboard under
+  Settings -> Websites -> Edit -> Tracking code. When either is unset,
+  `src/components/UmamiAnalytics.tsx` renders nothing. Scope these to the
+  Production environment in Vercel so preview deployments stay out of the data.
 
 ## Design and Engineering Rules
 

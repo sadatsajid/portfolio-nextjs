@@ -7,6 +7,7 @@ import 'focus-visible';
 import { EditorialNav } from '@/components/editorial/Nav';
 import { EditorialFooter } from '@/components/editorial/Footer';
 import { Providers } from '@/components/Providers';
+import { UmamiAnalytics } from '@/components/UmamiAnalytics';
 import { fontDisplay, fontBody, fontSerif } from './fonts';
 import './globals.css';
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="min-w-0 flex-1">{children}</main>
           <EditorialFooter />
           <Analytics />
+          <UmamiAnalytics />
         </Providers>
       </body>
     </html>
