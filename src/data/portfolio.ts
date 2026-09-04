@@ -26,7 +26,7 @@ export type ClientProject = {
   title: string;
   year: string;
   tagline: string;
-  description: string;
+  description: readonly string[];
   stack: string[];
   href?: string;
   status: 'live' | 'in-development';
@@ -36,7 +36,7 @@ export type PersonalProject = {
   title: string;
   year: string;
   tagline: string;
-  description: string;
+  description: readonly string[];
   stack: string[];
   href?: string;
   status: 'live' | 'in-development';
@@ -254,8 +254,10 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     title: 'Circular Idea Blender',
     year: '2023',
     tagline: 'Match food waste to real circular-economy products, live.',
-    description:
-      'Freelance build for Bopinc and Village Capital. Pick a waste or byproduct, or a product you want to make, and see real companies already doing it circularly.',
+    description: [
+      'Freelance build for Bopinc and Village Capital.',
+      'Pick a waste or byproduct, or a product you want to make, and see real companies already doing it circularly.',
+    ],
     stack: ['React', 'TypeScript'],
     href: 'https://circularideablender.com/',
     status: 'live',
@@ -264,8 +266,11 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     title: 'Multi-Outlet Retail Commerce Platform',
     year: '2026',
     tagline: 'A storefront where the backend owns every pixel, and the admin never waits on a deploy.',
-    description:
-      'Freelance build for a leading apparel ecommerce brand. NestJS backend split into two API planes: a resolved, cacheable storefront surface and a raw, RBAC-gated admin surface, driving a typed, versioned block vocabulary the frontend renders. Next.js storefront, ERP catalogue integration, measured SEO and performance work.',
+    description: [
+      'Freelance build for a leading apparel ecommerce brand.',
+      'NestJS backend split into two API planes: a resolved, cacheable storefront surface and a raw, RBAC-gated admin surface.',
+      'Typed, versioned block vocabulary the Next.js storefront renders, plus ERP catalogue integration and measured SEO work.',
+    ],
     stack: ['NestJS', 'Next.js', 'Prisma', 'PostgreSQL', 'TypeScript', 'Zod'],
     status: 'live',
   },
@@ -273,8 +278,11 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     title: 'Payment Gateway Settlement',
     year: '2026',
     tagline: 'A payment lands twice, from two directions. The order gets created once.',
-    description:
-      'For the same brand. SSLCommerz settlement across two racing callback channels (a server-to-server notification and a browser redirect), consumed exactly once via an atomic state claim, verified against the gateway before it settles. Encrypted customer credential at rest, with expiry routed to an operator review queue instead of silently dropped.',
+    description: [
+      'SSLCommerz settlement across two racing callback channels: a server-to-server notification and a browser redirect.',
+      'Consumed exactly once via an atomic state claim, verified against the gateway before it settles.',
+      'Encrypted customer credential at rest; expiry routes to an operator review queue instead of being silently dropped.',
+    ],
     stack: ['NestJS', 'PostgreSQL', 'Prisma', 'SSLCommerz'],
     href: '/notes/a-payment-lands-twice-the-order-gets-created-once',
     status: 'in-development',
@@ -287,8 +295,11 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
     title: 'PrismaCV OAuth',
     year: '2026',
     tagline: 'One interface, two OAuth providers, and the next one is basically free.',
-    description:
-      "Designed the OAuth provider abstraction behind PrismaCV's LinkedIn and Google sign-in: one interface every provider implements, a strategy that boots cleanly even when its config is missing, and a module that exports only the shared service, not the providers themselves.",
+    description: [
+      "Designed the OAuth provider abstraction behind PrismaCV's LinkedIn and Google sign-in.",
+      'One interface every provider implements, and a strategy that boots cleanly even when its config is missing.',
+      'The module exports only the shared service, not the providers themselves.',
+    ],
     stack: ['NestJS', 'Passport', 'TypeScript', 'OAuth2'],
     href: '/notes/the-oauth-provider-i-havent-had-to-write-yet',
     status: 'live',
@@ -297,8 +308,11 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
     title: 'TrySpecta',
     year: '2026',
     tagline: 'AI-powered virtual glasses try-on for ecommerce.',
-    description:
-      'Turbo monorepo: NestJS API + Next.js storefront. Customers upload a selfie; FAL/Gemini overlays frames in real time. PostgreSQL + Redis backend, shared Zod validation across the stack.',
+    description: [
+      'Turbo monorepo: NestJS API + Next.js storefront.',
+      'Customers upload a selfie; FAL/Gemini overlays frames in real time.',
+      'PostgreSQL + Redis backend, with shared Zod validation across the stack.',
+    ],
     stack: ['Next.js', 'NestJS', 'TypeScript', 'FAL', 'Gemini', 'PostgreSQL', 'Redis'],
     href: 'https://github.com/sadatsajid/tryspecta',
     status: 'in-development',
@@ -307,8 +321,11 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
     title: 'ReadSaver',
     year: '2025-2026',
     tagline: 'Paste any article. Get a TL;DR, key points, and Q&A with citations.',
-    description:
-      'Full RAG pipeline: in-house extraction (Readability + Playwright) with Jina as a fallback, not the primary; swapped after volume made the vendor bill the bottleneck. OpenAI embeds and chunks into pgvector; semantic search returns grounded, cited answers. Streaming UI, magic-link auth.',
+    description: [
+      'Full RAG pipeline: in-house extraction (Readability + Playwright), with Jina as a fallback after volume made the vendor bill the bottleneck.',
+      'OpenAI embeds and chunks into pgvector; semantic search returns grounded, cited answers.',
+      'Streaming UI and magic-link auth.',
+    ],
     stack: ['Next.js', 'OpenAI', 'pgvector', 'Supabase', 'Prisma', 'TypeScript'],
     href: 'https://github.com/sadatsajid/read-saver',
     status: 'in-development',
@@ -317,8 +334,11 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
     title: 'MoneyQ',
     year: '2026',
     tagline: 'Personal finance for Bangladesh: AI categorisation, savings buckets, EMI tracking.',
-    description:
-      'BDT-primary expense tracker. GPT-4o-mini auto-categorises transactions, decimal.js handles financial precision, Vercel crons process recurring entries nightly, Recharts renders monthly insights.',
+    description: [
+      'BDT-primary expense tracker with GPT-4o-mini auto-categorisation.',
+      'decimal.js handles financial precision; Vercel crons process recurring entries nightly.',
+      'Recharts renders monthly insights.',
+    ],
     stack: ['Next.js', 'OpenAI', 'Supabase', 'Prisma', 'Recharts', 'TypeScript'],
     href: 'https://github.com/sadatsajid/money-q',
     status: 'in-development',
@@ -327,8 +347,12 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
     title: 'TaskOps',
     year: '2026',
     tagline: 'Issue tracking where roles live on the organisation, not the user.',
-    description:
-      "ASP.NET Core on .NET 10, evolved deliberately from one feature-folder API into a modular monolith (Identity, Organizations, Projects, Issues, Notifications), each phase a real refactor, not a rewrite. Org-scoped authorization returns 401 for unauthenticated, 404 for authenticated non-members (no existence leak), and 403 for the wrong role, enforced through a custom authorization result handler rather than in each service. Refresh tokens are hashed and rotated; access tokens never carry org roles. Issue events publish through a small in-process event seam (deliberately not MediatR or a message bus); Hangfire dispatches notification emails and reminders as separate background jobs, each idempotent. Testcontainers run the integration suite against real PostgreSQL, and Husky.Net git hooks run the same build and test suite before every push.",
+    description: [
+      'ASP.NET Core on .NET 10, grown from a feature-folder API into a modular monolith (Identity, Organizations, Projects, Issues, Notifications) through real refactors, not a rewrite.',
+      'Org-scoped auth returns 401, 404, or 403 from a custom handler so services never leak whether an org exists.',
+      'Refresh tokens are hashed and rotated; access tokens never carry org roles.',
+      'Issue events stay in-process (not MediatR); Hangfire runs idempotent notification jobs against Testcontainers PostgreSQL.',
+    ],
     stack: ['.NET 10', 'ASP.NET Core', 'EF Core', 'PostgreSQL', 'Hangfire', 'JWT', 'FluentValidation'],
     href: 'https://github.com/sadatsajid/taskops-be-dotnet',
     status: 'in-development',

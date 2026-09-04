@@ -28,7 +28,7 @@ function isMobileViewport() {
 
 function ProjectCard({ p }: { p: ClientProject | PersonalProject }) {
   return (
-    <div className="bg-paper-deep flex flex-col gap-4 rounded-[2px] p-6">
+    <div className="bg-paper-deep flex flex-col gap-4 rounded-xs p-6">
       <div className="flex items-baseline justify-between gap-2">
         <span className="font-heading tracking-heading text-ink text-[20px] font-semibold">
           {p.title}
@@ -36,19 +36,30 @@ function ProjectCard({ p }: { p: ClientProject | PersonalProject }) {
         <span className="text-muted shrink-0 text-[12px]">{p.year}</span>
       </div>
 
-      <p className="text-ink-soft font-serif text-[15px] leading-[1.5]">
+      <p className="text-ink-soft font-serif text-[15px] leading-normal">
         {p.tagline}
       </p>
 
-      <p className="text-muted flex-1 text-[13px] leading-[1.6]">
-        {p.description}
-      </p>
+      <ul className="text-muted flex-1 list-none space-y-1.5 ps-0 text-[13px] leading-[1.6]">
+        {p.description.map(item => (
+          <li
+            key={item}
+            className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-2"
+          >
+            <span
+              className="bg-accent mt-[0.55em] block size-1 shrink-0 rounded-full"
+              aria-hidden
+            />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
 
       <div className="flex flex-wrap gap-1.5">
         {p.stack.map(s => (
           <span
             key={s}
-            className="bg-paper text-muted rounded-[2px] px-2 py-0.5 font-mono text-[11px]"
+            className="bg-paper text-muted rounded-xs px-2 py-0.5 font-mono text-[11px]"
           >
             {s}
           </span>
@@ -171,7 +182,7 @@ export function Work() {
   return (
     <section
       id="work"
-      className="mx-auto max-w-[1200px] scroll-mt-24 px-6 py-24 lg:px-10"
+      className="mx-auto max-w-300 scroll-mt-24 px-6 py-24 lg:px-10"
     >
       <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
         <h2
@@ -229,11 +240,11 @@ export function Work() {
         </div>
 
         {/* Right: sticky detail — desktop only */}
-        <div className="hidden min-w-0 self-start md:sticky md:top-[100px] md:col-span-7 md:block">
+        <div className="hidden min-w-0 self-start md:sticky md:top-25 md:col-span-7 md:block">
           {project && (
             <ProjectDetail
               project={project}
-              className="bg-paper-deep rounded-[2px] p-8 lg:p-10"
+              className="bg-paper-deep rounded-xs p-8 lg:p-10"
             />
           )}
         </div>

@@ -6,6 +6,7 @@ import rehypePrism from '@mapbox/rehype-prism';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 
+import { ShareButton } from '@/components/editorial/ShareButton';
 import { formatNoteDate, getAllNotes, getNoteBySlug } from '@/lib/notes';
 import '@/styles/prism.css';
 
@@ -70,14 +71,22 @@ export default async function NotePage({
         </Link>
 
         <header className="mb-12 border-b border-rule pb-12">
-          <div className="mb-5 flex items-center gap-4">
-            <span className="font-heading text-[12px] font-semibold tracking-heading text-accent">
-              {note.kind}
-            </span>
-            <span className="text-[12px] text-muted">
-              {formatNoteDate(note.date)}
-            </span>
-            <span className="text-[12px] text-muted">{note.readingTime}</span>
+          <div className="mb-5 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <span className="font-heading text-[12px] font-semibold tracking-heading text-accent">
+                {note.kind}
+              </span>
+              <span className="text-[12px] text-muted">
+                {formatNoteDate(note.date)}
+              </span>
+              <span className="text-[12px] text-muted">
+                {note.readingTime}
+              </span>
+            </div>
+            <ShareButton
+              title={note.title}
+              url={`${process.env.NEXT_PUBLIC_URL ?? 'https://asifsadat.com'}/notes/${note.slug}`}
+            />
           </div>
           <h1
             className="font-heading font-bold leading-display tracking-display-tight text-ink"

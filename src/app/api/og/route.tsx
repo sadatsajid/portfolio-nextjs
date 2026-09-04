@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
+import { readFile } from 'fs/promises';
+import path from 'path';
+
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
-const fontPromise = fetch(
-  new URL('../../../../public/assets/font/Inter.ttf', import.meta.url)
-).then(res => res.arrayBuffer());
+const fontPromise = readFile(
+  path.join(process.cwd(), 'public/assets/font/Inter.ttf')
+);
 
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
@@ -18,12 +21,7 @@ export async function GET(req: NextRequest) {
   const safeTitle = title.slice(0, 100);
   const safeDescription = description?.slice(0, 200) ?? null;
 
-  let fontData: ArrayBuffer | undefined;
-  try {
-    fontData = await fontPromise;
-  } catch {
-    // ImageResponse falls back to its built-in font
-  }
+  const fontData = await fontPromise;
 
   return new ImageResponse(
     (
@@ -49,9 +47,7 @@ export async function GET(req: NextRequest) {
     {
       width: 1200,
       height: 630,
-      fonts: fontData
-        ? [{ name: 'Inter', data: fontData, style: 'normal' }]
-        : [],
+      fonts: [{ name: 'Inter', data: fontData, style: 'normal' }],
     }
   );
 }
