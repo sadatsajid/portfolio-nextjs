@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { readFile } from 'fs/promises';
-import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
 const fontPromise = readFile(
-  path.join(process.cwd(), 'public/assets/font/Inter.ttf')
+  fileURLToPath(new URL('./fonts/Inter.ttf', import.meta.url))
 );
 
 export async function GET(req: NextRequest) {
