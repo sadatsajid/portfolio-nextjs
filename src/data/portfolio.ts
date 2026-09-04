@@ -265,7 +265,7 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     year: '2026',
     tagline: 'A storefront where the backend owns every pixel — and the admin never waits on a deploy.',
     description:
-      'Freelance build for a retail client under NDA. NestJS backend split into two API planes — a resolved, cacheable storefront surface and a raw, RBAC-gated admin surface — driving a typed, versioned block vocabulary the frontend renders. Next.js storefront, ERP catalogue integration, measured SEO and performance work.',
+      'Freelance build for a leading apparel ecommerce brand. NestJS backend split into two API planes — a resolved, cacheable storefront surface and a raw, RBAC-gated admin surface — driving a typed, versioned block vocabulary the frontend renders. Next.js storefront, ERP catalogue integration, measured SEO and performance work.',
     stack: ['NestJS', 'Next.js', 'Prisma', 'PostgreSQL', 'TypeScript', 'Zod'],
     status: 'live',
   },
@@ -274,8 +274,9 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     year: '2026',
     tagline: 'A payment lands twice, from two directions. The order gets created once.',
     description:
-      'For the same client, under NDA. SSLCommerz settlement across two racing callback channels — a server-to-server notification and a browser redirect — consumed exactly once via an atomic state claim. Encrypted customer credential at rest, with expiry routed to an operator review queue instead of silently dropped. I also wrote the ERP team a spec for the endpoints that would remove the workaround.',
+      'For the same brand. SSLCommerz settlement across two racing callback channels — a server-to-server notification and a browser redirect — consumed exactly once via an atomic state claim, verified against the gateway before it settles. Encrypted customer credential at rest, with expiry routed to an operator review queue instead of silently dropped.',
     stack: ['NestJS', 'PostgreSQL', 'Prisma', 'SSLCommerz'],
+    href: '/notes/a-payment-lands-twice-the-order-gets-created-once',
     status: 'in-development',
   },
 ];
