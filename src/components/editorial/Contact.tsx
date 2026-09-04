@@ -53,8 +53,8 @@ export function Contact() {
       </h2>
 
       <p className="text-ink-soft mt-8 max-w-[600px] font-serif text-[clamp(17px,1.6vw,22px)] leading-[1.45]">
-        I read every email. If you&apos;re looking for a senior frontend lead —
-        full-time or contract — start here.
+        I read every email. If you&apos;re looking for a senior frontend lead
+        (full-time or contract), start here.
       </p>
 
       <div className="mt-12 flex flex-wrap items-center gap-3">

@@ -8,8 +8,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_URL ?? 'https://asifsadat.com';
 
 export async function GET() {
   const feed = new RSS({
-    title: 'Asif Sadat — Writing',
-    description: 'Stories from the work — systems, decisions, and lessons learned the hard way.',
+    title: 'Asif Sadat | Writing',
+    description: 'Stories from the work: systems, decisions, and lessons learned the hard way.',
     site_url: SITE_URL,
     feed_url: `${SITE_URL}/api/rss.xml`,
     language: 'en',

@@ -28,14 +28,12 @@ export function Toolkit() {
                 {category}
               </span>
             </div>
-            <div className="flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[17px] leading-[1.55] text-ink-soft lg:col-span-9">
-              {items.map((s, j) => (
-                <span key={s} className="inline-flex items-baseline gap-2.5">
-                  {j > 0 ? (
-                    <span className="text-muted" aria-hidden>
-                      ·
-                    </span>
-                  ) : null}
+            <div className="flex min-w-0 flex-wrap gap-2 lg:col-span-9">
+              {items.map((s) => (
+                <span
+                  key={s}
+                  className="inline-flex items-center rounded-full border border-rule bg-paper-deep px-3 py-1 font-heading text-[13px] font-medium tracking-heading text-ink-soft"
+                >
                   {s}
                 </span>
               ))}

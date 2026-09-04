@@ -1,22 +1,22 @@
 ---
 title: Learning the backend on a frontend engineer's clock
-description: Not a detour — a deliberate move into schemas, APIs, and the half of the system I used to treat as a black box.
+description: 'Not a detour: a deliberate move into schemas, APIs, and the half of the system I used to treat as a black box.'
 date: 2026-03-08
 kind: Growth
 published: true
 ---
 
-For most of my career, "the backend" was the thing my frontend code talked to. I knew how to shape a request, read a response, and blame a 500 on someone else's service. That's a comfortable place to live as a frontend engineer, and it's also a ceiling — there's a whole category of technical decision you can't participate in if the API is a black box to you.
+For most of my career, "the backend" was the thing my frontend code talked to. I knew how to shape a request, read a response, and blame a 500 on someone else's service. That's a comfortable place to live as a frontend engineer, and it's also a ceiling: there's a whole category of technical decision you can't participate in if the API is a black box to you.
 
-I'd never written a line of C#. Not "rusty" — zero. What changed my mind wasn't a course, it was working next to a .NET backend team on Creolytics and realizing I couldn't ask a good question about their decisions, only about mine. So I picked the least comfortable way to learn it: build something real, with an AI coding agent as a pairing partner instead of a stack of tutorials, and let the pressure of a real system teach me what a course wouldn't.
+I'd never written a line of C#. Not "rusty." Zero. What changed my mind wasn't a course, it was working next to a .NET backend team on Creolytics and realizing I couldn't ask a good question about their decisions, only about mine. So I picked the least comfortable way to learn it: build something real, with an AI coding agent as a pairing partner instead of a stack of tutorials, and let the pressure of a real system teach me what a course wouldn't.
 
 ## What I built
 
-TaskOps — a project-management and issue-tracking backend on ASP.NET Core. Minimal APIs, PostgreSQL with EF Core migrations, JWT auth with rotating refresh tokens, FluentValidation on requests, integration tests running against a real Postgres instance instead of a mock, and a layered structure — Api, Application, Domain, Infrastructure — that I didn't fully understand the point of until I'd violated it a few times and felt the boundary leak.
+TaskOps: a project-management and issue-tracking backend on ASP.NET Core. Minimal APIs, PostgreSQL with EF Core migrations, JWT auth with rotating refresh tokens, FluentValidation on requests, integration tests running against a real Postgres instance instead of a mock, and a layered structure (Api, Application, Domain, Infrastructure) that I didn't fully understand the point of until I'd violated it a few times and felt the boundary leak.
 
 ## The lesson CRUD doesn't teach you
 
-Anyone can wire up create, read, update, delete in an afternoon. What took actual design work was authorization, and the reason is a single rule I built the system around: a user isn't globally an admin. They're an admin in one organization and a developer in another. That one sentence touched everything — the database model, the service layer, the API contracts, the tests, the security decisions. CRUD is the easy 80%. Who's allowed to do it, in which context, is the hard 20%, and it's the part every tutorial skips because it's the part that's actually specific to your system.
+Anyone can wire up create, read, update, delete in an afternoon. What took actual design work was authorization, and the reason is a single rule I built the system around: a user isn't globally an admin. They're an admin in one organization and a developer in another. That one sentence touched everything: the database model, the service layer, the API contracts, the tests, the security decisions. CRUD is the easy 80%. Who's allowed to do it, in which context, is the hard 20%, and it's the part every tutorial skips because it's the part that's actually specific to your system.
 
 ## What carried over, and what didn't
 
@@ -26,6 +26,6 @@ After each phase I went back and looked for duplication, boundary leaks, and whe
 
 ## Where it left me
 
-Not a .NET developer — I wouldn't claim that, and a few weeks of focused building doesn't erase years of not having the fundamentals. What it did give me: the basics, the shape of the ecosystem, and the removal of the fear that used to stop me from even asking a backend question in a design review. AI didn't do the thinking for me here — it removed the friction between deciding to learn something and actually starting, which turned out to be most of what was stopping me.
+Not a .NET developer. I wouldn't claim that, and a few weeks of focused building doesn't erase years of not having the fundamentals. What it did give me: the basics, the shape of the ecosystem, and the removal of the fear that used to stop me from even asking a backend question in a design review. AI didn't do the thinking for me here. It removed the friction between deciding to learn something and actually starting, which turned out to be most of what was stopping me.
 
 I'm T-shaped now in a way I wasn't a year ago. Not because the frontend got any less important to me, but because the black box on the other side of my fetch calls isn't one anymore.

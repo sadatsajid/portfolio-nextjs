@@ -298,7 +298,7 @@ export function Work() {
             Side projects.
           </h3>
           <span className="text-muted text-[13px]">
-            Personal work · 2025 — 2026
+            Personal work · 2025-2026
           </span>
         </div>
 

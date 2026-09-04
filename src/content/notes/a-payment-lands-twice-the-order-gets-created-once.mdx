@@ -1,30 +1,30 @@
 ---
 title: A payment lands twice. The order gets created once.
 description: Two callback channels racing to settle the same transaction, an ERP that refuses an order with no payment on it, and the three honest ways a payment can end.
-date: '2026-09-03'
+date: '2026-09-05'
 kind: Engineering
 published: true
 ---
 
-I built the payment path for a leading apparel ecommerce brand's storefront, and the interesting problem wasn't the gateway integration — it was that the same payment tells you it succeeded twice, from two different directions, and you only get to create the order once.
+I built the payment path for a leading apparel ecommerce brand's storefront, and the interesting problem wasn't the gateway integration. It was that the same payment tells you it succeeded twice, from two different directions, and you only get to create the order once.
 
 ## The shape of the problem
 
 A shopper pays through SSLCommerz. Two things happen after that, independently, and either can arrive first:
 
-- SSLCommerz calls our server directly — a server-to-server notification with no shopper attached to it, no session, no browser.
+- SSLCommerz calls our server directly: a server-to-server notification with no shopper attached to it, no session, no browser.
 - The shopper's own browser gets redirected back to us with the same transaction id.
 
 Both of those requests are trying to do the same thing: confirm the payment and create the order. If I let either one run unconditionally, a slow network hiccup on one channel and a fast one on the other creates the order twice. If I only trust one channel, I've built a single point of failure into the one part of the system that's about money.
 
-The other constraint came from the ERP, not from me. It refuses to create an order with no payment already recorded against it, and it has no endpoint to attach a payment to an order that already exists. So "create the order, then reconcile payment" was never on the table — the order has to be created *after* the money is confirmed, by whichever channel gets there.
+The other constraint came from the ERP, not from me. It refuses to create an order with no payment already recorded against it, and it has no endpoint to attach a payment to an order that already exists. So "create the order, then reconcile payment" was never on the table. The order has to be created *after* the money is confirmed, by whichever channel gets there.
 
 ## One row, one atomic claim
 
-The fix is smaller than the problem sounds. Every payment session writes one row — `pending`, keyed by a transaction id — the moment the shopper is sent to the gateway. Whichever channel reaches `settle()` first does a compare-and-swap: update the row from `pending` to `valid` only if it's still `pending`. That's a single `UPDATE ... WHERE status = 'pending'` — Postgres either changes one row or changes zero. The loser doesn't retry, doesn't lock, doesn't queue. It just re-reads the row and returns what the winner already wrote.
+The fix is smaller than the problem sounds. Every payment session writes one row (`pending`, keyed by a transaction id) the moment the shopper is sent to the gateway. Whichever channel reaches `settle()` first does a compare-and-swap: update the row from `pending` to `valid` only if it's still `pending`. That's a single `UPDATE ... WHERE status = 'pending'`. Postgres either changes one row or changes zero. The loser doesn't retry, doesn't lock, doesn't queue. It just re-reads the row and returns what the winner already wrote.
 
 <figure className="not-prose my-10">
-  <svg viewBox="0 0 680 746" className="w-full h-auto" role="img" aria-label="Diagram: an IPN callback and a browser return both call settle(), which claims the transaction row exactly once via compare-and-swap, then validates the amount with the gateway before branching to a risk hold, a created order, or a captured-but-unsettled payment — the last two of which land in an admin review queue.">
+  <svg viewBox="0 0 680 746" className="w-full h-auto" role="img" aria-label="Diagram: an IPN callback and a browser return both call settle(), which claims the transaction row exactly once via compare-and-swap, then validates the amount with the gateway before branching to a risk hold, a created order, or a captured-but-unsettled payment. The last two of which land in an admin review queue.">
     <defs>
       <marker id="pg-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
         <path d="M0,0 L10,5 L0,10 z" className="fill-muted" />
@@ -38,11 +38,11 @@ The fix is smaller than the problem sounds. Every payment session writes one row
     {/* Row 1: the two inbound channels */}
     <rect x="20" y="32" width="300" height="64" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
     <text x="170" y="58" textAnchor="middle" className="fill-ink text-[13px] font-medium">Server-to-server IPN</text>
-    <text x="170" y="78" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">POST /ipn — always replies 200</text>
+    <text x="170" y="78" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">POST /ipn, always replies 200</text>
 
     <rect x="360" y="32" width="300" height="64" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
     <text x="510" y="58" textAnchor="middle" className="fill-ink text-[13px] font-medium">Browser return</text>
-    <text x="510" y="78" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">POST /return/:outcome — 303</text>
+    <text x="510" y="78" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">POST /return/:outcome, 303</text>
 
     {/* Merge into settle() */}
     <line x1="170" y1="96" x2="170" y2="122" className="stroke-rule" strokeWidth="1.5" />
@@ -102,29 +102,29 @@ The fix is smaller than the problem sounds. Every payment session writes one row
   </svg>
   <figcaption className="mt-4 text-[13px] leading-relaxed text-muted">
     Dashed borders mark the two outcomes a human has to look at. A declined or amount-mismatched
-    payment fails immediately and isn&apos;t drawn here — the diagram is the path for money that
+    payment fails immediately and isn&apos;t drawn here: the diagram is the path for money that
     actually moved.
   </figcaption>
 </figure>
 
 ## Trusting the gateway, not the client
 
-Validation isn't a formality between the claim and the order. SSLCommerz reports what it actually captured — amount and currency — and that gets checked against what the transaction row says we asked for, with a one-paisa tolerance for the rounding the gateway's own decimal formatting introduces. A mismatch fails the transaction before it ever reaches the ERP. The alternative — trusting the amount the client sends back — means a payment for a different figure than the one the shopper approved would settle silently into the ERP, and nothing downstream would ever catch it. The gateway captured the money; the gateway gets the final word on how much.
+Validation isn't a formality between the claim and the order. SSLCommerz reports what it actually captured, amount and currency, and that gets checked against what the transaction row says we asked for, with a one-paisa tolerance for the rounding the gateway's own decimal formatting introduces. A mismatch fails the transaction before it ever reaches the ERP. The alternative, trusting the amount the client sends back, means a payment for a different figure than the one the shopper approved would settle silently into the ERP, and nothing downstream would ever catch it. The gateway captured the money; the gateway gets the final word on how much.
 
 ## The failure mode I had to design for on purpose
 
-The customer's ERP bearer token has to travel with the payment, because the ERP resolves the order to an organisation from the caller's own credentials — there's no service account that can create it on their behalf. So the token gets encrypted at rest (AES-256-GCM, a random IV per encryption) while the transaction sits pending, and decrypted only once, at settlement, to make the one ERP call that needs it.
+The customer's ERP bearer token has to travel with the payment, because the ERP resolves the order to an organisation from the caller's own credentials, and there's no service account that can create it on their behalf. So the token gets encrypted at rest (AES-256-GCM, a random IV per encryption) while the transaction sits pending, and decrypted only once, at settlement, to make the one ERP call that needs it.
 
-That token can expire before settlement happens — a shopper who takes forty minutes on the gateway page, say. When it does, SSLCommerz has already captured real money and the ERP order creation fails. That's not a bug to fix; it's a state the system has to represent honestly. The transaction is marked `failed`, but with the gateway's `valId` attached — the one field that means "the money is real, the order isn't." A plain failed payment has no `valId` at all. That distinction is the only thing standing between a charged customer getting told nothing was charged, and an operator seeing exactly what happened and finishing the order by hand.
+That token can expire before settlement happens, say a shopper who takes forty minutes on the gateway page. When it does, SSLCommerz has already captured real money and the ERP order creation fails. That's not a bug to fix; it's a state the system has to represent honestly. The transaction is marked `failed`, but with the gateway's `valId` attached: the one field that means "the money is real, the order isn't." A plain failed payment has no `valId` at all. That distinction is the only thing standing between a charged customer getting told nothing was charged, and an operator seeing exactly what happened and finishing the order by hand.
 
 ## What the shopper sees is not what the row says
 
-The return route classifies outcomes for the shopper differently than the database does, and on purpose. `settled`, `risk_hold`, and `failed`-with-a-`valId` all read as a successful payment to the shopper — because in every one of those cases, their money was actually taken. Only a payment that never captured anything shows as a failure and reopens checkout. Collapsing "risk hold" or "ERP write failed" into a visible failure would tell a customer who was just charged that they weren't, and invite them to pay again.
+The return route classifies outcomes for the shopper differently than the database does, and on purpose. `settled`, `risk_hold`, and `failed`-with-a-`valId` all read as a successful payment to the shopper, because in every one of those cases, their money was actually taken. Only a payment that never captured anything shows as a failure and reopens checkout. Collapsing "risk hold" or "ERP write failed" into a visible failure would tell a customer who was just charged that they weren't, and invite them to pay again.
 
-Getting that redirect right took one real production bug: the response envelope this API wraps every return in in `{ data, meta }` was swallowing Nest's own redirect handling, so `@Redirect()` was returning a 302 with an empty `Location` header — every shopper coming back from the gateway hit a dead end. The fix was writing to the raw response directly for that one route, stepping outside the framework's response pipeline entirely, because the one route that has to redirect a browser is exactly the one route where a generic response wrapper can't be allowed to intercept it.
+Getting that redirect right took one real production bug: the response envelope this API wraps every return in in `{ data, meta }` was swallowing Nest's own redirect handling, so `@Redirect()` was returning a 302 with an empty `Location` header. Every shopper coming back from the gateway hit a dead end. The fix was writing to the raw response directly for that one route, stepping outside the framework's response pipeline entirely, because the one route that has to redirect a browser is exactly the one route where a generic response wrapper can't be allowed to intercept it.
 
 ## What this taught me about money paths generally
 
-Most of the work here wasn't the SSLCommerz API — it's a form post and a redirect. It was deciding, ahead of time, which failures are allowed to be silent and which ones aren't. A captured payment with no order is not allowed to be silent. A risk-flagged payment is not allowed to look like a failure to the person who just paid. And the two systems telling you the same thing twice are not allowed to create the thing twice.
+Most of the work here wasn't the SSLCommerz API. It's a form post and a redirect. It was deciding, ahead of time, which failures are allowed to be silent and which ones aren't. A captured payment with no order is not allowed to be silent. A risk-flagged payment is not allowed to look like a failure to the person who just paid. And the two systems telling you the same thing twice are not allowed to create the thing twice.
 
 That's the part that generalizes past payments: the interesting design work in a system like this isn't the happy path, it's naming every way the happy path can half-happen, and deciding on purpose what a human has to see when it does.

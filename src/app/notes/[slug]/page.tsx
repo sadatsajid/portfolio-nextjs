@@ -32,7 +32,7 @@ export async function generateMetadata({
   )}&description=${encodeURIComponent(note.description)}`;
 
   return {
-    title: `${note.title} — Asif Sadat`,
+    title: `${note.title} | Asif Sadat`,
     description: note.description,
     openGraph: {
       title: note.title,

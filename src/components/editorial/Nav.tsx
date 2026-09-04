@@ -70,7 +70,7 @@ export function EditorialNav() {
           <Link
             href="/"
             className="group flex items-center gap-3"
-            aria-label="Asif Sadat — home"
+            aria-label="Asif Sadat, home"
           >
             <div
               className="w-7 h-7 rounded-full bg-accent flex items-center justify-center select-none"
@@ -131,7 +131,7 @@ export function EditorialNav() {
             <div className="flex w-max items-center gap-4 text-[13px]">
               <div className="flex shrink-0 items-center gap-2">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-                <span className="text-muted">Now —</span>
+                <span className="text-muted">Now:</span>
               </div>
               {NOW.items.map((item, i) => (
                 <span key={item.label} className="flex shrink-0 items-center gap-3">

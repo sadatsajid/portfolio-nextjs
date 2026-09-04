@@ -55,7 +55,7 @@ export const Resume = () => {
                   aria-label={`${work.start} until ${work.end}`}
                 >
                   <time dateTime={work.start}>{work.start}</time>{' '}
-                  <span aria-hidden="true">—</span>{' '}
+                  <span aria-hidden="true">-</span>{' '}
                   <time dateTime={work.end}>{work.end}</time>
                 </dd>
               </dl>
@@ -98,7 +98,7 @@ export const Resume = () => {
                     aria-label={`${work.start} until ${work.end}`}
                   >
                     <time dateTime={work.start}>{work.start}</time>{' '}
-                    <span aria-hidden="true">—</span>{' '}
+                    <span aria-hidden="true">-</span>{' '}
                     <time dateTime={work.end}>{work.end}</time>
                   </dd>
                 </div>
@@ -122,7 +122,7 @@ export const Resume = () => {
                         </div>
                         <div className="text-xs font-medium text-zinc-400 dark:text-zinc-500 whitespace-nowrap">
                           <time dateTime={role.start}>{role.start}</time>{' '}
-                          <span aria-hidden="true">—</span>{' '}
+                          <span aria-hidden="true">-</span>{' '}
                           <time dateTime={role.end}>{role.end}</time>
                         </div>
                       </div>

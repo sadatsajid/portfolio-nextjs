@@ -1,0 +1,117 @@
+---
+title: One interface, two OAuth providers, and a third one I haven't had to build yet
+description: Designing the OAuth provider abstraction behind LinkedIn and Google sign-in for a CV platform, and why the next provider should cost almost nothing to add.
+date: '2026-09-04'
+kind: Engineering
+published: true
+---
+
+I designed the OAuth provider abstraction behind PrismaCV's LinkedIn and Google sign-in: the interface every provider implements, the LinkedIn side of it, the guard, and how the module wires it together. The account-linking logic underneath it lives in a shared service the whole team touches, and that split is exactly the point of this post: the interface is the thing that has to be right, because everything downstream of it stops caring which provider you used.
+
+## The shape every provider has to agree to
+
+LinkedIn and Google don't return the same profile shape. Different field names, different nesting, different guarantees about what's actually populated. Handle that difference anywhere near the business logic and every feature downstream (account linking, welcome emails, avatar display) ends up branching on provider name to know which fields to trust.
+
+So the boundary sits as early as it can. One interface:
+
+```ts
+interface IOAuthProvider<TProfile = unknown> {
+  getProviderName(): string;
+  validateProfile(profile: TProfile): OAuthProfile;
+}
+```
+
+`OAuthProfile` is the normalized shape: `provider`, `providerId`, `email`, `name`, `picture`. Everything past this point in the system (account linking, user creation, token issuance) reads that one shape and has never heard of LinkedIn or Google specifically. `LinkedInOAuthProvider` and `GoogleOAuthProvider` both implement it, each responsible for nothing but translating its own provider's mess into that one contract, including rejecting a profile that's missing an id or an email before it goes any further.
+
+<figure className="not-prose my-10">
+  <svg viewBox="0 0 680 590" className="w-full h-auto" role="img" aria-label="Diagram: LinkedIn and Google each flow through their own Passport strategy and provider class into one shared OAuthProfile shape, which feeds a single OAuthService.authenticate() and issues a user and token pair the same way regardless of provider. A dashed box shows a future provider plugging into the same interface with no other change.">
+    <defs>
+      <marker id="oauth-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" className="fill-muted" />
+      </marker>
+    </defs>
+
+    {/* Row 1: the two OAuth entry points */}
+    <rect x="20" y="20" width="280" height="60" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="160" y="46" textAnchor="middle" className="fill-ink text-[13px] font-medium">LinkedIn OAuth</text>
+    <text x="160" y="65" textAnchor="middle" className="fill-muted font-mono text-[10px]">passport-linkedin-oauth2</text>
+
+    <rect x="380" y="20" width="280" height="60" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="520" y="46" textAnchor="middle" className="fill-ink text-[13px] font-medium">Google OAuth</text>
+    <text x="520" y="65" textAnchor="middle" className="fill-muted font-mono text-[10px]">passport-google-oauth20</text>
+
+    <line x1="160" y1="80" x2="160" y2="104" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#oauth-arrow)" />
+    <line x1="520" y1="80" x2="520" y2="104" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#oauth-arrow)" />
+
+    {/* Row 2: Passport strategies */}
+    <rect x="20" y="104" width="280" height="60" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="160" y="130" textAnchor="middle" className="fill-ink font-mono text-[12.5px] font-medium">LinkedInStrategy</text>
+    <text x="160" y="149" textAnchor="middle" className="fill-muted text-[10px]">boots even when unconfigured</text>
+
+    <rect x="380" y="104" width="280" height="60" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="520" y="130" textAnchor="middle" className="fill-ink font-mono text-[12.5px] font-medium">GoogleStrategy</text>
+    <text x="520" y="149" textAnchor="middle" className="fill-muted text-[10px]">same PassportStrategy contract</text>
+
+    <line x1="160" y1="164" x2="160" y2="188" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#oauth-arrow)" />
+    <line x1="520" y1="164" x2="520" y2="188" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#oauth-arrow)" />
+
+    {/* Row 3: provider classes */}
+    <rect x="20" y="188" width="280" height="68" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="160" y="214" textAnchor="middle" className="fill-ink font-mono text-[12.5px] font-medium">LinkedInOAuthProvider</text>
+    <text x="160" y="233" textAnchor="middle" className="fill-muted text-[10px]">implements IOAuthProvider&lt;Profile&gt;</text>
+    <text x="160" y="248" textAnchor="middle" className="fill-muted text-[10px]">validateProfile(): OAuthProfile</text>
+
+    <rect x="380" y="188" width="280" height="68" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="520" y="214" textAnchor="middle" className="fill-ink font-mono text-[12.5px] font-medium">GoogleOAuthProvider</text>
+    <text x="520" y="233" textAnchor="middle" className="fill-muted text-[10px]">implements IOAuthProvider&lt;Profile&gt;</text>
+    <text x="520" y="248" textAnchor="middle" className="fill-muted text-[10px]">validateProfile(): OAuthProfile</text>
+
+    {/* Merge into the shared interface */}
+    <line x1="160" y1="256" x2="160" y2="282" className="stroke-rule" strokeWidth="1.5" />
+    <line x1="520" y1="256" x2="520" y2="282" className="stroke-rule" strokeWidth="1.5" />
+    <line x1="160" y1="282" x2="520" y2="282" className="stroke-rule" strokeWidth="1.5" />
+    <line x1="340" y1="282" x2="340" y2="308" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#oauth-arrow)" />
+
+    {/* The shared contract */}
+    <rect x="170" y="310" width="340" height="80" rx="12" className="fill-accent-soft stroke-accent" strokeWidth="2" />
+    <text x="340" y="336" textAnchor="middle" className="fill-ink font-mono text-[13.5px] font-semibold">OAuthProfile</text>
+    <text x="340" y="357" textAnchor="middle" className="fill-ink-soft text-[10.5px]">provider, providerId, email, name, picture</text>
+    <text x="340" y="374" textAnchor="middle" className="fill-muted text-[10px]">every provider normalizes to exactly this</text>
+
+    {/* Ghost: the provider that isn't built yet */}
+    <rect x="530" y="322" width="130" height="56" rx="10" className="fill-transparent stroke-accent" strokeWidth="1.5" strokeDasharray="4 3" />
+    <text x="595" y="345" textAnchor="middle" className="fill-ink-soft text-[11px] font-medium">+ next provider</text>
+    <text x="595" y="361" textAnchor="middle" className="fill-muted text-[9px]">zero changes elsewhere</text>
+    <line x1="530" y1="350" x2="512" y2="350" className="stroke-accent" strokeWidth="1.5" strokeDasharray="3 2" markerEnd="url(#oauth-arrow)" />
+
+    <line x1="340" y1="390" x2="340" y2="414" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#oauth-arrow)" />
+
+    {/* Shared service */}
+    <rect x="190" y="416" width="300" height="70" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="443" textAnchor="middle" className="fill-ink font-mono text-[12.5px] font-medium">OAuthService.authenticate()</text>
+    <text x="340" y="462" textAnchor="middle" className="fill-muted text-[10px]">find by provider, then by email: link or create</text>
+
+    <line x1="340" y1="486" x2="340" y2="508" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#oauth-arrow)" />
+
+    {/* Outcome */}
+    <rect x="210" y="510" width="260" height="60" rx="10" className="fill-accent-soft stroke-accent" strokeWidth="1.5" />
+    <text x="340" y="536" textAnchor="middle" className="fill-ink text-[13px] font-semibold">User + token pair</text>
+    <text x="340" y="554" textAnchor="middle" className="fill-muted text-[10px]">issued the same way regardless of provider</text>
+  </svg>
+  <figcaption className="mt-4 text-[13px] leading-relaxed text-muted">
+    The dashed box is not built. It is what adding a third provider looks like: one class, one
+    strategy, one line in the module. Nothing below the OAuthProfile line has to change.
+  </figcaption>
+</figure>
+
+## The decision that isn't visible in the interface
+
+The interesting failure mode for an OAuth integration isn't the happy path, it's what happens when the environment variables aren't set yet. A naive Passport strategy throws at bootstrap if its client id is missing, which means a missing `LINKEDIN_CLIENT_SECRET` in a staging environment takes down every other route in the app, including the ones with nothing to do with LinkedIn.
+
+`LinkedInStrategy` boots with placeholder credentials when the real ones aren't configured, tracks a `configured` boolean, and logs a warning instead of crashing. The route still registers. A request to it will fail cleanly later, at the point where it actually needs the missing config, instead of taking the whole module down before a single request has been served. That's a small decision that only matters on the one day someone forgets to set a secret in a new environment, which is exactly the day you don't want it to matter.
+
+## Why the interface is the part that has to be right
+
+The module only exports `OAuthService`, not the individual providers or strategies. Nothing outside the OAuth module is allowed to know LinkedIn and Google exist as concrete types; it only knows there's a service that authenticates an `OAuthProfile` and returns a user and a token pair. That's what makes the dashed box in the diagram cheap instead of theoretical: a third provider means writing one class that implements `IOAuthProvider`, one strategy that calls it, and one line registering both in the module. The account-linking rules, the token issuance, the controller shape: none of it moves, because none of it was ever written against LinkedIn or Google specifically. It was written against the shape.
+
+That's the actual test of whether an abstraction is future-proof: not whether you can imagine a second case, but whether adding it touches anything you already trusted.

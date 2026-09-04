@@ -80,17 +80,17 @@ export const FEATURED: FeaturedProject[] = [
     slug: 'creolytix',
     title: 'Creolytix',
     role: 'Staff Engineer · Frontend Lead',
-    year: '2024 — present',
+    year: '2024-present',
     company: 'Selise Digital Platforms',
     tagline: "Real-time threat monitoring for organizations who can't afford to miss a signal.",
     impact:
-      'Led the AI Summary feature end-to-end — from shapeless PM ask to a UI that turns 200-line threat feeds into one-paragraph decisions.',
+      'Led the AI Summary feature end-to-end: from shapeless PM ask to a UI that turns 200-line threat feeds into one-paragraph decisions.',
     contributions: [
-      'Shipped the monitor + alert wizard — URL-driven create/edit that turns a map view into a live watch',
+      'Shipped the monitor + alert wizard: URL-driven create/edit that turns a map view into a live watch',
       'Built Weather as a map mode: backend tiles, forecast, history, air quality; retired Google Weather',
       'Shipped Places: POI markers, railroad paths, country/shape filters, zoom-gated geo fetches',
-      'Wired F24 SSO and ENS+ alarm trigger — login through to firing an alarm from an event',
-      'Extended the platform to React Native: a discussions feature end to end — read path with filters, write path, rich-text authoring with @mentions — plus relevance-sorted search and React Native Maps',
+      'Wired F24 SSO and ENS+ alarm trigger: login through to firing an alarm from an event',
+      'Extended the platform to React Native: a discussions feature end to end (read path with filters, write path, rich-text authoring with @mentions), plus relevance-sorted search and React Native Maps',
     ],
     stack: ['React', 'React Native', 'TypeScript', 'Vitest', 'Axios', 'Zustand'],
     kind: 'Enterprise SaaS',
@@ -107,7 +107,7 @@ export const FEATURED: FeaturedProject[] = [
     contributions: [
       'Role-based access from super-admin down to manager',
       "Web Push alerts so managers don't live in the tab",
-      'PWA install — works on the warehouse floor',
+      'PWA install: works on the warehouse floor',
       'Reducer + Context state, no Redux bloat',
     ],
     stack: ['React', 'MUI', 'Node.js', 'Web Push', 'PWA'],
@@ -117,7 +117,7 @@ export const FEATURED: FeaturedProject[] = [
     slug: 'obhai-admin',
     title: 'OBHAI Admin Panel',
     role: 'Lead Frontend',
-    year: '2019 — 2022',
+    year: '2019-2022',
     company: 'MGH Group',
     tagline: 'The single pane of glass for a ride-sharing back office.',
     impact:
@@ -132,7 +132,7 @@ export const FEATURED: FeaturedProject[] = [
   },
   {
     slug: 'warehouse',
-    title: 'NWS — Warehouse Management',
+    title: 'NWS Warehouse Management',
     role: 'Fullstack · Designer',
     year: '2024',
     company: 'MGH Group',
@@ -185,7 +185,7 @@ export const FEATURED: FeaturedProject[] = [
 
 // ── Archive ──────────────────────────────────────────────
 export const ARCHIVE: ArchiveProject[] = [
-  { title: 'OBHAI Owner Panel', year: '2022', kind: 'Fullstack', note: 'Fleet management for car owners — daily driver performance' },
+  { title: 'OBHAI Owner Panel', year: '2022', kind: 'Fullstack', note: 'Fleet management for car owners: daily driver performance' },
   { title: 'Registration Portal', year: '2021', kind: 'Web', note: 'Secure driver onboarding, 60% faster than the previous flow' },
   { title: 'mgX Landing Page', year: '2023', kind: 'Marketing', note: 'Domestic + international order tracking, public site' },
   { title: 'mgX Hub Admin', year: '2023', kind: 'Internal', note: 'Hub-side logistics management' },
@@ -195,7 +195,7 @@ export const ARCHIVE: ArchiveProject[] = [
   { title: 'MGH PowerBI Embed', year: '2024', kind: 'Fullstack', note: 'Authenticated PowerBI embedding inside React' },
   { title: 'MGH Query Management', year: '2023', kind: 'Fullstack', note: 'Internal issue & query tracking' },
   { title: 'Leave Management', year: '2023', kind: 'Internal', note: 'HR leave workflow' },
-  { title: 'DristiVan — SAAF', year: '2024', kind: 'Healthcare', note: 'EMR for glaucoma-screening patients' },
+  { title: 'DristiVan (SAAF)', year: '2024', kind: 'Healthcare', note: 'EMR for glaucoma-screening patients' },
 ];
 
 // ── Beliefs ──────────────────────────────────────────────
@@ -208,14 +208,14 @@ export const BELIEFS: string[] = [
 
 // ── Skills ───────────────────────────────────────────────
 export const SKILLS: Skills = {
-  Frontend: ['React', 'React Native', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'MUI', 'Zustand', 'Redux'],
+  Frontend: ['React', 'React Native', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'MUI', 'shadcn/ui', 'Zustand', 'Redux'],
   Backend: ['Node.js', 'Express', 'NestJS', 'MySQL', 'PostgreSQL', 'Prisma', 'Sequelize'],
   'AI & Machine Learning': ['OpenAI API', 'RAG (Retrieval-Augmented Generation)', 'pgvector', 'Vector Search', 'Prompt Engineering'],
   'Realtime & Tooling': ['Pusher', 'SignalR', 'FCM', 'Web Push', 'PWA', 'Google Maps', 'Vitest'],
-  'Currently learning': ['Docker', 'AWS'],
+  'Currently learning': ['Docker', 'AWS', 'C# / .NET (ASP.NET Core, EF Core)'],
 };
 
-// Writing now lives in src/content/notes/*.mdx — see src/lib/notes.ts
+// Writing now lives in src/content/notes/*.mdx; see src/lib/notes.ts
 
 // ── Work experience ──────────────────────────────────────
 export type WorkRole = { title: string; start: string; end: string };
@@ -240,10 +240,10 @@ export const WORK: WorkEntry[] = [
     start: '2018',
     end: '2024',
     roles: [
-      { title: 'Manager — Full Stack Developer',               start: '2023', end: '2024' },
-      { title: 'Assistant Manager — Full Stack Developer',     start: '2021', end: '2023' },
-      { title: 'Senior Executive — Lead Frontend Developer',   start: '2019', end: '2020' },
-      { title: 'Trainee Executive — Junior Frontend Developer',start: '2018', end: '2019' },
+      { title: 'Manager / Full Stack Developer',               start: '2023', end: '2024' },
+      { title: 'Assistant Manager / Full Stack Developer',     start: '2021', end: '2023' },
+      { title: 'Senior Executive / Lead Frontend Developer',   start: '2019', end: '2020' },
+      { title: 'Trainee Executive / Junior Frontend Developer',start: '2018', end: '2019' },
     ],
   },
 ];
@@ -263,9 +263,9 @@ export const CLIENT_PROJECTS: ClientProject[] = [
   {
     title: 'Multi-Outlet Retail Commerce Platform',
     year: '2026',
-    tagline: 'A storefront where the backend owns every pixel — and the admin never waits on a deploy.',
+    tagline: 'A storefront where the backend owns every pixel, and the admin never waits on a deploy.',
     description:
-      'Freelance build for a leading apparel ecommerce brand. NestJS backend split into two API planes — a resolved, cacheable storefront surface and a raw, RBAC-gated admin surface — driving a typed, versioned block vocabulary the frontend renders. Next.js storefront, ERP catalogue integration, measured SEO and performance work.',
+      'Freelance build for a leading apparel ecommerce brand. NestJS backend split into two API planes: a resolved, cacheable storefront surface and a raw, RBAC-gated admin surface, driving a typed, versioned block vocabulary the frontend renders. Next.js storefront, ERP catalogue integration, measured SEO and performance work.',
     stack: ['NestJS', 'Next.js', 'Prisma', 'PostgreSQL', 'TypeScript', 'Zod'],
     status: 'live',
   },
@@ -274,7 +274,7 @@ export const CLIENT_PROJECTS: ClientProject[] = [
     year: '2026',
     tagline: 'A payment lands twice, from two directions. The order gets created once.',
     description:
-      'For the same brand. SSLCommerz settlement across two racing callback channels — a server-to-server notification and a browser redirect — consumed exactly once via an atomic state claim, verified against the gateway before it settles. Encrypted customer credential at rest, with expiry routed to an operator review queue instead of silently dropped.',
+      'For the same brand. SSLCommerz settlement across two racing callback channels (a server-to-server notification and a browser redirect), consumed exactly once via an atomic state claim, verified against the gateway before it settles. Encrypted customer credential at rest, with expiry routed to an operator review queue instead of silently dropped.',
     stack: ['NestJS', 'PostgreSQL', 'Prisma', 'SSLCommerz'],
     href: '/notes/a-payment-lands-twice-the-order-gets-created-once',
     status: 'in-development',
@@ -284,21 +284,31 @@ export const CLIENT_PROJECTS: ClientProject[] = [
 // ── Personal / side projects ─────────────────────────────
 export const PERSONAL_PROJECTS: PersonalProject[] = [
   {
+    title: 'PrismaCV OAuth',
+    year: '2026',
+    tagline: 'One interface, two OAuth providers, and the next one is basically free.',
+    description:
+      "Designed the OAuth provider abstraction behind PrismaCV's LinkedIn and Google sign-in: one interface every provider implements, a strategy that boots cleanly even when its config is missing, and a module that exports only the shared service, not the providers themselves.",
+    stack: ['NestJS', 'Passport', 'TypeScript', 'OAuth2'],
+    href: '/notes/the-oauth-provider-i-havent-had-to-write-yet',
+    status: 'live',
+  },
+  {
     title: 'TrySpecta',
     year: '2026',
     tagline: 'AI-powered virtual glasses try-on for ecommerce.',
     description:
-      'Turbo monorepo — NestJS API + Next.js storefront. Customers upload a selfie; FAL/Gemini overlays frames in real time. PostgreSQL + Redis backend, shared Zod validation across the stack.',
+      'Turbo monorepo: NestJS API + Next.js storefront. Customers upload a selfie; FAL/Gemini overlays frames in real time. PostgreSQL + Redis backend, shared Zod validation across the stack.',
     stack: ['Next.js', 'NestJS', 'TypeScript', 'FAL', 'Gemini', 'PostgreSQL', 'Redis'],
     href: 'https://github.com/sadatsajid/tryspecta',
     status: 'in-development',
   },
   {
     title: 'ReadSaver',
-    year: '2025 — 2026',
+    year: '2025-2026',
     tagline: 'Paste any article. Get a TL;DR, key points, and Q&A with citations.',
     description:
-      'Full RAG pipeline: in-house extraction (Readability + Playwright) with Jina as a fallback, not the primary — swapped after volume made the vendor bill the bottleneck. OpenAI embeds and chunks into pgvector; semantic search returns grounded, cited answers. Streaming UI, magic-link auth.',
+      'Full RAG pipeline: in-house extraction (Readability + Playwright) with Jina as a fallback, not the primary; swapped after volume made the vendor bill the bottleneck. OpenAI embeds and chunks into pgvector; semantic search returns grounded, cited answers. Streaming UI, magic-link auth.',
     stack: ['Next.js', 'OpenAI', 'pgvector', 'Supabase', 'Prisma', 'TypeScript'],
     href: 'https://github.com/sadatsajid/read-saver',
     status: 'in-development',
@@ -306,7 +316,7 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
   {
     title: 'MoneyQ',
     year: '2026',
-    tagline: 'Personal finance for Bangladesh — AI categorisation, savings buckets, EMI tracking.',
+    tagline: 'Personal finance for Bangladesh: AI categorisation, savings buckets, EMI tracking.',
     description:
       'BDT-primary expense tracker. GPT-4o-mini auto-categorises transactions, decimal.js handles financial precision, Vercel crons process recurring entries nightly, Recharts renders monthly insights.',
     stack: ['Next.js', 'OpenAI', 'Supabase', 'Prisma', 'Recharts', 'TypeScript'],
@@ -318,8 +328,8 @@ export const PERSONAL_PROJECTS: PersonalProject[] = [
     year: '2026',
     tagline: 'Issue tracking where roles live on the organisation, not the user.',
     description:
-      'ASP.NET Core minimal APIs on .NET 10 — JWT register/login with rotating refresh tokens, membership-scoped org access. EF Core + PostgreSQL persist projects and issues (assignment, status, comments, activity); FluentValidation on requests, Testcontainers against real Postgres.',
-    stack: ['.NET 10', 'ASP.NET Core', 'EF Core', 'PostgreSQL', 'JWT', 'FluentValidation'],
+      "ASP.NET Core on .NET 10, evolved deliberately from one feature-folder API into a modular monolith (Identity, Organizations, Projects, Issues, Notifications), each phase a real refactor, not a rewrite. Org-scoped authorization returns 401 for unauthenticated, 404 for authenticated non-members (no existence leak), and 403 for the wrong role, enforced through a custom authorization result handler rather than in each service. Refresh tokens are hashed and rotated; access tokens never carry org roles. Issue events publish through a small in-process event seam (deliberately not MediatR or a message bus); Hangfire dispatches notification emails and reminders as separate background jobs, each idempotent. Testcontainers run the integration suite against real PostgreSQL, and Husky.Net git hooks run the same build and test suite before every push.",
+    stack: ['.NET 10', 'ASP.NET Core', 'EF Core', 'PostgreSQL', 'Hangfire', 'JWT', 'FluentValidation'],
     href: 'https://github.com/sadatsajid/taskops-be-dotnet',
     status: 'in-development',
   },

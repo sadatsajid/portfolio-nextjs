@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { formatNoteDate, getAllNotes } from '@/lib/notes';
 
 export const metadata: Metadata = {
-  title: 'Writing — Asif Sadat',
+  title: 'Writing | Asif Sadat',
   description:
     'Stories from the work: adapting to AI-assisted React, rebuilding the systems CRM agents live in, moving a team off Angular, and learning the backend on a frontend clock.',
 };

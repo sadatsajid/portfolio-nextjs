@@ -12,7 +12,7 @@ import { fontDisplay, fontBody, fontSerif } from './fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Asif Sadat — Staff Software Engineer',
+  title: 'Asif Sadat | Staff Software Engineer',
   description:
     'Staff engineer who reads the P&L before the PRD. Seven years building back-office systems, sales engines, and AI tools that move metrics.',
   metadataBase: process.env.NEXT_PUBLIC_URL

@@ -11,7 +11,7 @@ export function Beliefs() {
           Why hire me?
         </h2>
         <p className="font-serif text-[clamp(17px,1.6vw,22px)] leading-[1.45] text-ink-soft mt-5 max-w-160">
-          Because most engineers ship code. I ship outcomes — and I can explain
+          Because most engineers ship code. I ship outcomes, and I can explain
           them to your CFO.
         </p>
 

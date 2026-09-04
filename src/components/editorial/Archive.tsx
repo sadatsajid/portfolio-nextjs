@@ -12,7 +12,7 @@ export function Archive() {
         >
           {ARCHIVE.length} more I&apos;m proud of.
         </h2>
-        <span className="text-[13px] text-muted">2018 — 2025</span>
+        <span className="text-[13px] text-muted">2018-2025</span>
       </div>
 
       <div className="border-t border-rule">

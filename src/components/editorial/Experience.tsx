@@ -26,7 +26,7 @@ export function Experience() {
         >
           Work experience.
         </h2>
-        <span className="text-[13px] text-muted">2018 — Present</span>
+        <span className="text-[13px] text-muted">2018-Present</span>
       </div>
 
       <ol className="relative">
@@ -77,7 +77,7 @@ function CompanyEntry({ entry, isLast }: { entry: WorkEntry; isLast: boolean }) 
           {entry.company}
         </h3>
         <span className="text-[13px] text-muted tabular-nums">
-          {entry.start} — {entry.end}
+          {entry.start}-{entry.end}
         </span>
       </div>
 
@@ -106,7 +106,7 @@ function CompanyEntry({ entry, isLast }: { entry: WorkEntry; isLast: boolean }) 
               {role.title}
             </span>
             <span className="text-[12px] text-muted tabular-nums shrink-0">
-              {role.start} — {role.end}
+              {role.start}-{role.end}
             </span>
           </li>
         ))}
