@@ -1,0 +1,213 @@
+---
+title: The brain behind missed rides recovery
+description: Peak-hour customers weren't failing to book, they were failing to get matched — and the first hard problem wasn't recovery, it was defining what "missed" even means.
+date: '2019-12-16'
+kind: Engineering
+published: false
+---
+
+During peak hours — the morning and evening commute windows — customers in dense areas were requesting rides and getting nothing back. Not an error, not a decline. Just silence, because the supply of riders within the 0.5–3km matching radius had run out, or because the riders still online in that radius didn't want that customer's destination. Either way, the customer gave up and the demand just evaporated, unlogged as anything except a request that never turned into a ride.
+
+The fix wasn't a smarter matching algorithm. Peak-hour supply is a hard constraint you can't route your way around in the short term. What we built instead was two things working together: an alerting system that catches a customer who just failed to get a ride and gets a human in front of them before they give up on the app, and a heatmap that helps agents pull riders toward the areas actually short on supply, so there are fewer misses to catch in the first place.
+
+## Defining "missed" is the actual problem
+
+The obvious approach — flag any ride request that doesn't end in a completed trip — falls apart immediately, because most unmatched requests aren't failures at all:
+
+- A customer who requests and cancels within a few seconds isn't missing a ride. They fat-fingered the button, or changed their mind before a rider was even searched for. Counting that as missed floods agents with calls to people who were never waiting for anything.
+- A customer who gets rejected by one rider and matched by the next thirty seconds later isn't missed either — the system worked, just not on the first attempt.
+- A customer who requests three times in six minutes because the app timed out twice isn't three missed rides. It's one customer, still standing on the same curb, hitting the same supply gap three times.
+
+So "missed" got defined narrowly, on purpose: a request that ends in either a rider-side rejection with no subsequent match, or a full timeout with no rider ever answering — and only after an initial grace window during which an immediate self-cancel doesn't count at all. On top of that, every missed request from the same customer inside a short rolling window collapses into a single alert. The dedup isn't an optimization, it's the definition — three timeouts in six minutes is one missed ride, not three, because it's one unmet need, not three.
+
+## How a request becomes a phone call
+
+<figure className="not-prose my-10">
+  <svg viewBox="0 0 680 900" className="w-full h-auto" role="img" aria-label="Diagram: a ride request is filtered for an immediate self-cancel, classified by outcome (rejected or timed out), deduplicated against recent alerts from the same customer, then pushed via FCM to the CRM admin panel where an agent calls the customer and, if they still want a ride, manually calls a nearby rider and creates the ride from the admin panel.">
+    <defs>
+      <marker id="mr-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" className="fill-muted" />
+      </marker>
+    </defs>
+
+    <text x="340" y="16" textAnchor="middle" className="fill-muted font-mono text-[10px] tracking-[0.08em] uppercase">
+      Ride request stream
+    </text>
+
+    <rect x="220" y="32" width="240" height="56" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="55" textAnchor="middle" className="fill-ink text-[13px] font-medium">Ride requested</text>
+    <text x="340" y="74" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">0.5–3km matching radius</text>
+
+    <line x1="340" y1="88" x2="340" y2="114" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="180" y="116" width="320" height="60" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="140" textAnchor="middle" className="fill-ink text-[13px] font-medium">Self-cancelled within grace window?</text>
+    <text x="340" y="160" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">a few seconds, before search even starts</text>
+
+    <line x1="180" y1="146" x2="70" y2="146" className="stroke-rule" strokeWidth="1.5" />
+    <line x1="70" y1="146" x2="70" y2="176" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+    <rect x="0" y="178" width="140" height="56" rx="10" className="fill-transparent stroke-rule" strokeWidth="1.5" strokeDasharray="4 3" />
+    <text x="70" y="200" textAnchor="middle" className="fill-ink-soft text-[11.5px] font-medium">Not missed</text>
+    <text x="70" y="218" textAnchor="middle" className="fill-muted text-[10px]">discarded</text>
+
+    <text x="125" y="140" textAnchor="middle" className="fill-muted font-mono text-[9.5px]">yes</text>
+
+    <line x1="340" y1="176" x2="340" y2="202" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+    <text x="360" y="196" className="fill-muted font-mono text-[9.5px]">no</text>
+
+    <rect x="180" y="204" width="320" height="64" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="228" textAnchor="middle" className="fill-ink text-[13px] font-medium">Outcome: rejected, or timed out</text>
+    <text x="340" y="248" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">no rider answered, or no follow-up match</text>
+
+    <line x1="340" y1="268" x2="340" y2="294" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="150" y="296" width="380" height="58" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="319" textAnchor="middle" className="fill-ink text-[13px] font-medium">Missed-ride candidate</text>
+    <text x="340" y="338" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">tagged with customer id, time, location</text>
+
+    <line x1="340" y1="354" x2="340" y2="380" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="150" y="382" width="380" height="64" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="406" textAnchor="middle" className="fill-ink text-[13px] font-medium">Already alerted for this customer recently?</text>
+    <text x="340" y="426" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">rolling dedup window</text>
+
+    <line x1="150" y1="414" x2="70" y2="414" className="stroke-rule" strokeWidth="1.5" />
+    <line x1="70" y1="414" x2="70" y2="444" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+    <rect x="0" y="446" width="140" height="56" rx="10" className="fill-transparent stroke-rule" strokeWidth="1.5" strokeDasharray="4 3" />
+    <text x="70" y="468" textAnchor="middle" className="fill-ink-soft text-[11.5px] font-medium">Folded in</text>
+    <text x="70" y="486" textAnchor="middle" className="fill-muted text-[10px]">one alert, not three</text>
+    <text x="110" y="408" textAnchor="middle" className="fill-muted font-mono text-[9.5px]">yes</text>
+
+    <line x1="340" y1="446" x2="340" y2="472" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+    <text x="360" y="466" className="fill-muted font-mono text-[9.5px]">no</text>
+
+    <rect x="170" y="474" width="340" height="60" rx="10" className="fill-accent-soft stroke-accent" strokeWidth="2" />
+    <text x="340" y="498" textAnchor="middle" className="fill-ink text-[13px] font-semibold">Missed-ride alert created</text>
+    <text x="340" y="518" textAnchor="middle" className="fill-ink-soft text-[10.5px]">one unique alert per customer per window</text>
+
+    <line x1="340" y1="534" x2="340" y2="560" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="170" y="562" width="340" height="58" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="585" textAnchor="middle" className="fill-ink text-[13px] font-medium">FCM push → CRM admin panel</text>
+    <text x="340" y="604" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">agent sees customer, location, missed time</text>
+
+    <line x1="340" y1="620" x2="340" y2="646" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="170" y="648" width="340" height="56" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="671" textAnchor="middle" className="fill-ink text-[13px] font-medium">Agent calls the customer</text>
+    <text x="340" y="690" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">confirms they still want a ride</text>
+
+    <line x1="340" y1="704" x2="340" y2="726" className="stroke-rule" strokeWidth="1.5" />
+    <line x1="220" y1="726" x2="460" y2="726" className="stroke-rule" strokeWidth="1.5" />
+    <line x1="220" y1="726" x2="220" y2="750" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+    <line x1="460" y1="726" x2="460" y2="750" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="130" y="752" width="180" height="56" rx="10" className="fill-transparent stroke-rule" strokeWidth="1.5" strokeDasharray="4 3" />
+    <text x="220" y="774" textAnchor="middle" className="fill-ink-soft text-[12px] font-medium">Customer declines</text>
+    <text x="220" y="792" textAnchor="middle" className="fill-muted text-[10px]">alert closed</text>
+
+    <rect x="370" y="752" width="180" height="56" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="460" y="774" textAnchor="middle" className="fill-ink text-[12px] font-medium">Customer confirms</text>
+    <text x="460" y="792" textAnchor="middle" className="fill-muted text-[10px]">agent calls a nearby rider</text>
+
+    <line x1="460" y1="808" x2="460" y2="834" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="330" y="836" width="260" height="56" rx="10" className="fill-accent-soft stroke-accent" strokeWidth="2" />
+    <text x="460" y="859" textAnchor="middle" className="fill-ink text-[13px] font-semibold">Agent creates the ride</text>
+    <text x="460" y="878" textAnchor="middle" className="fill-ink-soft text-[10.5px]">from the admin panel, on the customer's behalf</text>
+
+  </svg>
+  <figcaption className="mt-4 text-[13px] leading-relaxed text-muted">
+    The dedup step is the one that turns a noisy stream of failed matches into a queue an agent
+    can actually work — without it, a single unlucky customer during a supply crunch generates several
+    alerts for the same underlying problem.
+  </figcaption>
+</figure>
+
+## The supply-side lever: a demand heatmap
+
+Calling customers after the fact treats the symptom. The other half of the work was giving agents a way to see the supply gap coming and lean on it before it produces an alert at all.
+
+Agents got a heatmap view in the same admin panel, built from the same request stream: every zone in the city scored by how often ride requests were landing there against how many riders were actually online and idle in that zone. A zone that's throwing off five requests a minute with two idle riders nearby lights up very differently from a zone throwing off the same five requests with twenty riders sitting in it.
+
+<figure className="not-prose my-10">
+  <svg viewBox="0 0 680 360" className="w-full h-auto" role="img" aria-label="Diagram: a city grid heatmap where zones are shaded by request volume against idle rider count, with hot, undersupplied zones highlighted, feeding an agent action to call nearby idle riders and suggest they reposition there.">
+    <text x="20" y="20" className="fill-muted font-mono text-[10px] tracking-[0.08em] uppercase">
+      Zone heatmap — requests vs. idle riders nearby
+    </text>
+
+    <g>
+      <rect x="20" y="36" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+      <rect x="120" y="36" width="94" height="70" rx="6" className="fill-accent-soft stroke-accent" strokeWidth="2" />
+      <rect x="220" y="36" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+      <rect x="320" y="36" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+      <rect x="420" y="36" width="94" height="70" rx="6" className="fill-accent-soft stroke-accent" strokeWidth="2" />
+      <rect x="520" y="36" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+
+      <rect x="20" y="112" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+      <rect x="120" y="112" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+      <rect x="220" y="112" width="94" height="70" rx="6" className="fill-accent-soft stroke-accent" strokeWidth="2" />
+      <rect x="320" y="112" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+      <rect x="420" y="112" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+      <rect x="520" y="112" width="94" height="70" rx="6" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    </g>
+
+    <text x="167" y="66" textAnchor="middle" className="fill-ink text-[11.5px] font-semibold">Zone B</text>
+    <text x="167" y="84" textAnchor="middle" className="fill-ink-soft text-[10px]">req ≫ idle riders</text>
+    <text x="467" y="66" textAnchor="middle" className="fill-ink text-[11.5px] font-semibold">Zone E</text>
+    <text x="467" y="84" textAnchor="middle" className="fill-ink-soft text-[10px]">req ≫ idle riders</text>
+    <text x="267" y="142" textAnchor="middle" className="fill-ink text-[11.5px] font-semibold">Zone H</text>
+    <text x="267" y="160" textAnchor="middle" className="fill-ink-soft text-[10px]">req ≫ idle riders</text>
+
+    <text x="67" y="66" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+    <text x="367" y="66" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+    <text x="567" y="66" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+    <text x="67" y="142" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+    <text x="167" y="142" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+    <text x="367" y="142" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+    <text x="467" y="142" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+    <text x="567" y="142" textAnchor="middle" className="fill-muted text-[10.5px]">balanced</text>
+
+    <line x1="340" y1="188" x2="340" y2="212" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="140" y="214" width="400" height="60" rx="10" className="fill-paper-deep stroke-rule" strokeWidth="1.5" />
+    <text x="340" y="238" textAnchor="middle" className="fill-ink text-[13px] font-medium">Agent picks idle riders just outside the hot zones</text>
+    <text x="340" y="257" textAnchor="middle" className="fill-muted font-mono text-[10.5px]">nearest first, weighted by how idle they've been</text>
+
+    <line x1="340" y1="274" x2="340" y2="298" className="stroke-rule" strokeWidth="1.5" markerEnd="url(#mr-arrow)" />
+
+    <rect x="140" y="300" width="400" height="52" rx="10" className="fill-accent-soft stroke-accent" strokeWidth="2" />
+    <text x="340" y="326" textAnchor="middle" className="fill-ink text-[13px] font-semibold">Call or notify: reposition to Zone B / E / H</text>
+    <text x="340" y="344" textAnchor="middle" className="fill-ink-soft text-[10.5px]">higher probability of picking up a request there, right now</text>
+
+  </svg>
+  <figcaption className="mt-4 text-[13px] leading-relaxed text-muted">
+    The same three zones that light up on the heatmap are the ones generating most of the
+    missed-ride alerts above — the heatmap is a leading indicator of the same gap, not a
+    separate problem.
+  </figcaption>
+</figure>
+
+Agents work the map, not just the queue: they call or push a notification to riders currently idle just outside a hot zone and tell them a nearby area is running short, right now, so moving there gives them a real shot at picking up a request in the next few minutes. It's a small nudge, one rider at a time, but repositioning supply toward where the requests already are is cheaper than any of it happening after a customer has already been let down.
+
+## The human loop is the recovery mechanism
+
+Nothing about either lever is automated matching. Once an agent has a missed-ride alert, they call the customer directly, and only if the customer still wants the ride does the agent call a nearby rider themselves and request the ride from the admin panel on the customer's behalf. It's slower than an algorithm and it doesn't scale the way retrying a match would. It's also the only version of this that works, because the actual constraint is supply, and no amount of software creates a rider who isn't online in that radius. What software can do is make sure a real customer with a real unmet need gets a phone call instead of getting nothing, and make sure idle riders get pointed at where they're actually needed.
+
+## Numbers, roughly
+
+These are directional, from the first couple of months both pieces ran, not an audited report:
+
+- During peak windows in high-demand areas, somewhere around **12–15% of ride requests** were going unmatched before this shipped — split roughly evenly between rejections and timeouts.
+- The dedup step alone cut alert volume by close to **40%**, since a meaningful share of missed requests were the same customer retrying inside the same short window.
+- Of the missed-ride alerts agents actually worked, roughly **55–60%** converted into a completed ride after the callback.
+- Zones agents actively rebalanced off the heatmap saw their own missed-ride rate drop by an estimated **20–25%** within the same window, before a single alert had to be worked on them.
+- At the volumes involved, the two together translated to an estimated **BDT 2–3 lakh a month** in gross bookings that would otherwise have been silent, unlogged demand.
+
+## UX impact
+
+The customer-facing change is almost invisible, and that's the point: nobody sees a "we noticed you missed a ride" screen. They just get a phone call a few minutes after the app went quiet on them, from someone who already knows what they were trying to book. For a customer deciding in the moment whether to keep waiting or switch to a competitor's app, that call is the difference between a bad experience and a bad experience someone visibly cared about. For riders, the heatmap turns "where should I wait" from a guess into a nudge from someone who can already see the gap. On the ops side, agents stopped getting paged for people who cancelled in three seconds, and started spending that attention on customers who were actually still waiting and on riders who were sitting in the wrong place.
+
+## What I'd still tighten
+
+The self-cancel grace window and the dedup window were both picked by feel, not by data, because we didn't have a missed-ride definition to measure against until this system existed. Now that a real stretch of alert data exists, both windows are candidates for tuning — the dedup window in particular is probably too generous in low-density areas and too tight during the worst of peak-hour crunches, where a customer might genuinely retry three separate times for three separate reasons. The heatmap has its own open question: right now it scores a zone the same whether it's short by two riders or short by twenty, and those two situations probably deserve different urgency in how hard an agent pushes the reposition call.
