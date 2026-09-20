@@ -68,7 +68,7 @@ export const NOW: { week: string; items: NowItem[] } = {
 
 // ── Metrics ──────────────────────────────────────────────
 export const METRICS: Metric[] = [
-  { value: '60%', label: 'faster driver onboarding', context: 'MGH Group' },
+  { value: '40%', label: 'faster driver onboarding', context: 'MGH Group' },
   { value: '40%', label: 'server cost reduction', context: 'OBHAI ride-share' },
   { value: '15+', label: 'production apps shipped', context: 'across teams' },
   { value: '7yr', label: 'leading & mentoring', context: 'junior to senior' },
@@ -186,7 +186,7 @@ export const FEATURED: FeaturedProject[] = [
 // ── Archive ──────────────────────────────────────────────
 export const ARCHIVE: ArchiveProject[] = [
   { title: 'OBHAI Owner Panel', year: '2022', kind: 'Fullstack', note: 'Fleet management for car owners: daily driver performance' },
-  { title: 'Registration Portal', year: '2021', kind: 'Web', note: 'Secure driver onboarding, 60% faster than the previous flow' },
+  { title: 'Registration Portal', year: '2021', kind: 'Web', note: 'Secure driver onboarding, 40% faster than the previous flow' },
   { title: 'mgX Landing Page', year: '2023', kind: 'Marketing', note: 'Domestic + international order tracking, public site' },
   { title: 'mgX Hub Admin', year: '2023', kind: 'Internal', note: 'Hub-side logistics management' },
   { title: 'mgX Customer Panel', year: '2023', kind: 'Customer', note: 'Order placement and tracking' },
