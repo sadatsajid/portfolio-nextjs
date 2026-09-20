@@ -209,10 +209,10 @@ export const BELIEFS: string[] = [
 // ── Skills ───────────────────────────────────────────────
 export const SKILLS: Skills = {
   Frontend: ['React', 'React Native', 'Next.js', 'Angular', 'TypeScript', 'Tailwind', 'MUI', 'shadcn/ui', 'Zustand', 'Redux'],
-  Backend: ['Node.js', 'Express', 'NestJS', 'MySQL', 'PostgreSQL', 'Prisma', 'Sequelize'],
+  Backend: ['Node.js', 'Express', 'NestJS', 'C#', '.NET / ASP.NET Core', 'EF Core', 'RabbitMQ', 'MySQL', 'PostgreSQL', 'Prisma', 'Sequelize'],
   'AI & Machine Learning': ['OpenAI API', 'RAG (Retrieval-Augmented Generation)', 'pgvector', 'Vector Search', 'Prompt Engineering'],
   'Realtime & Tooling': ['Pusher', 'SignalR', 'FCM', 'Web Push', 'PWA', 'Google Maps', 'Vitest'],
-  'Currently learning': ['Docker', 'AWS', 'C# / .NET (ASP.NET Core, EF Core)'],
+  'Currently learning': ['Docker', 'AWS'],
 };
 
 // Writing now lives in src/content/notes/*.mdx; see src/lib/notes.ts
