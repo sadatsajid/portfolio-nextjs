@@ -54,10 +54,10 @@ export function Hero() {
           </h1>
 
           <p className="text-ink-soft mt-10 max-w-155 font-serif text-[clamp(17px,1.6vw,22px)] leading-normal">
-            Staff engineer, frontend lead, and quiet operator. Seven years
-            building back-office systems, sales engines, and AI tools that move
-            metrics, not just merge requests. I read the P&L before the PRD,
-            and I run code reviews that start with{' '}
+            Staff engineer, full-stack from React to .NET, and quiet operator.
+            Seven years building back-office systems, sales engines, and AI
+            tools that move metrics, not just merge requests. I read the P&L
+            before the PRD, and I run code reviews that start with{' '}
             <em className="text-accent not-italic">
               &ldquo;what is this trying to do for the business?&rdquo;
             </em>

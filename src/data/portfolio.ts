@@ -79,7 +79,7 @@ export const FEATURED: FeaturedProject[] = [
   {
     slug: 'creolytix',
     title: 'Creolytix',
-    role: 'Staff Engineer · Frontend Lead',
+    role: 'Staff Engineer · Frontend Lead, Backend Contributor',
     year: '2024-present',
     company: 'Selise Digital Platforms',
     tagline: "Real-time threat monitoring for organizations who can't afford to miss a signal.",
@@ -91,8 +91,9 @@ export const FEATURED: FeaturedProject[] = [
       'Shipped Places: POI markers, railroad paths, country/shape filters, zoom-gated geo fetches',
       'Wired F24 SSO and ENS+ alarm trigger: login through to firing an alarm from an event',
       'Extended the platform to React Native: a discussions feature end to end (read path with filters, write path, rich-text authoring with @mentions), plus relevance-sorted search and React Native Maps',
+      'Contributed SMS and email communication services in C#/.NET: authenticated provider APIs, RabbitMQ delivery workers, template-based messaging',
     ],
-    stack: ['React', 'React Native', 'TypeScript', 'Vitest', 'Axios', 'Zustand'],
+    stack: ['React', 'React Native', 'TypeScript', 'C# / .NET', 'RabbitMQ', 'Vitest', 'Axios', 'Zustand'],
     kind: 'Enterprise SaaS',
   },
   {
