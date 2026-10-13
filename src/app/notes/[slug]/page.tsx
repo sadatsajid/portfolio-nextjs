@@ -77,20 +77,24 @@ export default async function NotePage({
 
   return (
     <article className="bg-paper">
-      <div className="mx-auto max-w-190 px-6 pt-12 pb-24 lg:px-10">
+      <div className="mx-auto max-w-190 px-6 pt-10 pb-24 lg:px-10">
         <Link
           href="/notes"
-          className="text-muted hover:text-accent mb-8 inline-block text-[13px] transition-colors"
+          className="group text-muted hover:text-accent mb-6 inline-flex min-h-11 items-center gap-1.5 text-[13px] transition-colors"
         >
-          ← All writing
+          <span
+            aria-hidden
+            className="transition-transform duration-200 group-hover:-translate-x-0.5"
+          >
+            ←
+          </span>
+          All writing
         </Link>
 
         <header className="border-rule mb-12 border-b pb-12">
           <div className="mb-5 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <span className="font-heading tracking-heading text-accent text-[12px] font-semibold">
-                {note.kind}
-              </span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span className="eyebrow text-accent">{note.kind}</span>
               <span className="text-muted text-[12px]">
                 {formatNoteDate(note.date)}
               </span>
@@ -102,12 +106,12 @@ export default async function NotePage({
             />
           </div>
           <h1
-            className="font-heading leading-display tracking-display-tight text-ink font-bold"
+            className="font-heading leading-display tracking-display-tight text-ink font-bold text-balance"
             style={{ fontSize: 'clamp(32px, 4.5vw, 52px)' }}
           >
             {note.title}
           </h1>
-          <p className="text-ink-soft mt-6 text-[18px] leading-relaxed">
+          <p className="text-ink-soft mt-6 font-serif text-[clamp(18px,1.8vw,21px)] leading-normal">
             {note.description}
           </p>
         </header>

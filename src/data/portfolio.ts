@@ -68,10 +68,10 @@ export const NOW: { week: string; items: NowItem[] } = {
 
 // ── Metrics ──────────────────────────────────────────────
 export const METRICS: Metric[] = [
-  { value: '40%', label: 'faster driver onboarding', context: 'MGH Group' },
-  { value: '40%', label: 'server cost reduction', context: 'OBHAI ride-share' },
-  { value: '15+', label: 'production apps shipped', context: 'across teams' },
-  { value: '7yr', label: 'leading & mentoring', context: 'junior to senior' },
+  { value: '40%', label: 'faster driver onboarding', context: 'OBHAI registration portal' },
+  { value: '28%', label: 'server cost reduction', context: 'OBHAI ride-share' },
+  { value: '15+', label: 'production apps shipped', context: 'requirements to release' },
+  { value: '7+', label: 'years shipping full-stack', context: 'web, mobile, and backend' },
 ];
 
 // ── Featured projects ────────────────────────────────────
@@ -124,7 +124,7 @@ export const FEATURED: FeaturedProject[] = [
     impact:
       'Eight modules, one panel. Asset management, issue tracking, sales monitoring, express delivery, intercity fares, task distribution, push notifications. The CRM team\'s home screen.',
     contributions: [
-      'Cut server costs 40% by collapsing redundant API calls',
+      'Cut server costs 28% by paginating and collapsing redundant API calls',
       'Revamped Request Ride flow used by every CRM agent',
       'Built the notification system used by the branding team',
     ],

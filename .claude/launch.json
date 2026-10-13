@@ -5,8 +5,22 @@
     {
       "name": "portfolio",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["dev"],
+      "runtimeArgs": [
+        "dev"
+      ],
       "port": 3007
+    },
+    {
+      "name": "portfolio-webpack",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "exec",
+        "next",
+        "dev",
+        "-p",
+        "3008"
+      ],
+      "port": 3008
     }
   ]
 }
