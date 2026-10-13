@@ -3,6 +3,17 @@ import type { NextRequest } from 'next/server';
 
 const OG_SIZE = { width: 1200, height: 630 } as const;
 
+// `note` (default) labels the card as a field note; `home` is the portfolio card.
+const VARIANTS = ['note', 'home'] as const;
+type Variant = (typeof VARIANTS)[number];
+
+function parseVariant(value: string | null): Variant | null {
+  if (value === null) return 'note';
+  return (VARIANTS as readonly string[]).includes(value)
+    ? (value as Variant)
+    : null;
+}
+
 function formatDate(date: string | null): string {
   if (!date) return 'FIELD NOTE';
 
@@ -26,9 +37,21 @@ export function GET(req: NextRequest) {
     return new Response('Missing required parameter: title', { status: 400 });
   }
 
+  const variant = parseVariant(searchParams.get('variant'));
+  if (!variant) {
+    return new Response('Invalid parameter: variant', { status: 400 });
+  }
+
   const safeTitle = title.slice(0, 110);
   const kind = (searchParams.get('kind')?.trim() || 'Engineering').slice(0, 30);
-  const date = formatDate(searchParams.get('date'));
+  const isHome = variant === 'home';
+  const date = isHome
+    ? 'OPEN TO REMOTE ROLES'
+    : formatDate(searchParams.get('date'));
+  const crumb = isHome ? '/ Staff Software Engineer' : '/ Notes';
+  const footerLabel = isHome
+    ? 'Selected work · Writing · Contact'
+    : `${kind} note`;
   const titleSize =
     safeTitle.length >= 70 ? 50 : safeTitle.length > 52 ? 58 : 68;
 
@@ -128,7 +151,7 @@ export function GET(req: NextRequest) {
             <span style={{ color: '#E8EAF0', fontWeight: 700 }}>
               Asif Sadat
             </span>
-            <span style={{ color: '#7B8194', marginLeft: 18 }}>/ Notes</span>
+            <span style={{ color: '#7B8194', marginLeft: 18 }}>{crumb}</span>
           </div>
           <span style={{ color: '#7B8194', fontSize: 17 }}>{date}</span>
         </header>
@@ -175,7 +198,7 @@ export function GET(req: NextRequest) {
           }}
         >
           <span style={{ textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-            {kind} note
+            {footerLabel}
           </span>
           <span style={{ color: '#E8EAF0', fontWeight: 600 }}>
             asifsadat.com

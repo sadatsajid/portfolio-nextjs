@@ -25,6 +25,9 @@ import { SectionHeading } from './SectionHeading';
 
 const MOBILE_QUERY = '(max-width: 767px)';
 
+/** Side projects shown on phones before "Show all"; desktop always shows every card. */
+const SIDE_PREVIEW_COUNT = 2;
+
 function isMobileViewport() {
   return window.matchMedia(MOBILE_QUERY).matches;
 }
@@ -35,13 +38,20 @@ function linkLabel(href: string) {
   return 'Visit site';
 }
 
-function ProjectCard({ p }: { p: ClientProject | PersonalProject }) {
+function ProjectCard({
+  p,
+  className,
+}: {
+  p: ClientProject | PersonalProject;
+  className?: string;
+}) {
   const external = p.href ? !p.href.startsWith('/') : false;
 
   return (
     <article
       data-reveal
       className={clsx(
+        className,
         'group bg-paper-deep relative flex flex-col gap-4 rounded-xs border border-transparent p-6 transition-[border-color,transform] duration-300',
         p.href &&
           'hover:border-rule-strong focus-within:border-rule-strong hover:-translate-y-0.5'
@@ -188,6 +198,8 @@ function ProjectDetail({
 export function Work() {
   const [active, setActive] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [showAllSide, setShowAllSide] = useState(false);
+  const hiddenSideCount = PERSONAL_PROJECTS.length - SIDE_PREVIEW_COUNT;
   const project = FEATURED[active];
 
   useEffect(() => {
@@ -359,11 +371,43 @@ export function Work() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {PERSONAL_PROJECTS.map(p => (
-            <ProjectCard key={p.title} p={p} />
+        <div
+          id="side-projects"
+          className="grid grid-cols-1 gap-5 md:grid-cols-2"
+        >
+          {PERSONAL_PROJECTS.map((p, i) => (
+            <ProjectCard
+              key={p.title}
+              p={p}
+              className={clsx(
+                !showAllSide && i >= SIDE_PREVIEW_COUNT && 'max-md:hidden!'
+              )}
+            />
           ))}
         </div>
+
+        {hiddenSideCount > 0 && (
+          <button
+            type="button"
+            onClick={() => setShowAllSide(v => !v)}
+            aria-expanded={showAllSide}
+            aria-controls="side-projects"
+            className="border-rule-strong text-ink font-heading tracking-heading hover:border-ink mt-6 flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-full border text-[15px] font-semibold transition-colors md:hidden"
+          >
+            {showAllSide
+              ? 'Show fewer'
+              : `Show ${hiddenSideCount} more side project${hiddenSideCount === 1 ? '' : 's'}`}
+            <span
+              aria-hidden
+              className={clsx(
+                'transition-transform duration-200',
+                showAllSide && 'rotate-180'
+              )}
+            >
+              ↓
+            </span>
+          </button>
+        )}
       </div>
     </section>
   );

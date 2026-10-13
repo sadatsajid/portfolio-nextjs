@@ -12,13 +12,45 @@ import { UmamiAnalytics } from '@/components/UmamiAnalytics';
 import { fontDisplay, fontBody, fontSerif } from './fonts';
 import './globals.css';
 
+const SITE_URL = process.env.NEXT_PUBLIC_URL ?? 'https://www.asifsadat.com';
+const SITE_TITLE = 'Asif Sadat | Staff Software Engineer';
+const SITE_DESCRIPTION =
+  'Staff engineer who reads the P&L before the PRD. Seven years building back-office systems, sales engines, and AI tools that move metrics.';
+
+const homeOgImage = new URL('/api/og', SITE_URL);
+homeOgImage.searchParams.set('variant', 'home');
+homeOgImage.searchParams.set(
+  'title',
+  'I turn business problems into shipped software.'
+);
+const homeOgAlt = 'Asif Sadat: I turn business problems into shipped software.';
+
 export const metadata: Metadata = {
-  title: 'Asif Sadat | Staff Software Engineer',
-  description:
-    'Staff engineer who reads the P&L before the PRD. Seven years building back-office systems, sales engines, and AI tools that move metrics.',
-  metadataBase: process.env.NEXT_PUBLIC_URL
-    ? new URL(process.env.NEXT_PUBLIC_URL)
-    : undefined,
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: 'Asif Sadat',
+    type: 'website',
+    images: [
+      {
+        url: homeOgImage,
+        width: 1200,
+        height: 630,
+        type: 'image/png',
+        alt: homeOgAlt,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [{ url: homeOgImage, alt: homeOgAlt }],
+  },
 };
 
 export const viewport: Viewport = {
