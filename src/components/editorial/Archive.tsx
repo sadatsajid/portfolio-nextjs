@@ -1,40 +1,50 @@
 import { ARCHIVE, FEATURED } from '@/data/portfolio';
 
+import { SectionHeading } from './SectionHeading';
+
 export function Archive() {
   const offset = FEATURED.length + 1;
 
   return (
-    <section className="max-w-[1200px] mx-auto px-6 lg:px-10 pb-24">
-      <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
-        <h2
-          className="font-heading font-bold tracking-display-tight leading-display text-ink"
-          style={{ fontSize: 'clamp(28px, 3vw, 44px)' }}
-        >
-          {ARCHIVE.length} more I&apos;m proud of.
-        </h2>
-        <span className="text-[13px] text-muted">2018-2025</span>
-      </div>
+    <section aria-labelledby="archive-title" className="page-frame pb-24">
+      <SectionHeading
+        id="archive-title"
+        index="02"
+        label="Archive"
+        title={<>{ARCHIVE.length} more I&apos;m proud of.</>}
+        meta="2018-2025"
+      />
 
-      <div className="border-t border-rule">
+      <ol data-reveal className="border-rule border-t">
         {ARCHIVE.map((item, i) => (
-          <div
+          <li
             key={item.title}
-            className="flex min-w-0 items-baseline gap-3 py-4 px-2 -mx-2 border-b border-rule text-[13px] transition-colors hover:bg-paper-deep/50 sm:gap-4 lg:gap-6"
+            className="border-rule grid grid-cols-[1.75rem_minmax(0,1fr)_auto] items-baseline gap-x-3 border-b py-4 text-[13px] sm:gap-x-4 md:grid-cols-[1.75rem_13rem_minmax(0,1fr)_6rem_3rem] lg:grid-cols-[1.75rem_16rem_minmax(0,1fr)_6rem_3rem] lg:gap-x-6"
           >
-            <span className="text-muted tabular-nums w-7 shrink-0">
+            <span className="text-muted tabular-nums">
               {String(i + offset).padStart(2, '0')}
             </span>
-            <span className="min-w-0 flex-1 font-heading font-semibold text-[18px] tracking-heading text-ink md:w-[200px] md:flex-none lg:w-[260px]">
-              {item.title}
+            <span className="min-w-0">
+              <span className="font-heading tracking-heading text-ink block text-[17px] font-semibold md:text-[18px]">
+                {item.title}
+              </span>
+              {/* On small screens the note tucks under the title instead of disappearing. */}
+              <span className="text-ink-soft mt-1 block font-serif text-[14px] md:hidden">
+                {item.note}
+              </span>
             </span>
-            <span className="font-serif text-[14px] text-ink-soft flex-1 hidden md:block">
+            <span className="text-ink-soft hidden font-serif text-[14px] md:block">
               {item.note}
             </span>
-            <span className="text-muted w-20 text-right shrink-0">{item.kind}</span>
-            <span className="text-muted tabular-nums w-10 text-right shrink-0">{item.year}</span>
-          </div>
+            <span className="text-muted hidden text-right md:block">
+              {item.kind}
+            </span>
+            <span className="text-muted text-right tabular-nums">
+              {item.year}
+            </span>
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
   );
 }

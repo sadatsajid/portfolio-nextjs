@@ -4,6 +4,8 @@ import MghLogo from '@/images/logos/mgh.png';
 import SeliseLogo from '@/images/logos/selise.png';
 import { WORK, type WorkEntry, type WorkRole } from '@/data/portfolio';
 
+import { SectionHeading } from './SectionHeading';
+
 const LOGOS: Record<string, typeof SeliseLogo> = {
   'SELISE Digital Platforms': SeliseLogo,
   'MGH Group': MghLogo,
@@ -12,24 +14,27 @@ const LOGOS: Record<string, typeof SeliseLogo> = {
 /** Normalize an entry to a role list so single- and multi-role companies share one timeline. */
 function rolesOf(entry: WorkEntry): WorkRole[] {
   if (entry.roles?.length) return entry.roles;
-  if (entry.role) return [{ title: entry.role, start: entry.start, end: entry.end }];
+  if (entry.role)
+    return [{ title: entry.role, start: entry.start, end: entry.end }];
   return [];
 }
 
 export function Experience() {
   return (
-    <section className="max-w-[1200px] mx-auto px-6 lg:px-10 pb-24">
-      <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
-        <h2
-          className="font-heading font-bold tracking-display-tight leading-display text-ink"
-          style={{ fontSize: 'clamp(28px, 3vw, 44px)' }}
-        >
-          Work experience.
-        </h2>
-        <span className="text-[13px] text-muted">2018-Present</span>
-      </div>
+    <section
+      id="experience"
+      aria-labelledby="experience-title"
+      className="page-frame scroll-mt-24 pb-24"
+    >
+      <SectionHeading
+        id="experience-title"
+        index="03"
+        label="Experience"
+        title="Work experience."
+        meta="2018-Present"
+      />
 
-      <ol className="relative">
+      <ol data-reveal className="relative">
         {WORK.map((entry, i) => (
           <CompanyEntry
             key={entry.company}
@@ -42,23 +47,29 @@ export function Experience() {
   );
 }
 
-function CompanyEntry({ entry, isLast }: { entry: WorkEntry; isLast: boolean }) {
+function CompanyEntry({
+  entry,
+  isLast,
+}: {
+  entry: WorkEntry;
+  isLast: boolean;
+}) {
   const logo = LOGOS[entry.company];
   const roles = rolesOf(entry);
 
   return (
-    <li className="relative pl-16 pb-12 last:pb-0">
+    <li className="relative pb-12 pl-16 last:pb-0">
       {/* Rail connecting this company's node to the next */}
       {!isLast && (
         <span
           aria-hidden
-          className="absolute left-5 top-10 -bottom-2 w-px -translate-x-1/2 bg-rule"
+          className="bg-rule absolute top-10 -bottom-2 left-5 w-px -translate-x-1/2"
         />
       )}
 
       {/* Node — the company logo sits on the rail */}
-      <div className="absolute left-5 top-0 -translate-x-1/2">
-        <div className="relative w-10 h-10 rounded-full bg-paper-deep border border-rule overflow-hidden">
+      <div className="absolute top-0 left-5 -translate-x-1/2">
+        <div className="bg-paper-deep border-rule relative h-10 w-10 overflow-hidden rounded-full border">
           {logo && (
             <Image
               src={logo}
@@ -72,11 +83,11 @@ function CompanyEntry({ entry, isLast }: { entry: WorkEntry; isLast: boolean }) 
       </div>
 
       {/* Company + dates */}
-      <div className="flex items-baseline gap-3 flex-wrap pt-1.5">
-        <h3 className="font-heading font-semibold text-[18px] tracking-heading text-ink">
+      <div className="flex flex-wrap items-baseline gap-3 pt-1.5">
+        <h3 className="font-heading tracking-heading text-ink text-[18px] font-semibold">
           {entry.company}
         </h3>
-        <span className="text-[13px] text-muted tabular-nums">
+        <span className="text-muted text-[13px] tabular-nums">
           {entry.start}-{entry.end}
         </span>
       </div>
@@ -86,7 +97,7 @@ function CompanyEntry({ entry, isLast }: { entry: WorkEntry; isLast: boolean }) 
         {roles.length > 1 && (
           <span
             aria-hidden
-            className="absolute left-0 top-[0.55em] bottom-2 w-px -translate-x-1/2 bg-rule"
+            className="bg-rule absolute top-[0.55em] bottom-2 left-0 w-px -translate-x-1/2"
           />
         )}
         {roles.map((role, i) => (
@@ -96,8 +107,8 @@ function CompanyEntry({ entry, isLast }: { entry: WorkEntry; isLast: boolean }) 
           >
             <span
               aria-hidden
-              className={`absolute -left-5 top-[0.55em] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full ${
-                i === 0 ? 'bg-accent' : 'border border-rule bg-paper'
+              className={`absolute top-[0.55em] -left-5 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full ${
+                i === 0 ? 'bg-accent' : 'border-rule bg-paper border'
               }`}
             />
             <span
@@ -105,7 +116,7 @@ function CompanyEntry({ entry, isLast }: { entry: WorkEntry; isLast: boolean }) 
             >
               {role.title}
             </span>
-            <span className="text-[12px] text-muted tabular-nums shrink-0">
+            <span className="text-muted shrink-0 text-[12px] tabular-nums">
               {role.start}-{role.end}
             </span>
           </li>

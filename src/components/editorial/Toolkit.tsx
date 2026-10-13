@@ -1,43 +1,53 @@
 import { SKILLS } from '@/data/portfolio';
 
+import { SectionHeading } from './SectionHeading';
+
 export function Toolkit() {
   const entries = Object.entries(SKILLS);
 
   return (
-    <section id="toolkit" className="max-w-[1200px] mx-auto px-6 lg:px-10 py-24 scroll-mt-24">
-      <h2
-        className="font-heading font-bold tracking-display-tight leading-display text-ink mb-14"
-        style={{ fontSize: 'clamp(28px, 3vw, 44px)' }}
-      >
-        The tools I reach for first.
-      </h2>
+    <section
+      id="toolkit"
+      aria-labelledby="toolkit-title"
+      className="page-frame scroll-mt-24 py-24"
+    >
+      <SectionHeading
+        id="toolkit-title"
+        index="05"
+        label="Toolkit"
+        title="The tools I reach for first."
+      />
 
-      <div className="space-y-7">
+      <div data-reveal className="space-y-7">
         {entries.map(([category, items]) => (
           <div
             key={category}
-            className="grid grid-cols-1 items-baseline gap-2 border-b border-rule pb-6 lg:grid-cols-12 lg:gap-6"
+            className="border-rule grid grid-cols-1 items-baseline gap-2 border-b pb-6 lg:grid-cols-12 lg:gap-6"
           >
             <div className="lg:col-span-3">
               <span
-                className={`font-heading font-semibold text-[15px] tracking-heading ${
-                  category === 'Currently learning' ? 'text-accent' : 'text-ink-soft'
+                className={`font-heading tracking-heading text-[15px] font-semibold ${
+                  category === 'Currently learning'
+                    ? 'text-accent'
+                    : 'text-ink-soft'
                 }`}
               >
-                {category === 'Currently learning' && <span aria-hidden>↗ </span>}
+                {category === 'Currently learning' && (
+                  <span aria-hidden>↗ </span>
+                )}
                 {category}
               </span>
             </div>
-            <div className="flex min-w-0 flex-wrap gap-2 lg:col-span-9">
-              {items.map((s) => (
-                <span
+            <ul className="flex min-w-0 flex-wrap gap-2 lg:col-span-9">
+              {items.map(s => (
+                <li
                   key={s}
-                  className="inline-flex items-center rounded-full border border-rule bg-paper-deep px-3 py-1 font-heading text-[13px] font-medium tracking-heading text-ink-soft"
+                  className="border-rule bg-paper-deep font-heading tracking-heading text-ink-soft inline-flex items-center rounded-full border px-3 py-1 text-[13px] font-medium"
                 >
                   {s}
-                </span>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         ))}
       </div>

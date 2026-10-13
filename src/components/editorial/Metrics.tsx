@@ -2,21 +2,35 @@ import { METRICS } from '@/data/portfolio';
 
 export function Metrics() {
   return (
-    <section className="max-w-[1200px] mx-auto px-6 lg:px-10 pb-20">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10 pt-16 border-t border-rule">
-        {METRICS.map(m => (
-          <div key={m.label}>
-            <div
-              className="font-heading font-bold text-accent leading-none"
-              style={{ fontSize: 'clamp(48px, 5vw, 72px)', letterSpacing: '-0.06em' }}
+    <section aria-label="Results at a glance" className="page-frame pb-20">
+      <dl className="border-rule grid grid-cols-2 border-t md:grid-cols-4">
+        {METRICS.map((m, i) => (
+          <div
+            key={m.label}
+            data-reveal
+            style={{ transitionDelay: `${i * 70}ms` }}
+            className="border-rule flex flex-col-reverse gap-2 pt-10 pb-2 odd:pr-6 even:border-l even:pl-6 md:border-l md:px-6 md:first:border-l-0 md:first:pl-0"
+          >
+            <dt>
+              <span className="text-ink-soft block text-[14px] leading-tight">
+                {m.label}
+              </span>
+              <span className="text-muted mt-1 block text-[12px]">
+                {m.context}
+              </span>
+            </dt>
+            <dd
+              className="font-heading text-accent leading-none font-bold tabular-nums"
+              style={{
+                fontSize: 'clamp(44px, 5vw, 72px)',
+                letterSpacing: '-0.06em',
+              }}
             >
               {m.value}
-            </div>
-            <div className="text-[14px] mt-2 text-ink-soft leading-tight">{m.label}</div>
-            <div className="text-[12px] text-muted mt-1">{m.context}</div>
+            </dd>
           </div>
         ))}
-      </div>
+      </dl>
     </section>
   );
 }

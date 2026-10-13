@@ -7,8 +7,9 @@
   --paper-deep: #E9EBF0;
   --ink: #14161A;
   --ink-soft: #3A3F4A;
-  --muted: #6B7280;
+  --muted: #5B6170; /* 5.6:1 on paper — AA for 12–13px meta text */
   --rule: rgba(20, 22, 26, 0.12);
+  --rule-strong: rgba(20, 22, 26, 0.24);
   --accent: #2B45FF;
   --accent-soft: rgba(43, 69, 255, 0.08);
 }
@@ -18,8 +19,9 @@
   --paper-deep: #12151C;
   --ink: #E8EAF0;
   --ink-soft: #C2C7D2;
-  --muted: #7B8194;
+  --muted: #8A90A2;
   --rule: rgba(232, 234, 240, 0.11);
+  --rule-strong: rgba(232, 234, 240, 0.24);
   --accent: #5B74FF;
   --accent-soft: rgba(91, 116, 255, 0.12);
 }
@@ -34,6 +36,7 @@
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
 
   /* Fonts — variables injected by next/font on <html> */
   --font-heading: var(--font-display);
@@ -47,6 +50,29 @@
 
   /* Leading */
   --leading-display: 1;
+
+  /* Motion */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Layout primitives ─────────────────────────────── */
+/* One page frame for every section, so edges line up top to bottom. */
+@utility page-frame {
+  margin-inline: auto;
+  max-width: 75rem;
+  padding-inline: 1.5rem;
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Small uppercase label used for section eyebrows and detail headings. */
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 body {
@@ -55,9 +81,65 @@ body {
   font-family: var(--font-body, system-ui, sans-serif);
 }
 
+/* ── Focus ─────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}
+
 /* ── Smooth scroll (respects reduced-motion) ──────── */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
+}
+
+/* ── Hero entrance ────────────────────────────────── */
+/* Transform-only on the headline so the LCP element paints immediately. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.8s var(--ease-out-quint) both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+  .rise-fade {
+    animation: rise-fade 0.8s var(--ease-out-quint) both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+}
+@keyframes rise {
+  from { transform: translateY(0.35em); }
+  to   { transform: none; }
+}
+@keyframes rise-fade {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Scroll reveal ────────────────────────────────── */
+/* Content stays visible without JS; RevealObserver opts the page in. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s var(--ease-out-quint),
+      transform 0.7s var(--ease-out-quint);
+  }
+  .reveal-ready [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Project detail swap ──────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .swap-in {
+    animation: rise-fade 0.45s var(--ease-out-quint) both;
+  }
 }
 
 /* ── Marquee ───────────────────────────────────────── */
