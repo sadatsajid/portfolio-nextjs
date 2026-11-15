@@ -199,6 +199,32 @@ export const ARCHIVE: ArchiveProject[] = [
   { title: 'DristiVan (SAAF)', year: '2024', kind: 'Healthcare', note: 'EMR for glaucoma-screening patients' },
 ];
 
+// ── Open source ──────────────────────────────────────────
+export type ContributionKind = 'Fix' | 'Feature' | 'Tests' | 'Docs';
+
+/** A merged upstream pull request. Newest first; `merged` is ISO yyyy-mm-dd. */
+export type Contribution = {
+  repo: string;
+  number: number;
+  summary: string;
+  kind: ContributionKind;
+  merged: string;
+};
+
+export const CONTRIBUTIONS: Contribution[] = [
+  { repo: 'nestjs/i18n', number: 61, kind: 'Fix', merged: '2026-11-10', summary: 'Match catalog locales case-insensitively' },
+  { repo: 'nestjs/ai', number: 35, kind: 'Fix', merged: '2026-11-10', summary: 'Validate language model pricing at startup' },
+  { repo: 'nestjs/docs.nestjs.com', number: 3690, kind: 'Docs', merged: '2026-11-06', summary: 'Document the job-skipped events in locks' },
+  { repo: 'mui/material-ui', number: 49668, kind: 'Fix', merged: '2026-11-05', summary: "Correct the event and reason types on Autocomplete's onInputChange" },
+  { repo: 'nestjs/storage', number: 47, kind: 'Feature', merged: '2026-11-02', summary: 'Cancel the read when a client disconnects before the file is served' },
+  { repo: 'nestjs/storage', number: 46, kind: 'Feature', merged: '2026-11-02', summary: 'Accept an AbortSignal on reads and other disk operations' },
+  { repo: 'nestjs/storage', number: 44, kind: 'Fix', merged: '2026-11-02', summary: 'Fail S3 multipart uploads when the body source stalls' },
+  { repo: 'nestjs/locks', number: 54, kind: 'Feature', merged: '2026-11-02', summary: 'Emit an event for each skipped job call' },
+  { repo: 'nestjs/observe', number: 57, kind: 'Fix', merged: '2026-10-30', summary: 'Isolate RPC and HTTP executions that share a trace ID' },
+  { repo: 'nestjs/storage', number: 42, kind: 'Fix', merged: '2026-10-29', summary: 'Honor an S3 multipart upload concurrency of one' },
+  { repo: 'nestjs/locks', number: 49, kind: 'Tests', merged: '2026-10-29', summary: 'Run the lock store contract against every documented store' },
+];
+
 // ── Beliefs ──────────────────────────────────────────────
 export const BELIEFS: string[] = [
   'The best code review starts with "what is this trying to do for the business?"',

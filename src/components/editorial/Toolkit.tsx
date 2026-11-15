@@ -13,7 +13,7 @@ export function Toolkit() {
     >
       <SectionHeading
         id="toolkit-title"
-        index="05"
+        index="06"
         label="Toolkit"
         title="The tools I reach for first."
       />

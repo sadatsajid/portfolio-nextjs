@@ -85,7 +85,8 @@ descriptions.
 
 Homepage order (`src/app/page.tsx`): Hero, Metrics, Marquee, 01 Work
 (featured list + sticky detail, client projects, side projects), 02 Archive,
-03 Experience, 04 Why me, 05 Toolkit, 06 Writing, 07 Contact.
+03 Experience, 04 Open source (merged upstream PRs from `CONTRIBUTIONS`),
+05 Why me, 06 Toolkit, 07 Writing, 08 Contact.
 
 Every section after the hero starts with `SectionHeading`
 (`src/components/editorial/SectionHeading.tsx`): numbered eyebrow, display
