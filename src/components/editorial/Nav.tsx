@@ -19,12 +19,16 @@ import { CONTACT, NOW } from '@/data/portfolio';
 const NAV_LINKS = [
   { id: 'work', label: 'Work' },
   { id: 'experience', label: 'Experience' },
+  { id: 'open-source', label: 'Open source' },
   { id: 'beliefs', label: 'Why me' },
   { id: 'writing', label: 'Writing' },
   { id: 'contact', label: 'Contact' },
 ] as const;
 
 type SectionId = (typeof NAV_LINKS)[number]['id'];
+
+/** Matches the sections' scroll-mt-24, so a nav jump lands on the band's top edge. */
+const BAND_TOP = 96;
 
 /** Tracks which homepage section sits under the header. */
 function useActiveSection(enabled: boolean) {
@@ -38,28 +42,32 @@ function useActiveSection(enabled: boolean) {
     const sections = NAV_LINKS.map(l => document.getElementById(l.id)).filter(
       (el): el is HTMLElement => el !== null
     );
-    const visible = new Map<string, number>();
+    const visible = new Set<HTMLElement>();
 
     const io = new IntersectionObserver(
       entries => {
         for (const e of entries) {
-          if (e.isIntersecting)
-            visible.set(e.target.id, e.boundingClientRect.top);
-          else visible.delete(e.target.id);
+          const el = e.target as HTMLElement;
+          if (e.isIntersecting) visible.add(el);
+          else visible.delete(el);
         }
-        // The topmost intersecting section wins.
+        // The topmost section that reaches into the band wins. A section whose
+        // bottom only touches the band's top edge (as happens right after a nav
+        // jump, thanks to scroll-margin) is skipped so the target section wins.
         let best: string | null = null;
         let bestTop = Infinity;
-        for (const [id, top] of visible) {
+        for (const el of visible) {
+          const { top, bottom } = el.getBoundingClientRect();
+          if (bottom <= BAND_TOP + 1) continue;
           if (top < bestTop) {
-            best = id;
+            best = el.id;
             bestTop = top;
           }
         }
         setActive(best as SectionId | null);
       },
       // A band just below the sticky header.
-      { rootMargin: '-96px 0px -55% 0px' }
+      { rootMargin: `-${BAND_TOP}px 0px -55% 0px` }
     );
     sections.forEach(s => io.observe(s));
     return () => io.disconnect();

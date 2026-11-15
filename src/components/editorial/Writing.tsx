@@ -16,7 +16,7 @@ export function Writing() {
       <div className="page-frame py-24">
         <SectionHeading
           id="writing-title"
-          index="06"
+          index="07"
           label="Writing"
           title="Things I've written down."
           meta={

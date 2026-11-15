@@ -49,7 +49,7 @@ export function Contact() {
     >
       <SectionHeading
         id="contact-title"
-        index="07"
+        index="08"
         label="Contact"
         title={
           <span

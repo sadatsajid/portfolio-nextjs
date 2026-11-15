@@ -12,7 +12,7 @@ export function Beliefs() {
       <div className="page-frame py-28">
         <SectionHeading
           id="beliefs-title"
-          index="04"
+          index="05"
           label="Why me"
           size="lg"
           title="Why hire me?"
